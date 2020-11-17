@@ -1,15 +1,14 @@
-package com.dylansalim.qrmenuapp.ui.login;
+package com.dylansalim.qrmenuapp.ui.login_registration;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dylansalim.qrmenuapp.models.dao.LoginDao;
+import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dao.RoleDao;
 import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
 import com.dylansalim.qrmenuapp.network.LoginRegistrationNetworkInterface;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
-import com.dylansalim.qrmenuapp.utils.JWTUtils;
 
 import java.util.List;
 
@@ -46,7 +45,11 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
 
     @Override
     public void submitRegistrationForm(RegistrationDto registrationDto) {
-
+        lrvi.showProgressBar();
+        getLoginRegistrationNetworkClient().submitRegistrationRequest(registrationDto)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(getRegistrationFormObserver());
     }
 
     private LoginRegistrationNetworkInterface getLoginRegistrationNetworkClient() {
@@ -74,16 +77,12 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
         };
     }
 
-    public DisposableObserver<LoginDao> getLoginFormObserver() {
-        return new DisposableObserver<LoginDao>() {
+    public DisposableObserver<TokenDao> getLoginFormObserver() {
+        return new DisposableObserver<TokenDao>() {
             @Override
-            public void onNext(@NonNull LoginDao loginDao) {
-                Log.d(TAG, "OnNext" + loginDao.getToken());
-                try {
-                    JWTUtils.decoded(loginDao.getToken());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            public void onNext(@NonNull TokenDao tokenDao) {
+                Log.d(TAG, "OnNext" + tokenDao.getToken());
+                lrvi.navigateToNextActivity(tokenDao);
             }
 
             @Override
@@ -100,4 +99,28 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
             }
         };
     }
+
+    public DisposableObserver<TokenDao> getRegistrationFormObserver() {
+        return new DisposableObserver<TokenDao>() {
+            @Override
+            public void onNext(@NonNull TokenDao tokenDao) {
+                Log.d(TAG, "getRegistrationFormObserver" + tokenDao);
+                lrvi.navigateToNextActivity(tokenDao);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d(TAG, "Error" + e);
+                e.printStackTrace();
+                lrvi.displayError("Error fetching Data");
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "Completed");
+                lrvi.hideProgressBar();
+            }
+        };
+    }
+
 }

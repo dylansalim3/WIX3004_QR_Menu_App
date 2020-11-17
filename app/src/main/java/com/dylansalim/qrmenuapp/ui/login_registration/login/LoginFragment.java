@@ -1,4 +1,4 @@
-package com.dylansalim.qrmenuapp.ui.login;
+package com.dylansalim.qrmenuapp.ui.login_registration.login;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,19 +15,41 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.utils.ValidationUtils;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements LoginViewInterface {
     OnChangeFragmentListener mChangeFragmentCallback;
     OnSubmitLoginFormListener mSubmitFormCallback;
 
-    public static int LOGIN_FRAGMENT_INDEX = 0;
+    LoginPresenter loginPresenter;
+
+    public static final int LOGIN_FRAGMENT_INDEX = 1;
 
     EditText mEmail;
 
     EditText mPassword;
 
     TextView mRegistrationText;
+
+    @Override
+    public void submitLoginForm(String email, String password) {
+        mSubmitFormCallback.onSubmitLoginForm(email, password);
+
+    }
+
+    @Override
+    public String getEmail() {
+        return mEmail.getText().toString();
+    }
+
+    @Override
+    public String getPassword() {
+        return mPassword.getText().toString();
+    }
+
+    @Override
+    public void displayError(String s) {
+        mSubmitFormCallback.displayError(s);
+    }
 
     public interface OnChangeFragmentListener {
         public void onChangeFragment(int currentFragmentIndex);
@@ -74,10 +96,12 @@ public class LoginFragment extends Fragment {
         mRegistrationText = (TextView) view.findViewById(R.id.tv_login_register_here);
         Button mSubmitBtn = view.findViewById(R.id.btn_login_submit);
 
+        setupMVP();
+
         mSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onSubmitForm();
+                loginPresenter.onLoginButtonClicked();
             }
         });
 
@@ -92,20 +116,8 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
-    public void onSubmitForm() {
-        Log.d("onsubmitform", "clicked");
-        String email = mEmail.getText().toString();
-        String password = mPassword.getText().toString();
-
-        if (email.isEmpty() || password.isEmpty()) {
-            mSubmitFormCallback.displayError("Please don't leave the field blank");
-        } else if (!ValidationUtils.isEmailValid(email)) {
-            mSubmitFormCallback.displayError("Invalid Email");
-        } else if (!ValidationUtils.isPasswordValid(password)) {
-            mSubmitFormCallback.displayError("Invalid Password Format. The password should consist of at least 5 characters.");
-        }
-
-        mSubmitFormCallback.onSubmitLoginForm(email, password);
+    private void setupMVP() {
+        loginPresenter = new LoginPresenter(this);
     }
 
 }

@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.ui.login.LoginRegistrationActivity;
+import com.dylansalim.qrmenuapp.ui.login_registration.LoginRegistrationActivity;
 
 public class OnboardingActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.dylansalim.qrmenuapp.ui.login;
+package com.dylansalim.qrmenuapp.ui.login_registration;
 
 import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
 

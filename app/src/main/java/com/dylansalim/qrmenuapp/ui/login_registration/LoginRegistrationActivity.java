@@ -1,5 +1,7 @@
-package com.dylansalim.qrmenuapp.ui.login;
+package com.dylansalim.qrmenuapp.ui.login_registration;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +13,11 @@ import androidx.fragment.app.Fragment;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.RoleDao;
+import com.dylansalim.qrmenuapp.models.dao.TokenDao;
+import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
+import com.dylansalim.qrmenuapp.ui.merchant_menu.MerchantMenuActivity;
+import com.dylansalim.qrmenuapp.ui.login_registration.login.LoginFragment;
+import com.dylansalim.qrmenuapp.ui.login_registration.registration.RegistrationFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +26,7 @@ public class LoginRegistrationActivity extends AppCompatActivity
         implements LoginFragment.OnChangeFragmentListener,
         RegistrationFragment.OnChangeFragmentListener,
         LoginFragment.OnSubmitLoginFormListener,
+        RegistrationFragment.OnSubmitRegistrationFormListener,
         LoginRegistrationViewInterface {
 
     ProgressBar mProgressBar;
@@ -99,6 +107,11 @@ public class LoginRegistrationActivity extends AppCompatActivity
     }
 
     @Override
+    public void onSubmitRegistrationForm(RegistrationDto registrationDto) {
+        loginRegistrationPresenter.submitRegistrationForm(registrationDto);
+    }
+
+    @Override
     public void displayError(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
@@ -114,5 +127,18 @@ public class LoginRegistrationActivity extends AppCompatActivity
                 .replace(R.id.fragment_container, newFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void navigateToNextActivity(TokenDao tokenDao) {
+        SharedPreferences sharedPreferences = this.getPreferences(this.getApplicationContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(getString(R.string.token), tokenDao.getToken());
+        editor.apply();
+
+        // Intent to QRScanActivity
+        Intent intent = new Intent(this, MerchantMenuActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
