@@ -1,10 +1,12 @@
-package com.dylansalim.qrmenuapp.activities;
+package com.dylansalim.qrmenuapp.ui.onboarding;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.dylansalim.qrmenuapp.R;
+import com.dylansalim.qrmenuapp.ui.login.LoginRegistrationActivity;
 
 public class OnboardingActivity extends AppCompatActivity {
 
@@ -12,5 +14,12 @@ public class OnboardingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
+        navigateToLogin();
     }
+
+    public void navigateToLogin(){
+        Intent intent = new Intent(OnboardingActivity.this, LoginRegistrationActivity.class);
+        startActivity(intent);
+    }
+
 }
