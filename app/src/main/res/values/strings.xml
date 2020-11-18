@@ -16,10 +16,19 @@
     <string name="register_here">Register here</string>
     <string name="register">Register</string>
     <string name="login_here">Login here</string>
+    <string name="store_registration">Store Registration</string>
+    <string name="name">Name</string>
 
     <string name="repeat_password">Repeat Password</string>
     <string name="phone_number">Phone Number</string>
+
+    <string name="store_name">Store Name</string>
     <string name="address">Address</string>
+    <string name="poscode">Poscode</string>
+    <string name="city">City</string>
+    <string name="country">Country</string>
+    <string name="phoneNum">Phone Number</string>
+
     <string name="title_activity_merchant_menu">MerchantMenuActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -31,4 +40,5 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="use_current_location">Use Current Location</string>
 </resources>

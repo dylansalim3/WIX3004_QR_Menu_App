@@ -25,6 +25,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    sourceSets {
+        main {
+            res {
+                srcDirs 'src/main/res/layouts/login_registration',
+                        'src/main/res/layouts/store_registration',
+                        'src/main/res/layouts',
+                        'src/main/res'
+            }
+        }
+    }
 }
 
 dependencies {

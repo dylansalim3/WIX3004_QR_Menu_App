@@ -59,3 +59,23 @@ No messaging function – There is no messaging functionality between merchant a
 - Retrofit Gson Converter 
 - Picasso  
 - RxJava
+
+## FAQ 
+1. Created folder not shown in the android studio res directory.
+Ans: Change your project directory view from Android to Project Files
+
+2. How to create new res folder in a correct way
+Ans: right click -> new -> folder -> res folder 
+    or create Package and go to build.gradle -> search for 
+    `
+    sourceSets {
+            main {
+                res {
+                    srcDirs 'src/main/res',
+                            'src/main/res/layouts',
+                            'src/main/res/layouts/login_registration',
+                            // Add new res folder here
+                }
+            }
+        }
+    `
