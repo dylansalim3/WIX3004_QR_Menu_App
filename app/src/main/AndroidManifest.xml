@@ -16,7 +16,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-        <activity android:name=".ui.QRScan.QRScanActivity"></activity>
+        <activity android:name=".ui.qr_scan.QRScanActivity"/>
         <activity android:name=".ui.store_registration.StoreRegistrationActivity" />
         <activity
             android:name=".ui.merchant_menu.MerchantMenuActivity"

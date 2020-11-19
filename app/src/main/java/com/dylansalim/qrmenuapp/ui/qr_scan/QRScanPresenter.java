@@ -1,12 +1,9 @@
-package com.dylansalim.qrmenuapp.ui.QRScan;
+package com.dylansalim.qrmenuapp.ui.qr_scan;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.util.Log;
-
 
 import com.dylansalim.qrmenuapp.BuildConfig;
 import com.dylansalim.qrmenuapp.R;
@@ -15,7 +12,6 @@ import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.network.QRScanNetworkInterface;
-import com.dylansalim.qrmenuapp.ui.store_registration.StoreRegistrationActivity;
 import com.dylansalim.qrmenuapp.utils.JWTUtils;
 import com.google.gson.Gson;
 
@@ -31,26 +27,22 @@ public class QRScanPresenter implements QRScanPresenterInterface {
     private Context mContext;
     private String token;
 
-    public QRScanPresenter(QRScanViewInterface qsvi, Context mContext) {
+    public QRScanPresenter(QRScanViewInterface qsvi) {
         this.qsvi = qsvi;
-        this.mContext = mContext;
     }
 
     @Override
     public void checkUserType(Activity activity) {
-        if(token==null){
-            SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
+        if (token == null) {
+            SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.app_name),Context.MODE_PRIVATE);
             token = sharedPreferences.getString(activity.getString(R.string.token), "");
         }
-        Log.d(TAG,"check user type");
+        Log.d(TAG, "check user type");
         Log.d(TAG, token);
 
-        if(token != null){
+        if (!token.equals("")) {
             String dataString = null;
             try {
-                if (BuildConfig.DEBUG && token.equals("")) {
-                    throw new AssertionError("Assertion failed");
-                }
                 dataString = JWTUtils.getDataString(token);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -85,7 +77,7 @@ public class QRScanPresenter implements QRScanPresenterInterface {
             @Override
             public void onNext(Result<StoreDao> storeResult) {
                 if (roleName.equalsIgnoreCase("MERCHANT") && storeResult.getData() == null) {
-                    showStoreNotFoundAlert();
+                    qsvi.showStoreNotFoundAlert();
                 }
             }
 
@@ -99,30 +91,5 @@ public class QRScanPresenter implements QRScanPresenterInterface {
                 Log.d(TAG, "Completed");
             }
         };
-    }
-
-    public void showStoreNotFoundAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-
-        // Setting Dialog Title
-        alertDialog.setTitle("Setup Store?");
-
-        // Setting Dialog Message
-        alertDialog.setMessage("You have not setup a store yet. Setup now?");
-
-        // On pressing Settings button
-        alertDialog.setPositiveButton("Go to Registration", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                qsvi.navigateToNextScreen(StoreRegistrationActivity.class);
-            }
-        });
-
-        // on pressing cancel button
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        alertDialog.show();
     }
 }

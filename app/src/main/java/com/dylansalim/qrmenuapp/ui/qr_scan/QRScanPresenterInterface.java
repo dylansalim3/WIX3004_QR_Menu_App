@@ -1,4 +1,4 @@
-package com.dylansalim.qrmenuapp.ui.QRScan;
+package com.dylansalim.qrmenuapp.ui.qr_scan;
 
 import android.app.Activity;
 

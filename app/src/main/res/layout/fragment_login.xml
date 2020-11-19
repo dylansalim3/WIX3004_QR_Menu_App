@@ -31,7 +31,7 @@
             android:selectAllOnFocus="true"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:text="dylansalim015@gmail.com" />
+            android:text="dylansalim3@gmail.com" />
 
         <EditText
             android:id="@+id/et_login_password"

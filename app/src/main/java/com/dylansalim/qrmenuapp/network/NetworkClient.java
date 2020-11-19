@@ -17,7 +17,7 @@ public class NetworkClient {
             OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://192.168.0.100:5000")
+                    .baseUrl("http://192.168.0.192:5000")
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .client(okHttpClient)

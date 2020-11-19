@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.ui.login_registration.LoginRegistrationActivity;
+import com.dylansalim.qrmenuapp.ui.qr_scan.QRScanActivity;
 
 public class OnboardingActivity extends AppCompatActivity {
 
@@ -18,8 +19,9 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     public void navigateToLogin(){
-        Intent intent = new Intent(OnboardingActivity.this, LoginRegistrationActivity.class);
+        Intent intent = new Intent(OnboardingActivity.this, QRScanActivity.class);
         startActivity(intent);
+        finish();
     }
 
 }
