@@ -28,9 +28,9 @@ android {
     sourceSets {
         main {
             res {
-                srcDirs 'src/main/res/layouts/login_registration',
-                        'src/main/res/layouts/store_registration',
-                        'src/main/res/layouts',
+                srcDirs 'src/main/res/layout/login_registration',
+                        'src/main/res/layout/store_registration',
+                        'src/main/res/layout',
                         'src/main/res'
             }
         }

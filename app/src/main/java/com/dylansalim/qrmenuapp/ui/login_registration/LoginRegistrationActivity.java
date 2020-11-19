@@ -42,7 +42,7 @@ public class LoginRegistrationActivity extends AppCompatActivity
         mProgressBar = (ProgressBar) findViewById(R.id.pb_login_loading);
 
         // If fragment container is available, we need to add fragment to it.
-        if (findViewById(R.id.fragment_container) != null) {
+        if (findViewById(R.id.login_registration_fragment_container) != null) {
 
             // if we're being restored from a previous state,
             // then we don't need to do anything and should return or else
@@ -59,7 +59,7 @@ public class LoginRegistrationActivity extends AppCompatActivity
 
             // Add the fragment to the 'fragment_container' FrameLayout
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, loginFragment)
+                    .add(R.id.login_registration_fragment_container, loginFragment)
                     .commit();
         }
         setupMVP();
@@ -80,7 +80,7 @@ public class LoginRegistrationActivity extends AppCompatActivity
             newFragment = new LoginFragment();
             newFragment.setArguments(getIntent().getExtras());
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, newFragment)
+                    .replace(R.id.login_registration_fragment_container, newFragment)
                     .addToBackStack(null)
                     .commit();
         }
@@ -124,7 +124,7 @@ public class LoginRegistrationActivity extends AppCompatActivity
         mBundle.putParcelableArrayList("Roles", mArrayList);
         newFragment.setArguments(mBundle);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, newFragment)
+                .replace(R.id.login_registration_fragment_container, newFragment)
                 .addToBackStack(null)
                 .commit();
     }

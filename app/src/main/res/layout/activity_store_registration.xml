@@ -46,7 +46,7 @@
         app:layout_constraintVertical_bias="0.16">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_registration_name"
+            android:id="@+id/til_store_registration_name"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="@android:color/transparent"
@@ -61,7 +61,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_registration_phone_number"
+            android:id="@+id/til_store_registration_phone_number"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="@android:color/transparent"
@@ -76,7 +76,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_registration_address"
+            android:id="@+id/til_store_registration_address"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="@android:color/transparent"
@@ -97,7 +97,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/et_registration_postal_code"
+                android:id="@+id/til_store_registration_postal_code"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_weight="1"
@@ -113,7 +113,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/et_registration_city"
+                android:id="@+id/til_store_registration_city"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_weight="1"
@@ -131,7 +131,7 @@
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_registration_country"
+            android:id="@+id/til_store_registration_country"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="@android:color/transparent"
