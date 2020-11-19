@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.dylansalim.qrmenuapp.R;
+import com.dylansalim.qrmenuapp.ui.login_registration.registration.RegistrationFragment;
 
 public class LoginFragment extends Fragment implements LoginViewInterface {
     OnChangeFragmentListener mChangeFragmentCallback;
@@ -109,7 +110,7 @@ public class LoginFragment extends Fragment implements LoginViewInterface {
             @Override
             public void onClick(View view) {
                 Log.d("change fragment","clicked");
-                mChangeFragmentCallback.onChangeFragment(LOGIN_FRAGMENT_INDEX);
+                mChangeFragmentCallback.onChangeFragment(RegistrationFragment.REGISTER_FRAGMENT_INDEX);
             }
         });
 

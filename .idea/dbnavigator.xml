@@ -25,7 +25,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="c571478a-16bb-4586-9ee1-0830955044ba">
-        <schema name="qr_menu_system" object-types="constraint, function, index, procedure, column, view, table, dataset trigger" />
+        <schema name="qr_menu_system" object-types="procedure, column, index, constraint, view, function, dataset trigger, table" />
       </connection>
     </loaded-nodes>
   </component>
@@ -39,6 +39,16 @@
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="c571478a-16bb-4586-9ee1-0830955044ba" />
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="c571478a-16bb-4586-9ee1-0830955044ba" dataset="qr_menu_system.user" active-filter-id="EMPTY_FILTER">
+      <filter id="47179f64-1c52-499e-bf9f-40fd9d2a3534" name="Filter 2" temporary="false" custom-name="false" type="basic" join-type="AND" />
+      <filter id="bc8bc0f3-5912-4ed6-9c7a-b685517573e1" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
+    </filter-actions>
+    <filter-actions connection-id="c571478a-16bb-4586-9ee1-0830955044ba" dataset="qr_menu_system.item" active-filter-id="" />
+    <filter-actions connection-id="c571478a-16bb-4586-9ee1-0830955044ba" dataset="qr_menu_system.role" active-filter-id="0fac04e8-ba20-49ce-97b1-5a1ff5798b1a">
+      <filter id="0fac04e8-ba20-49ce-97b1-5a1ff5798b1a" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
+    </filter-actions>
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />

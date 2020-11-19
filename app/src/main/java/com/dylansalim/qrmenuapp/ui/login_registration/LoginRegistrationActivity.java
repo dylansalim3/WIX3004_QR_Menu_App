@@ -1,5 +1,6 @@
 package com.dylansalim.qrmenuapp.ui.login_registration;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -15,9 +17,10 @@ import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.RoleDao;
 import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
-import com.dylansalim.qrmenuapp.ui.merchant_menu.MerchantMenuActivity;
+import com.dylansalim.qrmenuapp.ui.QRScan.QRScanActivity;
 import com.dylansalim.qrmenuapp.ui.login_registration.login.LoginFragment;
 import com.dylansalim.qrmenuapp.ui.login_registration.registration.RegistrationFragment;
+import com.dylansalim.qrmenuapp.ui.merchant_menu.MerchantMenuActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,9 +74,9 @@ public class LoginRegistrationActivity extends AppCompatActivity
 
 
     @Override
-    public void onChangeFragment(int currentFragmentIndex) {
+    public void onChangeFragment(int destFragmentIndex) {
         Fragment newFragment;
-        if (currentFragmentIndex == 0) {
+        if (destFragmentIndex == 0) {
             newFragment = new RegistrationFragment();
             getRoles();
         } else {
@@ -131,13 +134,15 @@ public class LoginRegistrationActivity extends AppCompatActivity
 
     @Override
     public void navigateToNextActivity(TokenDao tokenDao) {
-        SharedPreferences sharedPreferences = this.getPreferences(this.getApplicationContext().MODE_PRIVATE);
+        Log.d("LR Activity",tokenDao.getToken());
+
+        SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(getString(R.string.token), tokenDao.getToken());
         editor.apply();
 
-        // Intent to QRScanActivity
-        Intent intent = new Intent(this, MerchantMenuActivity.class);
+        Intent intent = new Intent(this, QRScanActivity.class);
+        intent.putExtra(getString(R.string.token), tokenDao.getToken());
         startActivity(intent);
         finish();
     }

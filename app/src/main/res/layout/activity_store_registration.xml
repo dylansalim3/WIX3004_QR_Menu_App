@@ -155,6 +155,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_submit_color"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
         android:layout_width="300dp"
         android:layout_height="46dp"
         android:background="@drawable/btn_gradient_style"

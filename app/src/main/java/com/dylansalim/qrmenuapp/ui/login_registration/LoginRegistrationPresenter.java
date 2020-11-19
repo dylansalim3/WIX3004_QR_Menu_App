@@ -4,13 +4,17 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dao.RoleDao;
+import com.dylansalim.qrmenuapp.models.dao.TokenDao;
+import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
 import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
 import com.dylansalim.qrmenuapp.network.LoginRegistrationNetworkInterface;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
+import com.dylansalim.qrmenuapp.utils.JWTUtils;
+import com.google.gson.Gson;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -20,6 +24,7 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
 
     LoginRegistrationViewInterface lrvi;
     private final String TAG = "LRPresenter";
+    private List<RoleDao> roleDaos;
 
     public LoginRegistrationPresenter(LoginRegistrationViewInterface lrvi) {
         this.lrvi = lrvi;
@@ -56,11 +61,12 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
         return NetworkClient.getNetworkClient().create(LoginRegistrationNetworkInterface.class);
     }
 
-    public DisposableObserver<List<RoleDao>> getRoleObserver(){
-        return new DisposableObserver<List<RoleDao>>(){
+    public DisposableObserver<List<RoleDao>> getRoleObserver() {
+        return new DisposableObserver<List<RoleDao>>() {
 
             @Override
             public void onNext(List<RoleDao> roleDaoList) {
+                roleDaos = roleDaoList;
                 lrvi.navigateToRegistrationFragment(roleDaoList);
             }
 
@@ -81,7 +87,7 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
         return new DisposableObserver<TokenDao>() {
             @Override
             public void onNext(@NonNull TokenDao tokenDao) {
-                Log.d(TAG, "OnNext" + tokenDao.getToken());
+                Log.d(TAG, "OnNext " + tokenDao.getToken());
                 lrvi.navigateToNextActivity(tokenDao);
             }
 
@@ -122,5 +128,10 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
             }
         };
     }
+
+
+
+
+
 
 }

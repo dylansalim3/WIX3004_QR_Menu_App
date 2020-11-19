@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.RoleDao;
 import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
+import com.dylansalim.qrmenuapp.ui.login_registration.login.LoginFragment;
 import com.dylansalim.qrmenuapp.utils.TextValidator;
 
 import java.util.ArrayList;
@@ -168,7 +169,7 @@ public class RegistrationFragment extends Fragment implements RegistrationViewIn
 
             @Override
             public void onClick(View view) {
-                mChangeFragmentCallback.onChangeFragment(REGISTER_FRAGMENT_INDEX);
+                mChangeFragmentCallback.onChangeFragment(LoginFragment.LOGIN_FRAGMENT_INDEX);
             }
         });
 

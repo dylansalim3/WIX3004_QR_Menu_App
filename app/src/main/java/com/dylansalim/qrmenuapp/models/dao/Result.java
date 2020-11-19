@@ -1,12 +1,17 @@
 package com.dylansalim.qrmenuapp.models.dao;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 
 public class Result<T> {
     @Expose
+    @NonNull
     private String msg;
 
     @Expose
+    @Nullable
     private T data;
 
     public Result(String msg, T data) {
