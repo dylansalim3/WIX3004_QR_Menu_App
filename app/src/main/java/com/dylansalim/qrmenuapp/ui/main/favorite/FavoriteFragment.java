@@ -1,4 +1,4 @@
-package com.dylansalim.qrmenuapp.ui.merchant.ui.gallery;
+package com.dylansalim.qrmenuapp.ui.main.favorite;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,25 +6,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.dylansalim.qrmenuapp.R;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.dylansalim.qrmenuapp.R;
+public class FavoriteFragment extends Fragment {
 
-public class GalleryFragment extends Fragment {
-
-    private GalleryViewModel galleryViewModel;
+    private FavoriteViewModel favoriteViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        final TextView textView = root.findViewById(R.id.text_gallery);
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        favoriteViewModel =
+                ViewModelProviders.of(this).get(FavoriteViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_favorite, container, false);
+        final TextView textView = root.findViewById(R.id.text_favorite);
+        favoriteViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

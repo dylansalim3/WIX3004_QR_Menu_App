@@ -41,4 +41,13 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="use_current_location">Use Current Location</string>
+
+    <string name="title_activity_merchant">MainActivity</string>
+
+<!--    Bottom navbar string-->
+    <string name="title_home">Home</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_account">Account</string>
+    <string name="title_store">Store</string>
 </resources>

@@ -5,14 +5,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.dylansalim.qrmenuapp.BuildConfig;
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.Result;
 import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.network.QRScanNetworkInterface;
-import com.dylansalim.qrmenuapp.ui.merchant.MerchantActivity;
+import com.dylansalim.qrmenuapp.ui.main.MainActivity;
 import com.dylansalim.qrmenuapp.utils.JWTUtils;
 import com.google.gson.Gson;
 
@@ -81,7 +80,7 @@ public class QRScanPresenter implements QRScanPresenterInterface {
                     qsvi.showStoreNotFoundAlert();
                 }else if(roleName.equalsIgnoreCase("MERCHANT")){
                     // For testing purpose only
-                    qsvi.navigateToNextScreen(MerchantActivity.class);
+                    qsvi.navigateToNextScreen(MainActivity.class);
                 }
             }
 

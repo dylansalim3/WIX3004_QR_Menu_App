@@ -143,8 +143,6 @@ public class LoginRegistrationActivity extends AppCompatActivity
 
     @Override
     public void navigateToNextActivity(TokenDao tokenDao) {
-        Log.d("LR Activity",tokenDao.getToken());
-
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.app_name),Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(getString(R.string.token), tokenDao.getToken());

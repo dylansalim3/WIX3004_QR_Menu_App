@@ -9,7 +9,7 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.ui.merchant.MerchantActivity;
+import com.dylansalim.qrmenuapp.ui.main.MainActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
@@ -149,7 +149,7 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
 
     @Override
     public void navigateToNextScreen() {
-        Intent intent = new Intent(this, MerchantActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
