@@ -1,4 +1,4 @@
-package com.dylansalim.qrmenuapp.ui.merchant_menu;
+package com.dylansalim.qrmenuapp.ui.merchant;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,7 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
-public class MerchantMenuActivity extends AppCompatActivity {
+public class MerchantActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 

@@ -1,4 +1,4 @@
-package com.dylansalim.qrmenuapp.ui.merchant_menu.ui.slideshow;
+package com.dylansalim.qrmenuapp.ui.merchant.ui.slideshow;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

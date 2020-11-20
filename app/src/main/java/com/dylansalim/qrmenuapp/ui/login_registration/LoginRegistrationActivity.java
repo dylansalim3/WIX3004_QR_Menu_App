@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -33,6 +34,9 @@ public class LoginRegistrationActivity extends AppCompatActivity
     ProgressBar mProgressBar;
 
     LoginRegistrationPresenter loginRegistrationPresenter;
+
+    ViewGroup progressView;
+    protected boolean isProgressShowing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,12 +103,19 @@ public class LoginRegistrationActivity extends AppCompatActivity
 
     @Override
     public void showProgressBar() {
-        mProgressBar.setVisibility(View.VISIBLE);
+        isProgressShowing = true;
+        progressView = (ViewGroup) getLayoutInflater().inflate(R.layout.progressbar_layout, null);
+        View v = this.findViewById(android.R.id.content).getRootView();
+        ViewGroup viewGroup = (ViewGroup) v;
+        viewGroup.addView(progressView);
     }
 
     @Override
     public void hideProgressBar() {
-        mProgressBar.setVisibility(View.GONE);
+        View v = this.findViewById(android.R.id.content).getRootView();
+        ViewGroup viewGroup = (ViewGroup) v;
+        viewGroup.removeView(progressView);
+        isProgressShowing = false;
     }
 
     @Override

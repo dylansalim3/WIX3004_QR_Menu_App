@@ -5,12 +5,11 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.ui.merchant_menu.MerchantMenuActivity;
+import com.dylansalim.qrmenuapp.ui.merchant.MerchantActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
@@ -133,24 +132,24 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
 
     @Override
     public void showProgressBar() {
-//        isProgressShowing = true;
-//        progressView = (ViewGroup) getLayoutInflater().inflate(R.layout.progressbar_layout, null);
-//        View v = this.findViewById(android.R.id.content).getRootView();
-//        ViewGroup viewGroup = (ViewGroup) v;
-//        viewGroup.addView(progressView);
+        isProgressShowing = true;
+        progressView = (ViewGroup) getLayoutInflater().inflate(R.layout.progressbar_layout, null);
+        View v = this.findViewById(android.R.id.content).getRootView();
+        ViewGroup viewGroup = (ViewGroup) v;
+        viewGroup.addView(progressView);
     }
 
     @Override
     public void hideProgressBar() {
-//        View v = this.findViewById(android.R.id.content).getRootView();
-//        ViewGroup viewGroup = (ViewGroup) v;
-//        viewGroup.removeView(progressView);
-//        isProgressShowing = false;
+        View v = this.findViewById(android.R.id.content).getRootView();
+        ViewGroup viewGroup = (ViewGroup) v;
+        viewGroup.removeView(progressView);
+        isProgressShowing = false;
     }
 
     @Override
     public void navigateToNextScreen() {
-        Intent intent = new Intent(this, MerchantMenuActivity.class);
+        Intent intent = new Intent(this, MerchantActivity.class);
         startActivity(intent);
         finish();
     }

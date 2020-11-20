@@ -19,7 +19,7 @@
         <activity android:name=".ui.qr_scan.QRScanActivity"/>
         <activity android:name=".ui.store_registration.StoreRegistrationActivity" />
         <activity
-            android:name=".ui.merchant_menu.MerchantMenuActivity"
+            android:name=".ui.merchant.MerchantActivity"
             android:label="@string/title_activity_merchant_menu"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.login_registration.LoginRegistrationActivity" />

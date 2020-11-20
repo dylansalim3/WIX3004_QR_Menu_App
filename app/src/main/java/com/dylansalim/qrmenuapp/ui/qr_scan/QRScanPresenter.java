@@ -12,6 +12,7 @@ import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.network.QRScanNetworkInterface;
+import com.dylansalim.qrmenuapp.ui.merchant.MerchantActivity;
 import com.dylansalim.qrmenuapp.utils.JWTUtils;
 import com.google.gson.Gson;
 
@@ -78,6 +79,9 @@ public class QRScanPresenter implements QRScanPresenterInterface {
             public void onNext(Result<StoreDao> storeResult) {
                 if (roleName.equalsIgnoreCase("MERCHANT") && storeResult.getData() == null) {
                     qsvi.showStoreNotFoundAlert();
+                }else if(roleName.equalsIgnoreCase("MERCHANT")){
+                    // For testing purpose only
+                    qsvi.navigateToNextScreen(MerchantActivity.class);
                 }
             }
 
