@@ -19,7 +19,7 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     public void navigateToLogin(){
-        Intent intent = new Intent(OnboardingActivity.this, QRScanActivity.class);
+        Intent intent = new Intent(OnboardingActivity.this, LoginRegistrationActivity.class);
         startActivity(intent);
         finish();
     }

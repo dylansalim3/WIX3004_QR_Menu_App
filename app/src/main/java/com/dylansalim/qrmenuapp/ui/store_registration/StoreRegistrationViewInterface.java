@@ -20,4 +20,12 @@ public interface StoreRegistrationViewInterface {
     void setCity(String city);
 
     void setCountry(String country);
+
+    void displayErrorMessage(String s);
+
+    void showProgressBar();
+
+    void hideProgressBar();
+
+    void navigateToNextScreen();
 }
