@@ -35,7 +35,11 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_share">Share</string>
+    <string name="action_info">Info</string>
+    <string name="action_edit">Edit</string>
+
+    <string name="btn_add_new_item">Add New Item</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
@@ -44,10 +48,15 @@
 
     <string name="title_activity_merchant">MainActivity</string>
 
-<!--    Bottom navbar string-->
+    <!--    Bottom navbar string-->
     <string name="title_home">Home</string>
     <string name="title_favorite">Favorite</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_account">Account</string>
     <string name="title_store">Store</string>
+
+<!--    Sample string-->
+    <string name="title">Lorem</string>
+    <string name="desc">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Ciceros De Finibus Bonorum et Malorum for use in a type specimen book.</string>
+    <string name="pricing">RM 2.50</string>
 </resources>

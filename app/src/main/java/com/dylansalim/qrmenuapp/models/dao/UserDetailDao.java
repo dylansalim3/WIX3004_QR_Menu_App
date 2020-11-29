@@ -2,6 +2,8 @@ package com.dylansalim.qrmenuapp.models.dao;
 
 import com.google.gson.annotations.SerializedName;
 
+import androidx.annotation.Nullable;
+
 public class UserDetailDao {
     private int id;
 
@@ -30,7 +32,15 @@ public class UserDetailDao {
 
     private String role;
 
-    public UserDetailDao(int id, String firstName, String lastName, String email, String password, String created, boolean active, String profileImg, String phoneNum, int roleId, String role) {
+    @Nullable
+    @SerializedName("store_id")
+    private Integer storeId;
+
+    @Nullable
+    @SerializedName("store_name")
+    private String storeName;
+
+    public UserDetailDao(int id, String firstName, String lastName, String email, String password, String created, boolean active, String profileImg, String phoneNum, int roleId, String role, int storeId,String storeName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -42,6 +52,8 @@ public class UserDetailDao {
         this.phoneNum = phoneNum;
         this.roleId = roleId;
         this.role = role;
+        this.storeId = storeId;
+        this.storeName = storeName;
     }
 
     public boolean isActive() {
@@ -134,6 +146,23 @@ public class UserDetailDao {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    public Integer getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Integer storeId) {
+        this.storeId = storeId;
+    }
+
+    @Nullable
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(@Nullable String storeName) {
+        this.storeName = storeName;
     }
 }
 

@@ -1,10 +1,12 @@
 package com.dylansalim.qrmenuapp.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.dylansalim.qrmenuapp.R;
+import com.dylansalim.qrmenuapp.ui.merchant.MerchantActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -40,7 +42,9 @@ public class MainActivity extends FragmentActivity implements MainViewInterface 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Go to store registration
+                Intent intent = new Intent(MainActivity.this, MerchantActivity.class);
+                intent.putExtra("isStoreAdmin",true);
+                startActivity(intent);
             }
         });
 

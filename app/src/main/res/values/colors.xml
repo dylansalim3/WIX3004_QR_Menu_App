@@ -7,6 +7,9 @@
 
     <color name="colorTextPrimary">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorDarkSemiTransparent">#C6000000</color>
+
+    <color name="colorBackgroundFloating">#FFFFFF</color>
 
     <!-- colors for button style -->
 

@@ -17,6 +17,7 @@ import retrofit2.http.POST;
 
 public interface LoginRegistrationNetworkInterface {
 
+
     @FormUrlEncoded
     @POST("/users/login")
     Observable<TokenDao> submitLoginRequest(@Field(encoded = false, value = "email") String email, @Field("password") String password);

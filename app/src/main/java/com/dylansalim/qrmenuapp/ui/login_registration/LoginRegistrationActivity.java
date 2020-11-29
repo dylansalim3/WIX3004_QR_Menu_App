@@ -4,25 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.RoleDao;
 import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
-import com.dylansalim.qrmenuapp.ui.qr_scan.QRScanActivity;
 import com.dylansalim.qrmenuapp.ui.login_registration.login.LoginFragment;
 import com.dylansalim.qrmenuapp.ui.login_registration.registration.RegistrationFragment;
+import com.dylansalim.qrmenuapp.ui.qr_scan.QRScanActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 public class LoginRegistrationActivity extends AppCompatActivity
         implements LoginFragment.OnChangeFragmentListener,
@@ -30,8 +28,6 @@ public class LoginRegistrationActivity extends AppCompatActivity
         LoginFragment.OnSubmitLoginFormListener,
         RegistrationFragment.OnSubmitRegistrationFormListener,
         LoginRegistrationViewInterface {
-
-    ProgressBar mProgressBar;
 
     LoginRegistrationPresenter loginRegistrationPresenter;
 
@@ -42,10 +38,12 @@ public class LoginRegistrationActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_registration);
-        Log.d("oncreate", "init");
 
-        mProgressBar = (ProgressBar) findViewById(R.id.pb_login_loading);
+        setupFrameLayout(savedInstanceState);
+        setupMVP();
+    }
 
+    private void setupFrameLayout(Bundle savedInstanceState) {
         // If fragment container is available, we need to add fragment to it.
         if (findViewById(R.id.login_registration_fragment_container) != null) {
 
@@ -67,7 +65,6 @@ public class LoginRegistrationActivity extends AppCompatActivity
                     .add(R.id.login_registration_fragment_container, loginFragment)
                     .commit();
         }
-        setupMVP();
     }
 
     private void setupMVP() {

@@ -126,7 +126,7 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
 
             @Override
             public void onError(Throwable e) {
-                srvi.displayErrorMessage("Error occurred");
+                srvi.displayErrorMessage(e.toString());
                 srvi.hideProgressBar();
             }
 
