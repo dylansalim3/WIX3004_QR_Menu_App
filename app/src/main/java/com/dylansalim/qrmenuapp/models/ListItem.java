@@ -21,12 +21,13 @@ public class ListItem extends Header  {
     }
 
     public ListItem(String header, int id) {
-        super(header, id);
+        this.name = header;
+        this.categoryId = id;
         isHeader = true;
     }
 
     public ListItem(int id){
-        this.id = id;
+        this.categoryId = id;
         isAddNewBtn=true;
     }
 
@@ -86,5 +87,18 @@ public class ListItem extends Header  {
 
     public void setAddNewBtn(boolean addNewBtn) {
         isAddNewBtn = addNewBtn;
+    }
+
+    @Override
+    public String toString() {
+        return "ListItem{" +
+                "name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", pricing=" + pricing +
+                ", categoryId=" + categoryId +
+                ", isHeader=" + isHeader +
+                ", isAddNewBtn=" + isAddNewBtn +
+                ", id=" + id +
+                '}';
     }
 }

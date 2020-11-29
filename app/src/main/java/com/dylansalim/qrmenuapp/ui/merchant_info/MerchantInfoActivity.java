@@ -3,7 +3,6 @@ package com.dylansalim.qrmenuapp.ui.merchant_info;
 import android.os.Bundle;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.ui.merchant.item.ItemFragment;
 import com.dylansalim.qrmenuapp.ui.merchant_info.about.AboutMerchantFragment;
 import com.dylansalim.qrmenuapp.ui.merchant_info.review.MerchantReviewFragment;
 
@@ -21,20 +20,20 @@ public class MerchantInfoActivity extends AppCompatActivity {
     }
 
     private void setupFrameLayout(Bundle savedInstanceState) {
-        if (findViewById(R.id.merchant_info_fragment_container) != null) {
-
-            if (savedInstanceState != null) {
-                return;
-            }
-
-            ItemFragment itemFragment = new ItemFragment();
-
-            itemFragment.setArguments(getIntent().getExtras());
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.merchant_info_fragment_container, itemFragment)
-                    .commit();
-        }
+//        if (findViewById(R.id.merchant_info_fragment_container) != null) {
+//
+//            if (savedInstanceState != null) {
+//                return;
+//            }
+//
+//            ItemFragment itemFragment = new ItemFragment();
+//
+//            itemFragment.setArguments(getIntent().getExtras());
+//
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.merchant_info_fragment_container, itemFragment)
+//                    .commit();
+//        }
     }
 
     public void onChangeFragment(int destFragmentIndex) {

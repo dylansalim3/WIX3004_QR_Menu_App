@@ -16,6 +16,7 @@ import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.ListItem;
 import com.dylansalim.qrmenuapp.ui.component.SingleEditTextDialog;
 import com.dylansalim.qrmenuapp.ui.merchant_info.MerchantInfoActivity;
+import com.dylansalim.qrmenuapp.ui.new_item_form.NewItemFormActivity;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
@@ -31,7 +32,9 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MerchantActivity extends AppCompatActivity implements MerchantViewInterface, SingleEditTextDialog.EditTextDialogListener {
+public class MerchantActivity extends AppCompatActivity
+        implements MerchantViewInterface, SingleEditTextDialog.EditTextDialogListener,
+        EditItemAdapter.OnCategoryDeleteListener, EditItemAdapter.OnItemListener, EditItemAdapter.OnAddNewBtnListener {
     private Toolbar toolbar;
     private MerchantPresenter merchantPresenter;
     private TextView mToolbarExpandedTitle;
@@ -61,7 +64,15 @@ public class MerchantActivity extends AppCompatActivity implements MerchantViewI
         LinearLayout mExpandedTitle = findViewById(R.id.merchant_title_expanded);
         setupMVP();
 
-        merchantPresenter.getAllItems(this);
+        Bundle bundle = getIntent().getExtras();
+
+        if (bundle != null && bundle.getBoolean("isStoreAdmin")) {
+            merchantPresenter.getAllItems(this, null);
+        } else {
+            Integer storeId = bundle.getInt("storeId");
+            merchantPresenter.getAllItems(this, storeId);
+        }
+
 //        setupFrameLayout(savedInstanceState);
         mCollapsingToolbar.setExpandedTitleColor(ContextCompat.getColor(this, R.color.zxing_transparent));
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -161,7 +172,7 @@ public class MerchantActivity extends AppCompatActivity implements MerchantViewI
     @Override
     public void setupRecyclerView(List<ListItem> listItems) {
         linearLayoutManager = new LinearLayoutManager(this);
-        EditItemAdapter editItemAdapter = new EditItemAdapter(listItems);
+        EditItemAdapter editItemAdapter = new EditItemAdapter(listItems, this, this, this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(editItemAdapter);
@@ -250,4 +261,36 @@ public class MerchantActivity extends AppCompatActivity implements MerchantViewI
     public void applyTexts(String text) {
         merchantPresenter.onAddNewCategory(text);
     }
+
+    @Override
+    public void onDeleteCategory(int categoryId) {
+        displayError("delete " + categoryId);
+    }
+
+    @Override
+    public void onDeleteItem(int itemId) {
+        displayError("delete item " + itemId);
+
+    }
+
+    @Override
+    public void onEditItem(int itemId) {
+        navigateToNewItemFormActivity(getResources().getString(R.string.edit_item), itemId);
+    }
+
+    @Override
+    public void onAddItem(int categoryId) {
+        navigateToNewItemFormActivity(getResources().getString(R.string.add_item), categoryId);
+    }
+
+    private void navigateToNewItemFormActivity(String type, int id) {
+        Intent intent = new Intent(this, NewItemFormActivity.class);
+        int resourceId = type.equals(getResources().getString(R.string.add_item)) ? R.string.category_id : R.string.item_id;
+        Bundle bundle = new Bundle();
+        bundle.putString(getResources().getString(R.string.action_type), type);
+        bundle.putInt(getResources().getString(resourceId), id);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
 }

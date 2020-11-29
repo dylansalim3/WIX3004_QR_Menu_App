@@ -9,6 +9,7 @@ import com.dylansalim.qrmenuapp.models.ListItem;
 import com.dylansalim.qrmenuapp.models.dao.AllItemDao;
 import com.dylansalim.qrmenuapp.models.dao.ItemCategoryDao;
 import com.dylansalim.qrmenuapp.models.dao.Result;
+import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
 import com.dylansalim.qrmenuapp.network.MerchantItemNetworkInterface;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
@@ -21,13 +22,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class MerchantPresenter implements MerchantPresenterInterface {
     MerchantViewInterface mvi;
-    private boolean editMode = false;
+    public static boolean editMode = false;
 
     public MerchantPresenter(MerchantViewInterface mvi) {
         this.mvi = mvi;
@@ -42,18 +44,26 @@ public class MerchantPresenter implements MerchantPresenterInterface {
     private static final String TAG = "mvi";
 
     @Override
-    public void getAllItems(Context context) {
+    public void getAllItems(Context context, @Nullable Integer storeId) {
         mvi.showProgressBar();
-        getUserDetails(context);
-        setupStoreName();
-        getMerchantItemNetworkInterface().getAllItems(storeId)
+        if (storeId == null) {
+            getUserDetails(context);
+            setupStoreName(null);
+        } else {
+            this.storeId = storeId;
+            getMerchantItemNetworkInterface().getStoreDetail(this.storeId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(getStoreDetailObserver());
+        }
+        getMerchantItemNetworkInterface().getAllItems(this.storeId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(getAllItemObserver());
     }
 
-    private void setupStoreName() {
-        String storeName = userDetailDao.getStoreName();
+    private void setupStoreName(@Nullable String initialName) {
+        String storeName = initialName != null ? initialName : userDetailDao.getStoreName();
         if (storeName != null) {
             mvi.setupToolbarTitle(storeName);
         }
@@ -119,23 +129,22 @@ public class MerchantPresenter implements MerchantPresenterInterface {
     private void addNewItemButton() {
         List<ListItem> listItemsWithAddBtn = new ArrayList<>(listItems);
         if (listItems.size() > 1) {
+            int addedQuantity = 0;
             for (int i = 1; i < listItems.size(); i++) {
                 if (listItems.get(i).isHeader()) {
-                    listItemsWithAddBtn.add(i, new ListItem(listItems.get(i - 1).getCategoryId()));
+                    listItemsWithAddBtn.add(i + addedQuantity, new ListItem(listItems.get(i - 1).getCategoryId()));
+                    addedQuantity++;
                 }
             }
         }
-//        if (listItems.size() > 0) {
-//            int categoryId;
-//            ListItem lastIndexItem = listItems.get(listItems.size() - 1);
-//            if (lastIndexItem.isHeader()) {
-//                categoryId = listItems.get(listItems.size() - 1).getId();
-//            } else {
-//                categoryId = listItems.get(listItems.size() - 1).getCategoryId();
-//            }
-//
-//            listItemsWithAddBtn.add(listItems.size() + 1, new ListItem(categoryId));
-//        }
+        if (listItemsWithAddBtn.size() > 0) {
+            int categoryId;
+            ListItem lastIndexItem = listItemsWithAddBtn.get(listItemsWithAddBtn.size() - 1);
+            categoryId = listItemsWithAddBtn.get(listItemsWithAddBtn.size() - 1).getCategoryId();
+
+
+            listItemsWithAddBtn.add(listItemsWithAddBtn.size(), new ListItem(categoryId));
+        }
         mvi.setupRecyclerView(listItemsWithAddBtn);
     }
 
@@ -173,6 +182,31 @@ public class MerchantPresenter implements MerchantPresenterInterface {
         return NetworkClient.getNetworkClient().create(MerchantItemNetworkInterface.class);
     }
 
+    public DisposableObserver<Result<StoreDao>> getStoreDetailObserver() {
+        return new DisposableObserver<Result<StoreDao>>() {
+            @Override
+            public void onNext(@NonNull Result<StoreDao> storeDaoResult) {
+                Log.d(TAG, "OnNext " + storeDaoResult);
+                if(storeDaoResult.getData()!=null){
+                    String storeName = storeDaoResult.getData().getName();
+                    setupStoreName(storeName);
+                }
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d(TAG, "Error" + e);
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "Completed");
+                mvi.hideProgressBar();
+            }
+        };
+    }
+
     public DisposableObserver<Result<List<AllItemDao>>> getAllItemObserver() {
         return new DisposableObserver<Result<List<AllItemDao>>>() {
             @Override
@@ -200,8 +234,6 @@ public class MerchantPresenter implements MerchantPresenterInterface {
             }
         };
     }
-
-//    Result<ItemCategoryDao>
 
     public DisposableObserver<Result<ItemCategoryDao>> addNewCategoryObserver() {
         return new DisposableObserver<Result<ItemCategoryDao>>() {

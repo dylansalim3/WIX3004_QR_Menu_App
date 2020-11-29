@@ -21,11 +21,9 @@
     <TextView
         android:id="@+id/tv_store_registration"
         android:layout_width="291dp"
-        android:layout_height="44dp"
         android:text="@string/store_registration"
-        android:textColor="@android:color/background_dark"
-        android:textSize="30sp"
-        app:fontFamily="@font/proxima_nova_black_res"
+        android:layout_height="44dp"
+        style="@style/TitleTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"

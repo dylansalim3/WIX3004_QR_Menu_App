@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="token">TOKEN</string>
+    <string name="action_type">ACTION TYPE</string>
+    <string name="category_id">CATEGORY ID</string>
+    <string name="item_id">ITEM ID</string>
+
+<!--    Constant-->
+    <string name="add_item">ADD ITEM</string>
 </resources>

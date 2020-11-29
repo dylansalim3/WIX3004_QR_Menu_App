@@ -10,6 +10,7 @@
     <color name="colorDarkSemiTransparent">#C6000000</color>
 
     <color name="colorBackgroundFloating">#FFFFFF</color>
+    <color name="colorRed">#FF0000</color>
 
     <!-- colors for button style -->
 

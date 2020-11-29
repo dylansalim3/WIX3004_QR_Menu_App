@@ -46,6 +46,8 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="use_current_location">Use Current Location</string>
 
+
+
     <string name="title_activity_merchant">MainActivity</string>
 
     <!--    Bottom navbar string-->
@@ -59,4 +61,21 @@
     <string name="title">Lorem</string>
     <string name="desc">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Ciceros De Finibus Bonorum et Malorum for use in a type specimen book.</string>
     <string name="pricing">RM 2.50</string>
+
+<!--    Merchant Activity-->
+    <string name="btn_delete">Button Delete</string>
+    <string name="btn_more">Button More</string>
+
+
+<!--    Add New Item-->
+    <string name="add_new_item">Add New Item</string>
+    <string name="edit_item">Edit Item</string>
+    <string name="item_name">Item Name</string>
+    <string name="item_desc">Description</string>
+    <string name="item_price">Price</string>
+    <string name="isPromo">Is the item having promotion?</string>
+    <string name="item_promo_price">Promo Price</string>
+    <string name="recommended">Recommended</string>
+    <string name="add">Add</string>
+    <string name="update">Update</string>
 </resources>
