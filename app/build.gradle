@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -22,6 +23,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    buildFeatures {
+        dataBinding true
     }
 
     compileOptions {
@@ -93,4 +98,7 @@ dependencies {
 
     // ZXing
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+
+    // FCM
+    implementation 'com.google.firebase:firebase-messaging:21.0.0'
 }

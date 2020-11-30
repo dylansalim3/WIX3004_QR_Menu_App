@@ -78,4 +78,13 @@
     <string name="recommended">Recommended</string>
     <string name="add">Add</string>
     <string name="update">Update</string>
+
+    <!-- Report -->
+    <string name="report_store_name">Store Name</string>
+    <string name="report_email">Your email</string>
+    <string name="report_desc">Description</string>
+    <string name="send_report">Send Report</string>
+    <string name="report_title">Title</string>
+    <string name="report_desc_hint">Describe the issues</string>
+    <string name="report_title_hint">Title</string>
 </resources>

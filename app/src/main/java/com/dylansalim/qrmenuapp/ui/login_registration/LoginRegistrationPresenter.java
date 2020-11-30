@@ -12,6 +12,7 @@ import com.dylansalim.qrmenuapp.network.LoginRegistrationNetworkInterface;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.utils.JWTUtils;
 import com.google.gson.Gson;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,6 +89,7 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
             @Override
             public void onNext(@NonNull TokenDao tokenDao) {
                 Log.d(TAG, "OnNext " + tokenDao.getToken());
+                setupFCM();
                 lrvi.navigateToNextActivity(tokenDao);
             }
 
@@ -111,6 +113,7 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
             @Override
             public void onNext(@NonNull TokenDao tokenDao) {
                 Log.d(TAG, "getRegistrationFormObserver" + tokenDao);
+                setupFCM();
                 lrvi.navigateToNextActivity(tokenDao);
             }
 
@@ -129,9 +132,8 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
         };
     }
 
-
-
-
-
-
+    private void setupFCM() {
+        Log.i(TAG, "FCM init");
+        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+    }
 }
