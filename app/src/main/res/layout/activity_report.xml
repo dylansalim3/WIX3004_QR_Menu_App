@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="reportViewModel"
+            type="com.dylansalim.qrmenuapp.ui.report.ReportViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="24dp"
+        tools:context=".ui.qr_scan.QRScanActivity">
+
+        <RelativeLayout
+            android:id="@+id/bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:paddingBottom="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/close_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_close_black_36dp"
+                android:tint="#000" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:fontFamily="@font/proxima_nova_black"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:text="@string/send_report"
+                android:textAlignment="center"
+                android:textSize="24sp" />
+
+            <ImageButton
+                android:id="@+id/send_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_send_black_36dp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/store_text"
+            style="@style/report_text"
+            android:text="@string/report_store_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bar" />
+
+        <EditText
+            android:id="@+id/store_input"
+            style="@style/report_input"
+            android:editable="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/store_text" />
+
+        <TextView
+            android:id="@+id/email_text"
+            style="@style/report_text"
+            android:text="@string/report_email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/store_input" />
+
+        <EditText
+            android:id="@+id/email_input"
+            style="@style/report_input"
+            android:inputType="textEmailAddress"
+            android:text="@={reportViewModel.email}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email_text" />
+
+        <TextView
+            android:id="@+id/title_text"
+            style="@style/report_text"
+            android:text="@string/report_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email_input" />
+
+        <EditText
+            android:id="@+id/title_input"
+            style="@style/report_input"
+            android:hint="@string/report_title_hint"
+            android:inputType="text"
+            android:maxLength="40"
+            android:text="@={reportViewModel.title}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_text" />
+
+        <TextView
+            android:id="@+id/desc_text"
+            style="@style/report_text"
+            android:text="@string/report_desc"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_input" />
+
+        <EditText
+            android:id="@+id/desc_input"
+            style="@style/report_input"
+            android:layout_height="0dp"
+            android:gravity="start|top"
+            android:hint="@string/report_desc_hint"
+            android:inputType="textMultiLine"
+            android:maxLength="700"
+            android:maxLines="20"
+            android:text="@={reportViewModel.desc}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/desc_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "805686350779",
+    "firebase_url": "https://qrmenuapp-b28d7.firebaseio.com",
+    "project_id": "qrmenuapp-b28d7",
+    "storage_bucket": "qrmenuapp-b28d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:805686350779:android:d488e52dfd63b1d1ba6a9e",
+        "android_client_info": {
+          "package_name": "com.dylansalim.qrmenuapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "805686350779-0g76082n3c5289992likck0n8o1h01qe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz0uqzPxkd6J-YhxwC4Ru8wh1AdPaWtGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "805686350779-0g76082n3c5289992likck0n8o1h01qe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
