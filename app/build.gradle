@@ -34,9 +34,7 @@ android {
     sourceSets {
         main {
             res {
-                srcDirs = ['src/main/res/layout/login_registration',
-                           'src/main/res/layout/store_registration',
-                           'src/main/res/layout',
+                srcDirs = [
                            'src/main/res'
                 ]
             }
