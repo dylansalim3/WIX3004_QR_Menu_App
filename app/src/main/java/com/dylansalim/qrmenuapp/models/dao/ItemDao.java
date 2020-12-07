@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+import androidx.annotation.Nullable;
+
 public class ItemDao {
     private int id;
     @SerializedName("item_category_id")
@@ -20,10 +22,11 @@ public class ItemDao {
 
     private Date created;
 
+    @Nullable
     @SerializedName("item_img")
     private String itemImg;
 
-    private boolean recommmended;
+    private boolean recommended;
 
     private boolean hidden;
 
@@ -92,11 +95,11 @@ public class ItemDao {
     }
 
     public boolean isRecommmended() {
-        return recommmended;
+        return recommended;
     }
 
-    public void setRecommmended(boolean recommmended) {
-        this.recommmended = recommmended;
+    public void setRecommended(boolean recommended) {
+        this.recommended = recommended;
     }
 
     public boolean isHidden() {
@@ -105,5 +108,21 @@ public class ItemDao {
 
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemDao{" +
+                "id=" + id +
+                ", itemCategoryId=" + itemCategoryId +
+                ", name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", price=" + price +
+                ", promoPrice=" + promoPrice +
+                ", created=" + created +
+                ", itemImg='" + itemImg + '\'' +
+                ", recommended=" + recommended +
+                ", hidden=" + hidden +
+                '}';
     }
 }

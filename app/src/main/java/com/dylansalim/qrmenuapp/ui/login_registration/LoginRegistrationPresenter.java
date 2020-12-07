@@ -2,21 +2,17 @@ package com.dylansalim.qrmenuapp.ui.login_registration;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.dylansalim.qrmenuapp.models.dao.RoleDao;
 import com.dylansalim.qrmenuapp.models.dao.TokenDao;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
 import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
 import com.dylansalim.qrmenuapp.network.LoginRegistrationNetworkInterface;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
-import com.dylansalim.qrmenuapp.utils.JWTUtils;
-import com.google.gson.Gson;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import androidx.annotation.NonNull;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -26,6 +22,7 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
     LoginRegistrationViewInterface lrvi;
     private final String TAG = "LRPresenter";
     private List<RoleDao> roleDaos;
+    private List<DisposableObserver<?>> disposableObservers = new ArrayList<>();
 
     public LoginRegistrationPresenter(LoginRegistrationViewInterface lrvi) {
         this.lrvi = lrvi;
@@ -34,28 +31,35 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
     @Override
     public void submitLoginForm(String email, String password) {
         lrvi.showProgressBar();
-        getLoginRegistrationNetworkClient().submitLoginRequest(email, password)
+        disposableObservers.add(getLoginRegistrationNetworkClient().submitLoginRequest(email, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(getLoginFormObserver());
+                .subscribeWith(getLoginFormObserver()));
     }
 
     @Override
     public void getRoles() {
         lrvi.showProgressBar();
-        getLoginRegistrationNetworkClient().getRoles()
+        disposableObservers.add(getLoginRegistrationNetworkClient().getRoles()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(getRoleObserver());
+                .subscribeWith(getRoleObserver()));
     }
 
     @Override
     public void submitRegistrationForm(RegistrationDto registrationDto) {
         lrvi.showProgressBar();
-        getLoginRegistrationNetworkClient().submitRegistrationRequest(registrationDto)
+        disposableObservers.add(getLoginRegistrationNetworkClient().submitRegistrationRequest(registrationDto)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(getRegistrationFormObserver());
+                .subscribeWith(getRegistrationFormObserver()));
+    }
+
+    @Override
+    public void disposeObserver() {
+        for(DisposableObserver<?> disposableObserver : disposableObservers){
+            disposableObserver.dispose();
+        }
     }
 
     private LoginRegistrationNetworkInterface getLoginRegistrationNetworkClient() {

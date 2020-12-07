@@ -149,4 +149,10 @@ public class LoginRegistrationActivity extends AppCompatActivity
         startActivity(intent);
         finish();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        loginRegistrationPresenter.disposeObserver();
+    }
 }

@@ -1,5 +1,7 @@
 package com.dylansalim.qrmenuapp.network;
 
+import com.dylansalim.qrmenuapp.BuildConfig;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -17,7 +19,7 @@ public class NetworkClient {
             OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://10.0.2.2:5000")
+                    .baseUrl(BuildConfig.SERVER_API_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .client(okHttpClient)

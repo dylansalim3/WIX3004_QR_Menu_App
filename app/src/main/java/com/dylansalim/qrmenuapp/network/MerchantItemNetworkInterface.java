@@ -28,4 +28,14 @@ public interface MerchantItemNetworkInterface {
     @FormUrlEncoded
     @POST("/stores/get-store-by-store-id")
     Observable<Result<StoreDao>> getStoreDetail(@Field("storeId") int storeId);
+
+    @FormUrlEncoded
+    @POST("/items/delete-item")
+    Observable<Result<String>> deleteItem(@Field("item_id") int itemId);
+
+    @FormUrlEncoded
+    @POST("/item-categories/delete-item-category")
+    Observable<Result<String>> deleteItemCategory(@Field("item_category_id") int itemCategoryId);
+
+
 }

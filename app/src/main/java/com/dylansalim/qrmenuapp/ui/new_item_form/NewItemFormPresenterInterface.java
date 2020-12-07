@@ -1,5 +1,8 @@
 package com.dylansalim.qrmenuapp.ui.new_item_form;
 
+import android.content.ContentResolver;
+import android.net.Uri;
+
 public interface NewItemFormPresenterInterface {
     void retrieveItemDetail(int itemId);
 
@@ -7,5 +10,11 @@ public interface NewItemFormPresenterInterface {
 
     void setRecommended(boolean recommended);
 
-    void submitForm();
+    void setIsPromo(boolean isPromo);
+
+    void onItemImageResult(Uri uri, ContentResolver contentResolver);
+
+    void onSubmitForm();
+
+    void disposeObserver();
 }

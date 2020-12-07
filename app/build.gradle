@@ -4,6 +4,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 29
     buildToolsVersion "30.0.2"
+    dataBinding.enabled = true
 
     defaultConfig {
         applicationId "com.dylansalim.qrmenuapp"
@@ -11,6 +12,8 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "String", "SERVER_API_URL", DEBUG_API_URL
 
         // Required when setting minSdkVersion to 20 or lower
         multiDexEnabled true
@@ -40,7 +43,7 @@ android {
         main {
             res {
                 srcDirs = [
-                           'src/main/res'
+                        'src/main/res'
                 ]
             }
         }

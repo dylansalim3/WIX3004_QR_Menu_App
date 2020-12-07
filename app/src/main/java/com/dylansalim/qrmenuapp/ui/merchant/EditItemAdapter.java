@@ -13,8 +13,10 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.dylansalim.qrmenuapp.BuildConfig;
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.ListItem;
+import com.dylansalim.qrmenuapp.models.EditListItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -32,10 +34,10 @@ public class EditItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private OnAddNewBtnListener onAddNewBtnListener;
     private static String TAG = "eia";
 
-    private List<ListItem> listItems;
+    private List<EditListItem> editListItems;
 
-    public EditItemAdapter(List<ListItem> listItems, OnCategoryDeleteListener onCategoryDeleteListener, OnItemListener onItemListener, OnAddNewBtnListener onAddNewBtnListener) {
-        this.listItems = listItems;
+    public EditItemAdapter(List<EditListItem> editListItems, OnCategoryDeleteListener onCategoryDeleteListener, OnItemListener onItemListener, OnAddNewBtnListener onAddNewBtnListener) {
+        this.editListItems = editListItems;
         this.onCategoryDeleteListener = onCategoryDeleteListener;
         this.onItemListener = onItemListener;
         this.onAddNewBtnListener = onAddNewBtnListener;
@@ -74,23 +76,27 @@ public class EditItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             VHaddNewBtn.categoryId = getItem(position).getCategoryId();
         }
         if (holder instanceof VHItem) {
-            ListItem currentItem = getItem(position);
+            EditListItem currentItem = getItem(position);
             VHItem VHitem = (VHItem) holder;
             VHitem.mTitle.setText(currentItem.getName());
             VHitem.mDesc.setText(currentItem.getDesc());
             VHitem.mPricing.setText(Double.toString(currentItem.getPricing()));
             VHitem.itemId = getItem(position).getId();
 
+            Picasso.get().load(BuildConfig.SERVER_API_URL + "/" + getItem(position).getImgUrl())
+                    .placeholder(R.drawable.common_google_signin_btn_icon_dark_focused)
+                    .into(VHitem.mImageView);
+
         }
     }
 
-    private ListItem getItem(int position) {
-        return listItems.get(position);
+    private EditListItem getItem(int position) {
+        return editListItems.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return listItems.size();
+        return editListItems.size();
     }
 
     @Override

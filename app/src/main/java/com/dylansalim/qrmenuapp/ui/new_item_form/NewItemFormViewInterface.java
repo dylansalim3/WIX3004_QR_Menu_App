@@ -17,9 +17,15 @@ public interface NewItemFormViewInterface {
 
     void setPromoPrice(String promoPrice);
 
+    void setRecommended(boolean recommended);
+
+    void setItemImage(String itemImageUrl);
+
     void showProgressBar();
 
     void hideProgressBar();
+
+    void onSuccessSubmission(String text);
 
     void displayError(String s);
 }

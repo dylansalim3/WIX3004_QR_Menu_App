@@ -18,4 +18,8 @@ public class ValidationUtils {
     public static boolean isValidPhoneNumber(String phoneNum) {
         return phoneNum.length() > 10 && phoneNum.charAt(0) == '+';
     }
+
+    public static boolean isValidPrice(double price) {
+        return price > 0;
+    }
 }

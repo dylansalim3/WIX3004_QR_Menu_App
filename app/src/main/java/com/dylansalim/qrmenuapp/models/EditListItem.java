@@ -1,32 +1,34 @@
 package com.dylansalim.qrmenuapp.models;
 
-public class ListItem extends Header  {
+public class EditListItem extends Header  {
     private String name;
     private String desc;
     private double pricing;
     private int categoryId;
     private boolean isHeader;
     private boolean isAddNewBtn = false;
+    private String imgUrl;
 
-    public ListItem() {
+    public EditListItem() {
     }
 
-    public ListItem(String name, String desc, int id, double pricing,int categoryId) {
+    public EditListItem(String name, String desc, int id, double pricing, int categoryId,String imgUrl) {
         this.name = name;
         this.desc = desc;
         this.id = id;
         this.pricing = pricing;
         this.categoryId = categoryId;
+        this.imgUrl = imgUrl;
         isHeader = false;
     }
 
-    public ListItem(String header, int id) {
+    public EditListItem(String header, int id) {
         this.name = header;
         this.categoryId = id;
         isHeader = true;
     }
 
-    public ListItem(int id){
+    public EditListItem(int id){
         this.categoryId = id;
         isAddNewBtn=true;
     }
@@ -89,15 +91,24 @@ public class ListItem extends Header  {
         isAddNewBtn = addNewBtn;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     @Override
     public String toString() {
-        return "ListItem{" +
+        return "EditListItem{" +
                 "name='" + name + '\'' +
                 ", desc='" + desc + '\'' +
                 ", pricing=" + pricing +
                 ", categoryId=" + categoryId +
                 ", isHeader=" + isHeader +
                 ", isAddNewBtn=" + isAddNewBtn +
+                ", imgUrl='" + imgUrl + '\'' +
                 ", id=" + id +
                 '}';
     }

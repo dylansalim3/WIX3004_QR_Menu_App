@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.ListItem;
+import com.dylansalim.qrmenuapp.models.EditListItem;
 import com.dylansalim.qrmenuapp.models.dao.AllItemDao;
 import com.dylansalim.qrmenuapp.models.dao.ItemCategoryDao;
 import com.dylansalim.qrmenuapp.models.dao.Result;
@@ -37,10 +37,11 @@ public class MerchantPresenter implements MerchantPresenterInterface {
 
     private UserDetailDao userDetailDao;
     private int storeId;
-    private List<ListItem> listItems;
+    private List<EditListItem> editListItems;
     private List<String> titles;
     private int currentTabPosition = 0;
     private HashMap<Integer, Integer> tabIndexHashMap;
+    private List<DisposableObserver<?>> disposableObservers = new ArrayList<>();
     private static final String TAG = "mvi";
 
     @Override
@@ -51,15 +52,25 @@ public class MerchantPresenter implements MerchantPresenterInterface {
             setupStoreName(null);
         } else {
             this.storeId = storeId;
-            getMerchantItemNetworkInterface().getStoreDetail(this.storeId)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(getStoreDetailObserver());
+            retrieveStoreDetail();
         }
-        getMerchantItemNetworkInterface().getAllItems(this.storeId)
+        retrieveItemDetail();
+    }
+
+    @Override
+    public void retrieveItemDetail() {
+        disposableObservers.add(getMerchantItemNetworkInterface().getAllItems(this.storeId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(getAllItemObserver());
+                .subscribeWith(getAllItemObserver()));
+    }
+
+    @Override
+    public void retrieveStoreDetail() {
+        disposableObservers.add(getMerchantItemNetworkInterface().getStoreDetail(this.storeId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(getStoreDetailObserver()));
     }
 
     private void setupStoreName(@Nullable String initialName) {
@@ -104,14 +115,22 @@ public class MerchantPresenter implements MerchantPresenterInterface {
     public void onEditActionButtonClicked() {
         editMode = !editMode;
         if (editMode) {
-            mvi.updateEditActionIcon(R.drawable.ic_baseline_done_24);
-            addNewEditableTab();
-            addNewItemButton();
+            restoreRecyclerViewWithAddBtn();
         } else {
-            mvi.updateEditActionIcon(R.drawable.ic_baseline_edit_24);
-            mvi.setupTabLayout(titles);
-            mvi.setupRecyclerView(listItems);
+            restoreRecyclerView();
         }
+    }
+
+    private void restoreRecyclerViewWithAddBtn(){
+        mvi.updateEditActionIcon(R.drawable.ic_baseline_done_24);
+        addNewEditableTab();
+        setupRecyclerViewWithAddNewButton();
+    }
+
+    private void restoreRecyclerView(){
+        mvi.updateEditActionIcon(R.drawable.ic_baseline_edit_24);
+        mvi.setupTabLayout(titles);
+        mvi.setupRecyclerView(editListItems);
     }
 
     @Override
@@ -119,33 +138,72 @@ public class MerchantPresenter implements MerchantPresenterInterface {
         if (userDetailDao != null && categoryName != null && userDetailDao.getStoreId() != null && categoryName.length() > 0) {
             mvi.showProgressBar();
             ItemCategoryDao itemCategoryDao = new ItemCategoryDao(categoryName, userDetailDao.getStoreId());
-            getMerchantItemNetworkInterface().createItemCategory(itemCategoryDao)
+            disposableObservers.add(getMerchantItemNetworkInterface().createItemCategory(itemCategoryDao)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(addNewCategoryObserver());
+                    .subscribeWith(addNewCategoryObserver()));
         }
     }
 
-    private void addNewItemButton() {
-        List<ListItem> listItemsWithAddBtn = new ArrayList<>(listItems);
-        if (listItems.size() > 1) {
+    @Override
+    public void onDeleteItem(int itemId) {
+        disposableObservers.add(getMerchantItemNetworkInterface().deleteItem(itemId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(getDeleteItemObserver()));
+    }
+
+    @Override
+    public void onDeleteItemCategory(int itemCategoryId) {
+        disposableObservers.add(getMerchantItemNetworkInterface().deleteItemCategory(itemCategoryId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(getDeleteItemObserver()));
+    }
+
+    public DisposableObserver<Result<String>> getDeleteItemObserver() {
+        return new DisposableObserver<Result<String>>() {
+            @Override
+            public void onNext(@NonNull Result<String> storeDaoResult) {
+                mvi.displayError(storeDaoResult.getMsg());
+                retrieveItemDetail();
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                e.printStackTrace();
+                mvi.displayError(e.toString());
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "Completed");
+                mvi.hideProgressBar();
+            }
+        };
+    }
+
+
+    private void setupRecyclerViewWithAddNewButton() {
+        List<EditListItem> editListItemsWithAddBtn = new ArrayList<>(editListItems);
+        if (editListItems.size() > 1) {
             int addedQuantity = 0;
-            for (int i = 1; i < listItems.size(); i++) {
-                if (listItems.get(i).isHeader()) {
-                    listItemsWithAddBtn.add(i + addedQuantity, new ListItem(listItems.get(i - 1).getCategoryId()));
+            for (int i = 1; i < editListItems.size(); i++) {
+                if (editListItems.get(i).isHeader()) {
+                    editListItemsWithAddBtn.add(i + addedQuantity, new EditListItem(editListItems.get(i - 1).getCategoryId()));
                     addedQuantity++;
                 }
             }
         }
-        if (listItemsWithAddBtn.size() > 0) {
+        if (editListItemsWithAddBtn.size() > 0) {
             int categoryId;
-            ListItem lastIndexItem = listItemsWithAddBtn.get(listItemsWithAddBtn.size() - 1);
-            categoryId = listItemsWithAddBtn.get(listItemsWithAddBtn.size() - 1).getCategoryId();
+            EditListItem lastIndexItem = editListItemsWithAddBtn.get(editListItemsWithAddBtn.size() - 1);
+            categoryId = editListItemsWithAddBtn.get(editListItemsWithAddBtn.size() - 1).getCategoryId();
 
 
-            listItemsWithAddBtn.add(listItemsWithAddBtn.size(), new ListItem(categoryId));
+            editListItemsWithAddBtn.add(editListItemsWithAddBtn.size(), new EditListItem(categoryId));
         }
-        mvi.setupRecyclerView(listItemsWithAddBtn);
+        mvi.setupRecyclerView(editListItemsWithAddBtn);
     }
 
     private void addNewEditableTab() {
@@ -187,7 +245,7 @@ public class MerchantPresenter implements MerchantPresenterInterface {
             @Override
             public void onNext(@NonNull Result<StoreDao> storeDaoResult) {
                 Log.d(TAG, "OnNext " + storeDaoResult);
-                if(storeDaoResult.getData()!=null){
+                if (storeDaoResult.getData() != null) {
                     String storeName = storeDaoResult.getData().getName();
                     setupStoreName(storeName);
                 }
@@ -212,12 +270,17 @@ public class MerchantPresenter implements MerchantPresenterInterface {
             @Override
             public void onNext(@NonNull Result<List<AllItemDao>> allItemsDao) {
                 Log.d(TAG, "OnNext " + allItemsDao);
-                if (allItemsDao != null && allItemsDao.getData() != null) {
-                    listItems = mapAllItemsToListItems(allItemsDao.getData());
+                if (allItemsDao.getData() != null) {
+                    editListItems = mapAllItemsToListItems(allItemsDao.getData());
                     titles = getItemsTitle(allItemsDao.getData());
-                    mvi.setupTabLayout(titles);
-                    mvi.setupRecyclerView(listItems);
-                    setTabIndexHashMap(listItems);
+                    setTabIndexHashMap(editListItems);
+                    if(editMode){
+                        restoreRecyclerViewWithAddBtn();
+                    }else{
+//                        mvi.setupTabLayout(titles);
+//                        mvi.setupRecyclerView(editListItems);
+                        restoreRecyclerView();
+                    }
                 }
             }
 
@@ -225,6 +288,7 @@ public class MerchantPresenter implements MerchantPresenterInterface {
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "Error" + e);
                 e.printStackTrace();
+                mvi.displayError(e.toString());
             }
 
             @Override
@@ -240,21 +304,19 @@ public class MerchantPresenter implements MerchantPresenterInterface {
             @Override
             public void onNext(@NonNull Result<ItemCategoryDao> itemCategoryDaoResult) {
                 Log.d(TAG, "OnNext " + itemCategoryDaoResult);
+                retrieveItemDetail();
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "Error" + e);
                 e.printStackTrace();
+                mvi.displayError(e.toString());
             }
 
             @Override
             public void onComplete() {
                 Log.d(TAG, "Completed");
-                getMerchantItemNetworkInterface().getAllItems(storeId)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeWith(getAllItemObserver());
             }
         };
     }
@@ -263,25 +325,31 @@ public class MerchantPresenter implements MerchantPresenterInterface {
         return allItems.stream().map(AllItemDao::getName).collect(Collectors.toList());
     }
 
-    private List<ListItem> mapAllItemsToListItems(List<AllItemDao> allItems) {
-        List<ListItem> listItems = new ArrayList<>();
+    private List<EditListItem> mapAllItemsToListItems(List<AllItemDao> allItems) {
+        List<EditListItem> editListItems = new ArrayList<>();
         allItems.stream().forEach(category -> {
-            listItems.add(new ListItem(category.getName(), category.getId()));
-            List<ListItem> categoryChildItems = category.getItems().stream()
-                    .map(item -> new ListItem(item.getName(), item.getDesc(), item.getId(), item.getPrice(), item.getItemCategoryId())).collect(Collectors.toList());
-            listItems.addAll(categoryChildItems);
+            editListItems.add(new EditListItem(category.getName(), category.getId()));
+            List<EditListItem> categoryChildItems = category.getItems().stream()
+                    .map(item -> new EditListItem(item.getName(), item.getDesc(), item.getId(), item.getPrice(), item.getItemCategoryId(), item.getItemImg())).collect(Collectors.toList());
+            editListItems.addAll(categoryChildItems);
         });
-        return listItems;
+        return editListItems;
     }
 
-    private void setTabIndexHashMap(List<ListItem> listItems) {
+    private void setTabIndexHashMap(List<EditListItem> editListItems) {
         tabIndexHashMap = new HashMap<>();
-        tabIndexHashMap = listItems.stream().filter(ListItem::isHeader).collect(HashMap<Integer, Integer>::new,
+        tabIndexHashMap = editListItems.stream().filter(EditListItem::isHeader).collect(HashMap<Integer, Integer>::new,
                 (map, streamValue) ->
-                        map.put(map.size(), listItems.indexOf(streamValue))
+                        map.put(map.size(), editListItems.indexOf(streamValue))
                 , (map, map2) -> {
                 });
     }
 
+    @Override
+    public void disposeObserver() {
+        for (DisposableObserver<?> disposableObserver : disposableObservers) {
+            disposableObserver.dispose();
+        }
+    }
 
 }

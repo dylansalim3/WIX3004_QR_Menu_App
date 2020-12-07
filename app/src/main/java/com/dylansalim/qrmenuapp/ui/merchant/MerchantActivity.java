@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.ListItem;
+import com.dylansalim.qrmenuapp.models.EditListItem;
 import com.dylansalim.qrmenuapp.ui.component.SingleEditTextDialog;
 import com.dylansalim.qrmenuapp.ui.merchant_info.MerchantInfoActivity;
 import com.dylansalim.qrmenuapp.ui.new_item_form.NewItemFormActivity;
@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -47,6 +48,7 @@ public class MerchantActivity extends AppCompatActivity
     private static final String TAG = "MA";
     private ViewGroup progressView;
     protected boolean isProgressShowing = false;
+    public static int SUBMISSION_FORM_REQUEST_CODE = 102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +75,6 @@ public class MerchantActivity extends AppCompatActivity
             merchantPresenter.getAllItems(this, storeId);
         }
 
-//        setupFrameLayout(savedInstanceState);
         mCollapsingToolbar.setExpandedTitleColor(ContextCompat.getColor(this, R.color.zxing_transparent));
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
@@ -170,9 +171,9 @@ public class MerchantActivity extends AppCompatActivity
     }
 
     @Override
-    public void setupRecyclerView(List<ListItem> listItems) {
+    public void setupRecyclerView(List<EditListItem> editListItems) {
         linearLayoutManager = new LinearLayoutManager(this);
-        EditItemAdapter editItemAdapter = new EditItemAdapter(listItems, this, this, this);
+        EditItemAdapter editItemAdapter = new EditItemAdapter(editListItems, this, this, this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(editItemAdapter);
@@ -264,13 +265,12 @@ public class MerchantActivity extends AppCompatActivity
 
     @Override
     public void onDeleteCategory(int categoryId) {
-        displayError("delete " + categoryId);
+        merchantPresenter.onDeleteItemCategory(categoryId);
     }
 
     @Override
     public void onDeleteItem(int itemId) {
-        displayError("delete item " + itemId);
-
+        merchantPresenter.onDeleteItem(itemId);
     }
 
     @Override
@@ -290,7 +290,22 @@ public class MerchantActivity extends AppCompatActivity
         bundle.putString(getResources().getString(R.string.action_type), type);
         bundle.putInt(getResources().getString(resourceId), id);
         intent.putExtras(bundle);
-        startActivity(intent);
+        startActivityForResult(intent, SUBMISSION_FORM_REQUEST_CODE);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SUBMISSION_FORM_REQUEST_CODE && null != data) {
+            String message = data.getStringExtra("MESSAGE");
+            displayError(message);
+            merchantPresenter.retrieveItemDetail();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        merchantPresenter.disposeObserver();
+    }
 }

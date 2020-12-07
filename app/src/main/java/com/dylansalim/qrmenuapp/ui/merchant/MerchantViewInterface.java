@@ -1,13 +1,13 @@
 package com.dylansalim.qrmenuapp.ui.merchant;
 
-import com.dylansalim.qrmenuapp.models.ListItem;
+import com.dylansalim.qrmenuapp.models.EditListItem;
 
 import java.util.List;
 
 public interface MerchantViewInterface {
     void displayError(String s);
 
-    void setupRecyclerView(List<ListItem> listItems);
+    void setupRecyclerView(List<EditListItem> editListItems);
 
     void setupTabLayout(List<String> title);
 
