@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".ui.store_registration.StoreRegistrationActivity">
 
     <Button
@@ -14,79 +15,81 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         app:icon="@drawable/ic_baseline_arrow_back_ios_24"
-        app:iconTint="@color/colorTextPrimary"
+        app:iconTint="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_store_registration"
-        android:layout_width="291dp"
-        android:text="@string/store_registration"
-        android:layout_height="44dp"
-        style="@style/TitleTheme"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.154" />
+
 
     <LinearLayout
         android:id="@+id/ll_store_registration"
-        android:layout_width="289dp"
-        android:layout_height="438dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/theme_margin_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_store_registration"
+        app:layout_constraintTop_toBottomOf="@+id/btn_store_registration_back"
         app:layout_constraintVertical_bias="0.16">
+
+        <TextView
+            android:id="@+id/introTV1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/montserrat"
+            android:text="Hello Merchant,"
+            android:textColor="@color/colorBeige"
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/introTV2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/montserrat"
+            android:text="Complete the information below and start going paperless."
+            android:textColor="@color/colorBeige"
+            android:textSize="15sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_store_registration_name"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@android:color/transparent"
-            android:maxLines="1"
-            app:boxBackgroundColor="@android:color/transparent">
+            style="@style/merchant_textinput_layout"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/store_name"
-                android:inputType="textShortMessage" />
+                android:inputType="textShortMessage"
+                style="@style/merchant_textinput_layout_editText" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_store_registration_phone_number"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@android:color/transparent"
-            android:maxLines="1"
-            app:boxBackgroundColor="@android:color/transparent">
+            style="@style/merchant_textinput_layout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/phone_number"
-                android:inputType="phone" />
+                android:inputType="phone"
+                style="@style/merchant_textinput_layout_editText"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_store_registration_address"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@android:color/transparent"
-            android:maxLines="1"
-            app:boxBackgroundColor="@android:color/transparent">
+            style="@style/merchant_textinput_layout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/address"
                 android:inputType="textPostalAddress"
-                android:lines="3" />
+                android:lines="3"
+                style="@style/merchant_textinput_layout_editText"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -96,34 +99,29 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_store_registration_postal_code"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:maxLines="1"
-                app:boxBackgroundColor="@android:color/transparent">
+                style="@style/merchant_textinput_layout_city">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/poscode"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    style="@style/merchant_textinput_layout_editText"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_store_registration_city"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:maxLines="1"
-                app:boxBackgroundColor="@android:color/transparent">
+                style="@style/merchant_textinput_layout_city">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/city"
-                    android:inputType="textPostalAddress" />
+                    android:inputType="textPostalAddress"
+                    style="@style/merchant_textinput_layout_editText"
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -131,23 +129,23 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_store_registration_country"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@android:color/transparent"
-            android:maxLines="1"
-            app:boxBackgroundColor="@android:color/transparent">
+            style="@style/merchant_textinput_layout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/country"
-                android:inputType="textPostalAddress" />
+                android:inputType="textPostalAddress"
+                style="@style/merchant_textinput_layout_editText"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switch_store_registration_current_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorBeige"
             android:text="@string/use_current_location" />
 
     </LinearLayout>

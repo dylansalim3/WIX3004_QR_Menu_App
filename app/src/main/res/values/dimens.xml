@@ -13,4 +13,7 @@
     <dimen name="list_header">28sp</dimen>
     <dimen name="btn_add_new_item">16sp</dimen>
 
+    <dimen name="theme_margin_top">25dp</dimen>
+    <dimen name="theme_margin_horizontal">30dp</dimen>
+
 </resources>

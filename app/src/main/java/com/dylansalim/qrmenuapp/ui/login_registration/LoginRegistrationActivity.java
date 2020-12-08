@@ -22,7 +22,7 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-public class LoginRegistrationActivity extends AppCompatActivity
+public class  LoginRegistrationActivity extends AppCompatActivity
         implements LoginFragment.OnChangeFragmentListener,
         RegistrationFragment.OnChangeFragmentListener,
         LoginFragment.OnSubmitLoginFormListener,
