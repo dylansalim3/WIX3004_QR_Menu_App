@@ -33,7 +33,7 @@
         <item name="android:fontFamily">@font/open_sans</item>
         <item name="android:backgroundTint">@color/colorBeigeTransparent</item>
         <item name="android:textColorHint">@color/colorBeigeTransparent</item>
-        <item name="android:textColor">@color/colorBeigeTransparent</item>
+        <item name="android:textColor">@color/colorBeige</item>
     </style>
 
     <style name="theme_text_bold">

@@ -102,7 +102,7 @@
             android:selectAllOnFocus="true"
             android:text="dylansalim3@gmail.com"
             android:textColorHint="@color/colorBeigeTransparent"
-            android:textColor="@color/colorBeigeTransparent" />
+            android:textColor="@color/colorBeige" />
 
         <EditText
             android:id="@+id/et_login_password"
@@ -118,7 +118,7 @@
             android:selectAllOnFocus="true"
             android:text="test123"
             android:textColorHint="@color/colorBeigeTransparent"
-            android:textColor="@color/colorBeigeTransparent"/>
+            android:textColor="@color/colorBeige"/>
 
     </LinearLayout>
 
