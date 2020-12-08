@@ -155,7 +155,7 @@ public class RegistrationFragment extends Fragment implements RegistrationViewIn
             }
         });
 
-        ArrayAdapter<RoleDao> arrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), R.layout.support_simple_spinner_dropdown_item, roles);
+        ArrayAdapter<RoleDao> arrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), R.layout.spinner_item, roles);
         mRoles.setAdapter(arrayAdapter);
 
         mSubmitBtn.setOnClickListener(new View.OnClickListener() {

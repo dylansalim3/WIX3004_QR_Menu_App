@@ -12,6 +12,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -27,6 +28,48 @@
         <item name="android:textSize">30dp</item>
         <item name="android:fontFamily">@font/proxima_nova_black_res</item>
     </style>
+
+    <style name="input_text">
+        <item name="android:fontFamily">@font/open_sans</item>
+        <item name="android:backgroundTint">@color/colorBeigeTransparent</item>
+        <item name="android:textColorHint">@color/colorBeigeTransparent</item>
+        <item name="android:textColor">@color/colorBeigeTransparent</item>
+    </style>
+
+    <style name="theme_text_bold">
+        <item name="android:fontFamily">@font/open_sans_bold</item>
+        <item name="android:textColor">@color/colorBeige</item>
+    </style>
+
+    <style name="theme_text_bold_transparent">
+        <item name="android:fontFamily">@font/open_sans_bold</item>
+        <item name="android:textColor">@color/colorBeigeTransparent</item>
+    </style>
+
+    <style name="merchant_textinput_layout">
+        <item name="android:textColor">@color/colorBeige</item>
+        <item name="android:textColorHint">@color/colorBeigeTransparent</item>
+        <item name="android:backgroundTint">@color/colorBeigeTransparent</item>
+        <item name="android:background">@color/colorBeigeTransparent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">65dp</item>
+    </style>
+
+    <style name="merchant_textinput_layout_city">
+        <item name="android:textColor">@color/colorBeige</item>
+        <item name="android:textColorHint">@color/colorBeigeTransparent</item>
+        <item name="android:backgroundTint">@color/colorBeigeTransparent</item>
+        <item name="android:background">@color/colorBeigeTransparent</item>
+        <item name="android:layout_height">65dp</item>
+    </style>
+
+    <style name="merchant_textinput_layout_editText">
+        <item name="android:background">@color/colorBackground</item>
+        <item name="android:textColor">@color/colorBeige</item>
+        <item name="android:textColorHint">@color/colorBeige</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+    </style>
+
 
     <style name="report_text">
         <item name="android:paddingTop">10dp</item>

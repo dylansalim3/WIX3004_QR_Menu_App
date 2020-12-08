@@ -1,135 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".ui.login_registration.registration.RegistrationFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+
 
         <LinearLayout
-            android:layout_width="310dp"
-            android:layout_height="602dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="50dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.732">
+            android:id="@+id/topTextContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="@dimen/theme_margin_horizontal"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_registration_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/registration"
-                android:textSize="30sp" />
-
-            <EditText
-                android:id="@+id/et_registration_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:selectAllOnFocus="true"
-                android:text="dylansalim3@gmail.com" />
-
-            <EditText
-                android:id="@+id/et_registration_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_password"
-                android:imeActionLabel="@string/prompt_password"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword"
-                android:selectAllOnFocus="true"
-                android:text="test123" />
-
-            <EditText
-                android:id="@+id/et_registration_password_repeat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/repeat_password"
-                android:imeActionLabel="@string/repeat_password"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword"
-                android:selectAllOnFocus="true"
-                android:text="test123" />
-
-            <Spinner
-                android:id="@+id/sp_role"
-                android:layout_width="match_parent"
-                android:layout_height="40dp" />
-
-            <EditText
-                android:id="@+id/et_registration_phone_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/phone_number"
-                android:imeActionLabel="@string/phone_number"
-                android:imeOptions="actionDone"
-                android:inputType="phone"
-                android:selectAllOnFocus="true" />
-
-            <EditText
-                android:id="@+id/et_registration_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/address"
-                android:imeActionLabel="@string/address"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:selectAllOnFocus="true" />
-
-            <EditText
-                android:id="@+id/et_registration_first_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/first_name"
-                android:imeActionLabel="@string/first_name"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:selectAllOnFocus="true" />
-
-            <EditText
-                android:id="@+id/et_registration_last_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/last_name"
-                android:imeActionLabel="@string/last_name"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:selectAllOnFocus="true" />
-
-            <TextView
+                style="@style/theme_text_bold_transparent"
                 android:id="@+id/tv_register_login_here"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="@string/login_here"
+                android:text="Login"
                 android:textAlignment="center"
-                android:textColor="@color/colorLink" />
+                android:textSize="20sp"
+                />
 
-            <Button
-                android:id="@+id/btn_registration_submit"
+            <TextView
+                style="@style/theme_text_bold"
+                android:id="@+id/signupTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:text="@string/register" />
+                android:text="Sign Up"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"/>
+
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+        <ImageView
+            android:id="@+id/logoView"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginRight="@dimen/theme_margin_horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/topTextContainer"
+            android:src="@drawable/qrmenu_logo" />
+
+        <View
+            android:id="@+id/lineView"
+            android:layout_width="72dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="117dp"
+            android:layout_marginTop="-10dp"
+            android:layout_below="@id/topTextContainer"
+            android:background="@color/colorBeige"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="@dimen/theme_margin_horizontal"
+            android:orientation="vertical"
+            android:layout_below="@+id/topTextContainer">
+
+            <TextView
+                android:id="@+id/introTV1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Hello There,"
+                android:textColor="@color/colorBeige"
+                android:textSize="35sp" />
+
+            <TextView
+                android:id="@+id/introTV2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="Enter your information below and start going paperless."
+                android:textColor="@color/colorBeige"
+                android:textSize="15sp" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="100dp">
+                    <EditText
+                        android:id="@+id/et_registration_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:hint="@string/prompt_email"
+                        android:inputType="textEmailAddress"
+                        android:selectAllOnFocus="true"
+                        android:text="dylansalim3@gmail.com"
+                        android:paddingBottom="20dp"
+                        style="@style/input_text"/>
+
+                    <EditText
+                        android:id="@+id/et_registration_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_password"
+                        android:imeActionLabel="@string/prompt_password"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPassword"
+                        android:selectAllOnFocus="true"
+                        android:text="test123"
+                        android:paddingBottom="20dp"
+                        style="@style/input_text"/>
+
+                    <EditText
+                        android:id="@+id/et_registration_password_repeat"
+                        style="@style/input_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/repeat_password"
+                        android:imeActionLabel="@string/repeat_password"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPassword"
+                        android:paddingBottom="20dp"
+                        android:selectAllOnFocus="true"
+                        android:text="test123" />
+
+                    <EditText
+                        android:id="@+id/et_registration_phone_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/phone_number"
+                        android:imeActionLabel="@string/phone_number"
+                        android:imeOptions="actionDone"
+                        android:inputType="phone"
+                        android:selectAllOnFocus="true"
+                        android:paddingBottom="20dp"
+                        style="@style/input_text"/>
+
+                    <EditText
+                        android:id="@+id/et_registration_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/address"
+                        android:imeActionLabel="@string/address"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:selectAllOnFocus="true"
+                        android:paddingBottom="20dp"
+                        style="@style/input_text"/>
+
+                    <EditText
+                        android:id="@+id/et_registration_first_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/first_name"
+                        android:imeActionLabel="@string/first_name"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:selectAllOnFocus="true"
+                        android:paddingBottom="20dp"
+                        style="@style/input_text"/>
+
+                    <EditText
+                        android:id="@+id/et_registration_last_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/last_name"
+                        android:imeActionLabel="@string/last_name"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:selectAllOnFocus="true"
+                        android:paddingBottom="20dp"
+                        style="@style/input_text"/>
+
+            <Spinner
+                android:id="@+id/sp_role"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/colorBeige"
+                />
+
+                </LinearLayout>
+            </ScrollView>
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_registration_submit"
+            android:padding="27dp"
+            android:layout_width="90dp"
+            android:layout_height="65dp"
+            android:layout_alignTop="@id/bottomDeco"
+            android:layout_alignRight="@id/bottomDeco"
+            android:layout_marginTop="-32dp"
+            android:layout_marginRight="@dimen/theme_margin_horizontal"
+            android:drawableEnd="@drawable/next" />
+
+        <View
+            android:id="@+id/bottomDeco"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorBeige"/>
+    </RelativeLayout>
+
