@@ -24,7 +24,6 @@ public class MainActivity extends FragmentActivity implements MainViewInterface 
     private MainPresenter mainPresenter;
 
     private ViewPager2 viewPager2;
-    private FragmentStateAdapter pagerAdapter;
     private BottomNavigationView navView;
     private FloatingActionButton fab;
 
@@ -93,7 +92,7 @@ public class MainActivity extends FragmentActivity implements MainViewInterface 
     @Override
     public void populateFragmentAdapter(List<Fragment> fragments) {
         viewPager2 = (ViewPager2) findViewById(R.id.home_view_pager2);
-        pagerAdapter = new ScreenSlidePagerAdapter(this, fragments);
+        FragmentStateAdapter pagerAdapter = new FragmentSlidePagerAdapter(this, fragments);
         viewPager2.setAdapter(pagerAdapter);
     }
 

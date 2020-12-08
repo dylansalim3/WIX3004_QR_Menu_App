@@ -80,8 +80,11 @@ public class NotificationService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         String body = remoteMessage.getData().get("body");
         String title = remoteMessage.getData().get("title");
+
+
         sendNotification(body, title);
     }
+
 
     /**
      * Create and show a simple notification containing the received FCM message.

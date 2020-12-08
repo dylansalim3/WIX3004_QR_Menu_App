@@ -23,5 +23,7 @@ public interface MerchantPresenterInterface {
 
     void onDeleteItemCategory(int itemCategoryId);
 
+    void onInfoButtonClick();
+
     void disposeObserver();
 }

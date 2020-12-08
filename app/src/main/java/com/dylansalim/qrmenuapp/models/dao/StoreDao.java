@@ -1,10 +1,13 @@
 package com.dylansalim.qrmenuapp.models.dao;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class StoreDao {
+public class StoreDao implements Parcelable {
     private int id;
 
     private String name;
@@ -29,6 +32,30 @@ public class StoreDao {
 
     @SerializedName("user_id")
     private int userId;
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public StoreDao createFromParcel(Parcel in) {
+            return new StoreDao(in);
+        }
+
+        public StoreDao[] newArray(int size) {
+            return new StoreDao[size];
+        }
+    };
+
+    protected StoreDao(Parcel in){
+        id = in.readInt();
+        name = in.readString();
+        address = in.readString();
+        postalCode = in.readInt();
+        city = in.readString();
+        country = in.readString();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
+        phoneNum = in.readString();
+        userId = in.readInt();
+    }
+
 
     public StoreDao(int id, String name, String address, int postalCode, String city, String country, @Nullable Double latitude, @Nullable Double longitude, String phoneNum, int userId) {
         this.id = id;
@@ -136,4 +163,24 @@ public class StoreDao {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(this.id);
+        parcel.writeString(this.name);
+        parcel.writeString(this.address);
+        parcel.writeInt(this.postalCode);
+        parcel.writeString(this.city);
+        parcel.writeString(this.country);
+        parcel.writeDouble(this.latitude);
+        parcel.writeDouble(this.longitude);
+        parcel.writeString(this.phoneNum);
+        parcel.writeInt(this.userId);
+    }
+
 }

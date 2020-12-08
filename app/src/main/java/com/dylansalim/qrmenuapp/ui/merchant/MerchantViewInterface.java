@@ -1,11 +1,16 @@
 package com.dylansalim.qrmenuapp.ui.merchant;
 
 import com.dylansalim.qrmenuapp.models.EditListItem;
+import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 
 import java.util.List;
 
 public interface MerchantViewInterface {
     void displayError(String s);
+
+    void showProgressBar();
+
+    void hideProgressBar();
 
     void setupRecyclerView(List<EditListItem> editListItems);
 
@@ -21,7 +26,5 @@ public interface MerchantViewInterface {
 
     void showAddNewCategoryDialog();
 
-    void showProgressBar();
-
-    void hideProgressBar();
+    void navigateToMerchantInfoActivity(StoreDao storeResult,boolean isStoreAdmin);
 }

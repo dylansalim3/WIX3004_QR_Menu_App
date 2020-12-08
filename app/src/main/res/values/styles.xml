@@ -25,7 +25,7 @@
 
     <style name="TitleTheme">
         <item name="android:textColor">@android:color/background_dark</item>
-        <item name="android:textSize">30dp</item>
+        <item name="android:textSize">30sp</item>
         <item name="android:fontFamily">@font/proxima_nova_black_res</item>
     </style>
 
@@ -70,6 +70,12 @@
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
 
+
+    <style name="ListItemTitleTheme">
+        <item name="android:textColor">@android:color/background_dark</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/proxima_nova_black</item>
+    </style>
 
     <style name="report_text">
         <item name="android:paddingTop">10dp</item>

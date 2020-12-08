@@ -42,18 +42,22 @@ public class MerchantPresenter implements MerchantPresenterInterface {
     private int currentTabPosition = 0;
     private HashMap<Integer, Integer> tabIndexHashMap;
     private List<DisposableObserver<?>> disposableObservers = new ArrayList<>();
+    private boolean isStoreAdmin = false;
     private static final String TAG = "mvi";
+
+    private StoreDao storeResult;
 
     @Override
     public void getAllItems(Context context, @Nullable Integer storeId) {
         mvi.showProgressBar();
         if (storeId == null) {
             getUserDetails(context);
-            setupStoreName(null);
+            isStoreAdmin = true;
         } else {
             this.storeId = storeId;
-            retrieveStoreDetail();
+            isStoreAdmin = false;
         }
+        retrieveStoreDetail();
         retrieveItemDetail();
     }
 
@@ -86,8 +90,6 @@ public class MerchantPresenter implements MerchantPresenterInterface {
             mvi.showAddNewCategoryDialog();
             mvi.updateSelectedTab(0);
         } else if (tabIndexHashMap != null && currentTabPosition != tabIndex && tabIndexHashMap.get(currentTabPosition) != null) {
-            Log.d(TAG, "current tab position" + tabIndex);
-            Log.d(TAG, tabIndexHashMap.toString());
             mvi.scrollRecyclerViewToPosition(tabIndexHashMap.get(tabIndex));
             currentTabPosition = tabIndex;
         }
@@ -121,13 +123,13 @@ public class MerchantPresenter implements MerchantPresenterInterface {
         }
     }
 
-    private void restoreRecyclerViewWithAddBtn(){
+    private void restoreRecyclerViewWithAddBtn() {
         mvi.updateEditActionIcon(R.drawable.ic_baseline_done_24);
         addNewEditableTab();
         setupRecyclerViewWithAddNewButton();
     }
 
-    private void restoreRecyclerView(){
+    private void restoreRecyclerView() {
         mvi.updateEditActionIcon(R.drawable.ic_baseline_edit_24);
         mvi.setupTabLayout(titles);
         mvi.setupRecyclerView(editListItems);
@@ -161,11 +163,16 @@ public class MerchantPresenter implements MerchantPresenterInterface {
                 .subscribeWith(getDeleteItemObserver()));
     }
 
+    @Override
+    public void onInfoButtonClick() {
+        mvi.navigateToMerchantInfoActivity(storeResult, isStoreAdmin);
+    }
+
     public DisposableObserver<Result<String>> getDeleteItemObserver() {
         return new DisposableObserver<Result<String>>() {
             @Override
-            public void onNext(@NonNull Result<String> storeDaoResult) {
-                mvi.displayError(storeDaoResult.getMsg());
+            public void onNext(@NonNull Result<String> deleteItemResult) {
+                mvi.displayError(deleteItemResult.getMsg());
                 retrieveItemDetail();
             }
 
@@ -177,7 +184,6 @@ public class MerchantPresenter implements MerchantPresenterInterface {
 
             @Override
             public void onComplete() {
-                Log.d(TAG, "Completed");
                 mvi.hideProgressBar();
             }
         };
@@ -216,8 +222,6 @@ public class MerchantPresenter implements MerchantPresenterInterface {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE);
         String token = sharedPreferences.getString(context.getString(R.string.token), "");
 
-        Log.d(TAG, "check user type");
-        Log.d(TAG, token);
 
         if (!token.equals("")) {
             String dataString = null;
@@ -232,7 +236,6 @@ public class MerchantPresenter implements MerchantPresenterInterface {
                 storeId = userDetailDao.getStoreId();
             }
 
-            Log.d(TAG, userDetailDao.toString());
         }
     }
 
@@ -244,22 +247,20 @@ public class MerchantPresenter implements MerchantPresenterInterface {
         return new DisposableObserver<Result<StoreDao>>() {
             @Override
             public void onNext(@NonNull Result<StoreDao> storeDaoResult) {
-                Log.d(TAG, "OnNext " + storeDaoResult);
                 if (storeDaoResult.getData() != null) {
                     String storeName = storeDaoResult.getData().getName();
+                    storeResult = storeDaoResult.getData();
                     setupStoreName(storeName);
                 }
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-                Log.d(TAG, "Error" + e);
                 e.printStackTrace();
             }
 
             @Override
             public void onComplete() {
-                Log.d(TAG, "Completed");
                 mvi.hideProgressBar();
             }
         };
@@ -269,14 +270,13 @@ public class MerchantPresenter implements MerchantPresenterInterface {
         return new DisposableObserver<Result<List<AllItemDao>>>() {
             @Override
             public void onNext(@NonNull Result<List<AllItemDao>> allItemsDao) {
-                Log.d(TAG, "OnNext " + allItemsDao);
                 if (allItemsDao.getData() != null) {
                     editListItems = mapAllItemsToListItems(allItemsDao.getData());
                     titles = getItemsTitle(allItemsDao.getData());
                     setTabIndexHashMap(editListItems);
-                    if(editMode){
+                    if (editMode) {
                         restoreRecyclerViewWithAddBtn();
-                    }else{
+                    } else {
 //                        mvi.setupTabLayout(titles);
 //                        mvi.setupRecyclerView(editListItems);
                         restoreRecyclerView();
@@ -286,14 +286,12 @@ public class MerchantPresenter implements MerchantPresenterInterface {
 
             @Override
             public void onError(@NonNull Throwable e) {
-                Log.d(TAG, "Error" + e);
                 e.printStackTrace();
                 mvi.displayError(e.toString());
             }
 
             @Override
             public void onComplete() {
-                Log.d(TAG, "Completed");
                 mvi.hideProgressBar();
             }
         };
@@ -303,20 +301,17 @@ public class MerchantPresenter implements MerchantPresenterInterface {
         return new DisposableObserver<Result<ItemCategoryDao>>() {
             @Override
             public void onNext(@NonNull Result<ItemCategoryDao> itemCategoryDaoResult) {
-                Log.d(TAG, "OnNext " + itemCategoryDaoResult);
                 retrieveItemDetail();
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-                Log.d(TAG, "Error" + e);
                 e.printStackTrace();
                 mvi.displayError(e.toString());
             }
 
             @Override
             public void onComplete() {
-                Log.d(TAG, "Completed");
             }
         };
     }

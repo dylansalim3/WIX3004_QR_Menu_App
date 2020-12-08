@@ -3,7 +3,6 @@ package com.dylansalim.qrmenuapp.ui.merchant;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.EditListItem;
+import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 import com.dylansalim.qrmenuapp.ui.component.SingleEditTextDialog;
 import com.dylansalim.qrmenuapp.ui.merchant_info.MerchantInfoActivity;
 import com.dylansalim.qrmenuapp.ui.new_item_form.NewItemFormActivity;
@@ -36,13 +36,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MerchantActivity extends AppCompatActivity
         implements MerchantViewInterface, SingleEditTextDialog.EditTextDialogListener,
         EditItemAdapter.OnCategoryDeleteListener, EditItemAdapter.OnItemListener, EditItemAdapter.OnAddNewBtnListener {
-    private Toolbar toolbar;
     private MerchantPresenter merchantPresenter;
     private TextView mToolbarExpandedTitle;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private TabLayout mTabLayout;
-    private AppBarLayout mAppBarLayout;
     private Menu menu;
     private int tabSelectedIndex;
     private static final String TAG = "MA";
@@ -57,13 +55,13 @@ public class MerchantActivity extends AppCompatActivity
 
         mRecyclerView = (RecyclerView) findViewById(R.id.item_recycler_view);
         mTabLayout = (TabLayout) findViewById(R.id.item_tab_layout);
-        mAppBarLayout = findViewById(R.id.merchant_appBarLayout);
+        AppBarLayout mAppBarLayout = findViewById(R.id.merchant_appBarLayout);
         mToolbarExpandedTitle = findViewById(R.id.tv_merchant_toolbar_expanded_title);
-        toolbar = findViewById(R.id.merchant_toolbar);
+        Toolbar toolbar = findViewById(R.id.merchant_toolbar);
         setSupportActionBar(toolbar);
 
         CollapsingToolbarLayout mCollapsingToolbar = findViewById(R.id.merchant_collapsingToolbarLayout);
-        LinearLayout mExpandedTitle = findViewById(R.id.merchant_title_expanded);
+        LinearLayout mExpandedTitle = findViewById(R.id.merchant_ll_title_expanded);
         setupMVP();
 
         Bundle bundle = getIntent().getExtras();
@@ -153,8 +151,7 @@ public class MerchantActivity extends AppCompatActivity
             return true;
         }
         if (id == R.id.action_info) {
-            Intent intent = new Intent(MerchantActivity.this, MerchantInfoActivity.class);
-            startActivity(intent);
+            merchantPresenter.onInfoButtonClick();
             return true;
         }
 
@@ -237,7 +234,6 @@ public class MerchantActivity extends AppCompatActivity
 
     @Override
     public void setupToolbarTitle(String title) {
-        Log.d(TAG, "title is " + title);
         if (getSupportActionBar() != null && mToolbarExpandedTitle != null) {
             getSupportActionBar().setTitle(title);
             mToolbarExpandedTitle.setText(title);
@@ -249,13 +245,25 @@ public class MerchantActivity extends AppCompatActivity
         Drawable drawable = ContextCompat.getDrawable(this, drawableId);
         drawable = DrawableCompat.wrap(drawable);
         DrawableCompat.setTint(drawable, getResources().getColor(R.color.colorWhite));
-        menu.getItem(0).setIcon(drawable);
+        if (menu != null) {
+            menu.getItem(0).setIcon(drawable);
+        }
     }
 
     @Override
     public void showAddNewCategoryDialog() {
         SingleEditTextDialog singleEditTextDialog = new SingleEditTextDialog("Add New Category", "Category Name", "Cancel", "Submit");
         singleEditTextDialog.show(getSupportFragmentManager(), "Category");
+    }
+
+    @Override
+    public void navigateToMerchantInfoActivity(StoreDao storeResult, boolean isStoreAdmin) {
+        Intent intent = new Intent(MerchantActivity.this, MerchantInfoActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(getResources().getString(R.string.store_result), storeResult);
+        bundle.putBoolean(getResources().getString(R.string.is_store_admin), isStoreAdmin);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override
