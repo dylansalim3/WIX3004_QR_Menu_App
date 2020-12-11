@@ -7,7 +7,7 @@ import java.util.List;
 import androidx.fragment.app.Fragment;
 
 public interface MerchantInfoViewInterface {
-    void displayError(String s);
+    void displayToast(String s);
 
     void showProgressBar();
 
@@ -16,4 +16,6 @@ public interface MerchantInfoViewInterface {
     void setupToolbar(String title);
 
     void populateView(List<Fragment> fragments, StoreDao sotreDetail);
+
+    void navigateToStoreQRActivity(StoreDao storeDetail);
 }

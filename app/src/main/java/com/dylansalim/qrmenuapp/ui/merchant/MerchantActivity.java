@@ -95,23 +95,6 @@ public class MerchantActivity extends AppCompatActivity
         merchantPresenter = new MerchantPresenter(this);
     }
 
-//    private void setupFrameLayout(Bundle savedInstanceState) {
-//        if (findViewById(R.id.merchant_fragment_container) != null) {
-//
-//            if (savedInstanceState != null) {
-//                return;
-//            }
-//
-//            ItemFragment itemFragment = new ItemFragment();
-//
-//            itemFragment.setArguments(getIntent().getExtras());
-//
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.merchant_fragment_container, itemFragment)
-//                    .commit();
-//        }
-//    }
-
     @Override
     public void showProgressBar() {
         isProgressShowing = true;

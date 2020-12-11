@@ -5,11 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.merchant_info.review.MerchantReviewFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_merchant_review"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="MERCHANT REVIEW" />
-
+        android:layout_height="match_parent" />
 </FrameLayout>

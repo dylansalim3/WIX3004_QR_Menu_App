@@ -12,7 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-        <activity android:name=".ui.new_item_form.NewItemFormActivity"></activity>
+        <activity
+            android:name=".ui.store_qr.StoreQRActivity"
+            android:label="@string/title_activity_store_qr"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".ui.new_item_form.NewItemFormActivity" />
         <activity android:name=".ui.merchant_info.MerchantInfoActivity" />
         <activity
             android:name=".ui.merchant.MerchantActivity"
@@ -40,29 +44,30 @@
             android:stateNotNeeded="true"
             />
 
-        <service android:name=".services.NotificationService"
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyA6VEfJPi3dhHcSU2Rt4EmrcjMf-mKdQY8" />
+        <service
+            android:name=".services.NotificationService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <meta-data
-            android:name="firebase_messaging_auto_init_enabled"
-            android:value="false" />
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyA6VEfJPi3dhHcSU2Rt4EmrcjMf-mKdQY8"/>
     </application>
-    <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA"/>
 
     <uses-feature android:name="android.hardware.camera"/>
     <uses-feature android:name="android.hardware.camera.autofocus"/>
+
+    <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
 
 </manifest>

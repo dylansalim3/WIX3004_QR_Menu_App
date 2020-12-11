@@ -1,21 +1,21 @@
 package com.dylansalim.qrmenuapp.ui.merchant_info;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.ui.component.RatingDialog;
 import com.dylansalim.qrmenuapp.ui.main.FragmentSlidePagerAdapter;
 import com.dylansalim.qrmenuapp.ui.merchant_info.about.AboutMerchantFragment;
 import com.dylansalim.qrmenuapp.ui.merchant_info.review.MerchantReviewFragment;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.dylansalim.qrmenuapp.ui.store_qr.StoreQRActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -25,15 +25,13 @@ import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-public class MerchantInfoActivity extends AppCompatActivity implements MerchantInfoViewInterface {
+public class MerchantInfoActivity extends AppCompatActivity implements MerchantInfoViewInterface,
+        RatingDialog.RatingDialogListener {
 
     private MerchantInfoPresenter merchantInfoPresenter;
-    private TextView mToolbarExpandedTitle;
     private TabLayout mTabLayout;
     private ViewPager2 mViewPager2;
     private ViewGroup progressView;
@@ -50,8 +48,6 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
         setContentView(R.layout.activity_merchant_info);
 
         Toolbar toolbar = findViewById(R.id.merchant_info_toolbar);
-        mToolbarExpandedTitle = findViewById(R.id.tv_merchant_info_toolbar_expanded_title);
-        mTabLayout = findViewById(R.id.merchant_info_item_tab_layout);
         setSupportActionBar(toolbar);
 
         setupMVP();
@@ -65,27 +61,11 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
             }
         }
 
-
-        // Setting the collapsing toolbar as transparent
-        CollapsingToolbarLayout mCollapsingToolbar = findViewById(R.id.merchant_info_collapsingToolbarLayout);
-        mCollapsingToolbar.setExpandedTitleColor(ContextCompat.getColor(this, R.color.zxing_transparent));
-
-        // Set title visibility
-        LinearLayout mExpandedTitle = findViewById(R.id.merchant_info_ll_title_expanded);
-        AppBarLayout mAppBarLayout = findViewById(R.id.merchant_info_appBarLayout);
-        mAppBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
-            if (Math.abs(verticalOffset) - appBarLayout.getTotalScrollRange() == 0) {
-                //  Collapsed
-                mExpandedTitle.setVisibility(View.INVISIBLE);
-
-            } else {
-                mExpandedTitle.setVisibility(View.VISIBLE);
-            }
-        });
         // Populating fragments
         merchantInfoPresenter.setupFragments(MERCHANT_INFO_FRAGMENTS);
 
         // Enable change of fragment by clicking on tab
+        mTabLayout = findViewById(R.id.merchant_info_item_tab_layout);
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
@@ -119,18 +99,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
         merchantInfoPresenter = new MerchantInfoPresenter(this);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public void displayError(String s) {
+    public void displayToast(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
@@ -153,9 +122,8 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
 
     @Override
     public void setupToolbar(String title) {
-        if (getSupportActionBar() != null && mToolbarExpandedTitle != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(title);
-            mToolbarExpandedTitle.setText(title);
         }
     }
 
@@ -168,5 +136,54 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
         bundle.putParcelable(getResources().getString(R.string.store_result), storeDetail);
         pagerAdapter.setBundle(bundle);
         mViewPager2.setAdapter(pagerAdapter);
+    }
+
+    @Override
+    public void navigateToStoreQRActivity(StoreDao storeDetail) {
+        Intent intent = new Intent(this, StoreQRActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(getResources().getString(R.string.store_result), storeDetail);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.getBoolean(getResources().getString(R.string.is_store_admin))) {
+            getMenuInflater().inflate(R.menu.merchant_info_admin_action_menu, menu);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.action_get_qr:
+                merchantInfoPresenter.onQRActionBtnClick();
+                return true;
+            case R.id.action_leave_review:
+                RatingDialog ratingDialog = new RatingDialog(this);
+                ratingDialog.show(getSupportFragmentManager(), "Review");
+                return true;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void submitReviewDialog(String text, float rating) {
+        merchantInfoPresenter.onReviewSubmit(text, rating, this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        merchantInfoPresenter.disposeObserver();
     }
 }

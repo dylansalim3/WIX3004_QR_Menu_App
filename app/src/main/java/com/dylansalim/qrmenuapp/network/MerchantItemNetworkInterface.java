@@ -2,7 +2,6 @@ package com.dylansalim.qrmenuapp.network;
 
 import com.dylansalim.qrmenuapp.models.dao.AllItemDao;
 import com.dylansalim.qrmenuapp.models.dao.ItemCategoryDao;
-import com.dylansalim.qrmenuapp.models.dao.ItemDao;
 import com.dylansalim.qrmenuapp.models.dao.Result;
 import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 

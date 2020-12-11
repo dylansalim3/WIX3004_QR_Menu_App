@@ -210,10 +210,6 @@ public class NewItemFormPresenter implements NewItemFormPresenterInterface {
 
     }
 
-    private void submitEditItemForm() {
-
-    }
-
     public DisposableObserver<Result<ItemDao>> getSubmitFormObserver(String type) {
         return new DisposableObserver<Result<ItemDao>>() {
             @Override
