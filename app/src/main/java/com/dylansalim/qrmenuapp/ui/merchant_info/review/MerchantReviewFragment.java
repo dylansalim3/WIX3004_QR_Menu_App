@@ -6,13 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dylansalim.qrmenuapp.R;
+import com.dylansalim.qrmenuapp.models.RatingListItem;
+
+import java.util.List;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MerchantReviewFragment extends Fragment implements MerchantReviewViewInterface {
 
     public static final int FRAGMENT_INDEX = 1;
     private MerchantReviewPresenterInterface merchantReviewPresenterInterface;
+    private ReviewArrayAdapter reviewArrayAdapter;
 
     public MerchantReviewFragment() {
     }
@@ -37,7 +43,21 @@ public class MerchantReviewFragment extends Fragment implements MerchantReviewVi
         View view = inflater.inflate(R.layout.fragment_merchant_review, container, false);
 
         // setup recycler view & retrieve rating data from backend
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_merchant_review);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        reviewArrayAdapter = new ReviewArrayAdapter();
+        recyclerView.setAdapter(reviewArrayAdapter);
 
         return view;
+    }
+
+
+    @Override
+    public void fillRecyclerView(List<RatingListItem> ratingListItemList) {
+        if (null != reviewArrayAdapter) {
+            reviewArrayAdapter.fillData(ratingListItemList);
+        }
     }
 }

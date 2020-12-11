@@ -77,6 +77,18 @@
         <item name="android:fontFamily">@font/proxima_nova_black</item>
     </style>
 
+    <style name="ListItemDescTheme">
+        <item name="android:textColor">@android:color/background_dark</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/proxima_nova_black</item>
+    </style>
+
+    <style name="ListItemSubtitleTheme">
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/proxima_nova_black</item>
+    </style>
+
     <style name="report_text">
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
