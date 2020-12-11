@@ -61,7 +61,8 @@
     <string name="desc">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Ciceros De Finibus Bonorum et Malorum for use in a type specimen book.</string>
     <string name="pricing">RM 2.50</string>
 
-    <!--    Merchant Activity-->
+
+<!--    Merchant Activity-->
     <string name="btn_delete">Button Delete</string>
     <string name="btn_more">Button More</string>
 
@@ -87,6 +88,15 @@
     <string name="report_desc_hint">Describe the issues</string>
     <string name="report_title_hint">Title</string>
 
+    <!--    OnBoarding Activity    -->
+    <string name="proceed_button">Proceed to registration</string>
+    <string name="ignore_register_button">Continue without registering</string>
+
+
+    <!--    QrScanActivity-->
+    <string name="scan_button">Scan</string>
+    <string name="close_button">Close</string>
+    <string name="welcome_textView">Welcome</string>
     <!--    Rating Dialog-->
     <string name="write_your_thoughts">Write your thoughts here...</string>
 

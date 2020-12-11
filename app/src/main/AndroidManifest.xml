@@ -28,14 +28,21 @@
         <activity android:name=".ui.qr_scan.QRScanActivity" />
         <activity android:name=".ui.store_registration.StoreRegistrationActivity" />
         <activity android:name=".ui.login_registration.LoginRegistrationActivity" />
-        <activity android:name=".ui.onboarding.OnboardingActivity">
+        <activity android:name=".ui.onboarding.SplashscreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.onboarding.OnboardingActivity"/>
         <activity android:name=".ui.report.ReportActivity" />
+        <activity android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            tools:replace="android:screenOrientation"
+            android:stateNotNeeded="true"
+            />
 
         <meta-data
             android:name="firebase_messaging_auto_init_enabled"
@@ -56,6 +63,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
 
     <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
 

@@ -26,6 +26,7 @@ public class QRScanPresenter implements QRScanPresenterInterface {
     private String roleName;
     private Context mContext;
     private String token;
+    public String userName;
 
     public QRScanPresenter(QRScanViewInterface qsvi) {
         this.qsvi = qsvi;
@@ -51,6 +52,7 @@ public class QRScanPresenter implements QRScanPresenterInterface {
             Log.d(TAG, userDetailDao.toString());
             int userId = userDetailDao.getId();
             roleName = userDetailDao.getRole();
+            userName = userDetailDao.getFirstName() + " " + userDetailDao.getLastName();
 
             getQRScanNetworkClient().getStoreByUserId(userId)
                     .subscribeOn(Schedulers.io())
@@ -66,6 +68,9 @@ public class QRScanPresenter implements QRScanPresenterInterface {
         }
     }
 
+    public String getUserName(){
+        return userName;
+    }
 
     private QRScanNetworkInterface getQRScanNetworkClient() {
         return NetworkClient.getNetworkClient().create(QRScanNetworkInterface.class);
