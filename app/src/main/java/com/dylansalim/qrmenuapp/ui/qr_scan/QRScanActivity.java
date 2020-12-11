@@ -1,5 +1,6 @@
 package com.dylansalim.qrmenuapp.ui.qr_scan;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -9,15 +10,23 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
+import com.dylansalim.qrmenuapp.ui.main.MainActivity;
+import com.dylansalim.qrmenuapp.ui.merchant.MerchantActivity;
 import com.dylansalim.qrmenuapp.ui.store_registration.StoreRegistrationActivity;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.Objects;
 
 public class QRScanActivity extends AppCompatActivity implements QRScanViewInterface {
-
+    private TextView closeTV, qrActivityTV;
+    private Button scanButton;
     private QRScanPresenter qrScanPresenter;
 
     @Override
@@ -25,9 +34,35 @@ public class QRScanActivity extends AppCompatActivity implements QRScanViewInter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_scan);
 
+        closeTV = findViewById(R.id.closeTV);
+        qrActivityTV = findViewById(R.id.qrActivityTV);
+        scanButton = findViewById(R.id.scanBtn);
+
         setupMVP();
 
+//      will intent to zxing camera scanner api to scanner qr code
+        scanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentIntegrator integrator = new IntentIntegrator(QRScanActivity.this);
+                integrator.setPrompt("Scan a QrCode to navigate to Menu");
+                integrator.setOrientationLocked(false);
+                integrator.setCameraId(0);
+                integrator.initiateScan();
+            }
+        });
+
+        closeTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent navigateToMain = new Intent(QRScanActivity.this, MainActivity.class);
+                startActivity(navigateToMain);
+                finish();
+            }
+        });
+
         qrScanPresenter.checkUserType(this);
+        qrActivityTV.setText(qrScanPresenter.getUserName());
     }
 
     private void setupMVP() {
@@ -70,5 +105,28 @@ public class QRScanActivity extends AppCompatActivity implements QRScanViewInter
             }
         });
         alertDialog.show();
+    }
+
+//  Scanner activity starts here and scan result storeId will save as bundle transfer to merchant activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+
+        if(result != null){
+            if(result.getContents() == null){
+                Toast.makeText(getBaseContext(), "Scan Cancelled", Toast.LENGTH_LONG).show();
+            }else{
+                int storeId = Integer.parseInt(result.getContents());
+                Intent navigateToMerchant = new Intent(this, MerchantActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("storeId", storeId);
+                navigateToMerchant.putExtras(bundle);
+                startActivity(navigateToMerchant);
+            }
+        }else{
+            super.onActivityResult(requestCode,resultCode,data);
+            Toast.makeText(getBaseContext(), "Failed to get Scan result. Scan the correct Qr Code", Toast.LENGTH_LONG).show();
+        }
     }
 }
