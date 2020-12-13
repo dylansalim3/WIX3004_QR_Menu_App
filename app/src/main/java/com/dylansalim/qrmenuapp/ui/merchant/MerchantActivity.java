@@ -117,6 +117,11 @@ public class MerchantActivity extends AppCompatActivity
     }
 
     @Override
+    public void setOverallRating(String overallRating) {
+        ((TextView) findViewById(R.id.merchant_overall_rating)).setText(overallRating);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         Bundle bundle = getIntent().getExtras();
@@ -164,10 +169,10 @@ public class MerchantActivity extends AppCompatActivity
 
         TextView mEmptyListTv = findViewById(R.id.tv_merchant_empty_list);
 
-        if(editListItems.size()>0){
+        if (editListItems.size() > 0) {
             mRecyclerView.setVisibility(View.VISIBLE);
             mEmptyListTv.setVisibility(View.GONE);
-        }else{
+        } else {
             mEmptyListTv.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
         }
@@ -260,7 +265,7 @@ public class MerchantActivity extends AppCompatActivity
         bundle.putParcelable(getResources().getString(R.string.store_result), storeResult);
         bundle.putBoolean(getResources().getString(R.string.is_store_admin), isStoreAdmin);
         intent.putExtras(bundle);
-        startActivityForResult(intent,MERCHANT_INFO_REQUEST_CODE);
+        startActivityForResult(intent, MERCHANT_INFO_REQUEST_CODE);
     }
 
     @Override
@@ -315,8 +320,8 @@ public class MerchantActivity extends AppCompatActivity
             String message = data.getStringExtra("MESSAGE");
             displayError(message);
             merchantPresenter.retrieveItemDetail();
-        }else if(requestCode == MERCHANT_INFO_REQUEST_CODE && null != data){
-            Log.d(TAG,"QWERTY");
+        } else if (requestCode == MERCHANT_INFO_REQUEST_CODE && null != data) {
+            Log.d(TAG, "QWERTY");
             merchantPresenter.retrieveStoreDetail(false);
         }
     }

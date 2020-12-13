@@ -7,6 +7,7 @@ import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.EditListItem;
 import com.dylansalim.qrmenuapp.models.dao.AllItemDao;
 import com.dylansalim.qrmenuapp.models.dao.ItemCategoryDao;
+import com.dylansalim.qrmenuapp.models.dao.OverallRating;
 import com.dylansalim.qrmenuapp.models.dao.Result;
 import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
@@ -42,6 +43,7 @@ public class MerchantPresenter implements MerchantPresenterInterface {
     private HashMap<Integer, Integer> tabIndexHashMap;
     private List<DisposableObserver<?>> disposableObservers = new ArrayList<>();
     private boolean isStoreAdmin = false;
+    private String overallRating;
     private static final String TAG = "mvi";
 
     private StoreDao storeResult;
@@ -62,7 +64,6 @@ public class MerchantPresenter implements MerchantPresenterInterface {
             this.storeId = storeId;
             isStoreAdmin = false;
             retrieveStoreDetail(true);
-//            retrieveItemDetail();
         }
     }
 
@@ -72,6 +73,13 @@ public class MerchantPresenter implements MerchantPresenterInterface {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(getAllItemObserver()));
+    }
+
+    public void retrieveOverallRating() {
+        disposableObservers.add(getMerchantItemNetworkInterface().getRatingByStoreId(this.storeId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(getOverallRatingObserver()));
     }
 
     @Override
@@ -259,6 +267,7 @@ public class MerchantPresenter implements MerchantPresenterInterface {
                     setupStoreName(storeName);
                     storeId = storeResult.getId();
                 }
+                retrieveOverallRating();
 
                 if (null != retrieveItem && retrieveItem) {
                     retrieveItemDetail();
@@ -323,6 +332,30 @@ public class MerchantPresenter implements MerchantPresenterInterface {
 
             @Override
             public void onComplete() {
+            }
+        };
+    }
+
+    public DisposableObserver<Result<OverallRating>> getOverallRatingObserver() {
+        return new DisposableObserver<Result<OverallRating>>() {
+            @Override
+            public void onNext(@NonNull Result<OverallRating> allItemsDao) {
+                if (null != allItemsDao.getData()) {
+                    OverallRating rating = allItemsDao.getData();
+                    overallRating = String.format("%.2f (%d)", rating.getAverage(), rating.getCount());
+                    mvi.setOverallRating(overallRating);
+                }
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                e.printStackTrace();
+                mvi.displayError(e.toString());
+            }
+
+            @Override
+            public void onComplete() {
+                mvi.hideProgressBar();
             }
         };
     }

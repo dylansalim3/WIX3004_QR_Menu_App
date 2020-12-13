@@ -12,6 +12,8 @@ public interface MerchantViewInterface {
 
     void hideProgressBar();
 
+    void setOverallRating(String overallRating);
+
     void setupRecyclerView(List<EditListItem> editListItems);
 
     void setupTabLayout(List<String> title);
