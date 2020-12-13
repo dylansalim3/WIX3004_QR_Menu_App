@@ -4,4 +4,7 @@
     <string name="is_store_admin">IS STORE ADMIN</string>
 
     <string name="edit_store">EDIT STORE</string>
+
+    <string name="message">MESSAGE</string>
+    <string name="store_id">STORE ID</string>
 </resources>

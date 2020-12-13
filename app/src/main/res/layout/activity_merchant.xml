@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.merchant.MerchantActivity">
 
+    <TextView
+        android:id="@+id/tv_merchant_empty_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/no_item_merchant"
+        android:visibility="gone"
+        style="@style/ListItemTitleTheme"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_recycler_view"

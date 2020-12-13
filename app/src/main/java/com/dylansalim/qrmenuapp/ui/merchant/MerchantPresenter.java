@@ -119,13 +119,18 @@ public class MerchantPresenter implements MerchantPresenterInterface {
     }
 
     @Override
-    public void onEditActionButtonClicked() {
+    public void onEditActionButtonClick() {
         editMode = !editMode;
         if (editMode) {
             restoreRecyclerViewWithAddBtn();
         } else {
             restoreRecyclerView();
         }
+    }
+
+    @Override
+    public void onShareBtnClick() {
+        mvi.navigateToStoreQRActivity(storeResult);
     }
 
     private void restoreRecyclerViewWithAddBtn() {
@@ -252,6 +257,7 @@ public class MerchantPresenter implements MerchantPresenterInterface {
                     String storeName = storeDaoResult.getData().getName();
                     storeResult = storeDaoResult.getData();
                     setupStoreName(storeName);
+                    storeId = storeResult.getId();
                 }
 
                 if (null != retrieveItem && retrieveItem) {

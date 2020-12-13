@@ -15,7 +15,9 @@ public interface MerchantPresenterInterface {
 
     void onRecyclerViewScrolled(int recyclerViewItemIndex);
 
-    void onEditActionButtonClicked();
+    void onEditActionButtonClick();
+
+    void onShareBtnClick();
 
     void onAddNewCategory(String categoryName);
 

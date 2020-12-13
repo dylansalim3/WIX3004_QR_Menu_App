@@ -125,7 +125,7 @@ public class QRScanActivity extends AppCompatActivity implements QRScanViewInter
                     QRResult qrResult = new Gson().fromJson(result.getContents(), QRResult.class);
                     Intent navigateToMerchant = new Intent(this, MerchantActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putInt("storeId", qrResult.getStoreId());
+                    bundle.putInt(getResources().getString(R.string.store_id), qrResult.getStoreId());
                     navigateToMerchant.putExtras(bundle);
                     startActivity(navigateToMerchant);
                 }catch(Exception e){

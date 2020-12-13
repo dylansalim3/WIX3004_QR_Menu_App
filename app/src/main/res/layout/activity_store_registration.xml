@@ -35,7 +35,7 @@
             android:paddingHorizontal="@dimen/theme_margin_horizontal">
 
             <TextView
-                android:id="@+id/introTV1"
+                android:id="@+id/tv_store_registration_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -46,7 +46,7 @@
 
 
             <TextView
-                android:id="@+id/introTV2"
+                android:id="@+id/tv_store_registration_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -71,18 +71,6 @@
                 android:id="@+id/phone_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                android:id="@+id/til_store_registration_phone_number"-->
-<!--                style="@style/merchant_textinput_layout">-->
-
-<!--                <com.google.android.material.textfield.TextInputEditText-->
-<!--                    style="@style/merchant_textinput_layout_editText"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:hint="@string/phone_number"-->
-<!--                    android:inputType="phone" />-->
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_store_registration_address"
@@ -217,7 +205,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/special_hour_note"
-                    android:inputType="time" />
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
 

@@ -7,15 +7,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 import com.dylansalim.qrmenuapp.ui.component.RatingDialog;
 import com.dylansalim.qrmenuapp.ui.main.FragmentSlidePagerAdapter;
+import com.dylansalim.qrmenuapp.ui.merchant.MerchantActivity;
 import com.dylansalim.qrmenuapp.ui.merchant_info.about.AboutMerchantFragment;
 import com.dylansalim.qrmenuapp.ui.merchant_info.review.MerchantReviewFragment;
 import com.dylansalim.qrmenuapp.ui.store_qr.StoreQRActivity;
+import com.dylansalim.qrmenuapp.ui.store_registration.StoreRegistrationActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -23,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -40,6 +44,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
 
     private static final String[] TAB_TITLES = new String[]{"About", "Review"};
     private static final List<Fragment> MERCHANT_INFO_FRAGMENTS = Arrays.asList(new AboutMerchantFragment(), new MerchantReviewFragment());
+    public static int UPDATE_FORM_REQUEST_CODE = 103;
 
 
     @Override
@@ -59,7 +64,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
             if (storeResult != null) {
                 merchantInfoPresenter.setStoreInfo(storeResult, isStoreAdmin);
             }
-        }else{
+        } else {
             finish();
         }
 
@@ -86,22 +91,34 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
             }
         });
 
+        setupTabMediator();
+
         // on back will go back
+        toolbar.setNavigationOnClickListener(view -> {
+            onBackPressed();
+        });
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     private void setupTabMediator() {
-        if (null != mTabLayout && null != mViewPager2) {
-            // Enable changing of tab by swiping
-            new TabLayoutMediator(mTabLayout, mViewPager2, (tab, position) -> {
-                tab.setText(TAB_TITLES[position]);
-            }).attach();
-        }
+//        if (null != mTabLayout && null != mViewPager2) {
+        // Enable changing of tab by swiping
+        new TabLayoutMediator(mTabLayout, mViewPager2, (tab, position) -> {
+            tab.setText(TAB_TITLES[position]);
+        }).attach();
+//        }
     }
 
     private void setupMVP() {
         merchantInfoPresenter = new MerchantInfoPresenter(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        setResult(MerchantActivity.MERCHANT_INFO_REQUEST_CODE, intent);
+        finish();
     }
 
     public void displayToast(String s) {
@@ -128,7 +145,8 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
     @Override
     public void setupToolbar(String title) {
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(title);
+            getSupportActionBar().setTitle("");
+            ((TextView)findViewById(R.id.tv_merchant_info_store_title)).setText(title);
         }
     }
 
@@ -141,7 +159,6 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
         bundle.putParcelable(getResources().getString(R.string.store_result), storeDetail);
         pagerAdapter.setBundle(bundle);
         mViewPager2.setAdapter(pagerAdapter);
-        setupTabMediator();
     }
 
     @Override
@@ -151,6 +168,27 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
         bundle.putParcelable(getResources().getString(R.string.store_result), storeDetail);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void navigateToEditStoreActivity(StoreDao storeDetail) {
+        Intent intent = new Intent(this, StoreRegistrationActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(getResources().getString(R.string.edit_store), true);
+        bundle.putParcelable(getResources().getString(R.string.store_result), storeDetail);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, UPDATE_FORM_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == UPDATE_FORM_REQUEST_CODE && null != data) {
+            String message = data.getStringExtra(getResources().getString(R.string.message));
+            displayToast(message);
+            StoreDao storeResult = data.getParcelableExtra(getResources().getString(R.string.store_result));
+            merchantInfoPresenter.setStoreInfo(storeResult, true);
+        }
     }
 
     @Override
@@ -179,7 +217,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
                 return true;
 
             case R.id.action_edit:
-
+                merchantInfoPresenter.onEditBtnClick();
                 return true;
         }
 

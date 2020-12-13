@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-        <activity android:name=".ui.location_picker.LocationPickerActivity"></activity>
+        <activity android:name=".ui.location_picker.LocationPickerActivity"/>
         <activity android:name=".ui.store_edit.EditStoreActivity" />
         <activity
             android:name=".ui.store_qr.StoreQRActivity"

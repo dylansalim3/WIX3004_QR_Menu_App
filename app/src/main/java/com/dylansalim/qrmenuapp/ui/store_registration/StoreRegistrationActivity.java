@@ -7,14 +7,16 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dylan.phoneNumberInput.PhoneEditText;
-import com.dylan.phoneNumberInput.PhoneInputLayout;
 import com.dylansalim.qrmenuapp.R;
+import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 import com.dylansalim.qrmenuapp.services.GpsTracker;
 import com.dylansalim.qrmenuapp.ui.component.CustomPhoneInputLayout;
 import com.dylansalim.qrmenuapp.ui.main.MainActivity;
+import com.dylansalim.qrmenuapp.ui.merchant_info.MerchantInfoActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
@@ -44,19 +46,20 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
     private CustomPhoneInputLayout mPhoneInputLayout;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setupMVP();
         setContentView(R.layout.activity_store_registration);
+
         mStoreName = (TextInputLayout) findViewById(R.id.til_store_registration_name);
-//        mPhoneNumber = (TextInputLayout) findViewById(R.id.til_store_registration_phone_number);
         mAddress = (TextInputLayout) findViewById(R.id.til_store_registration_address);
         mPostalCode = (TextInputLayout) findViewById(R.id.til_store_registration_postal_code);
         mCity = (TextInputLayout) findViewById(R.id.til_store_registration_city);
         mCountry = (TextInputLayout) findViewById(R.id.til_store_registration_country);
         mUseCurrentLocation = (SwitchMaterial) findViewById(R.id.switch_store_registration_current_location);
         MaterialButton mSubmitBtn = (MaterialButton) findViewById(R.id.btn_store_registration_submit);
+        Button mBackBtn = findViewById(R.id.btn_store_registration_back);
 
         mChooseLocationBtn = findViewById(R.id.btn_store_registration_choose_location);
         mOpeningHour = findViewById(R.id.til_store_registration_opening_hour);
@@ -64,15 +67,19 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
         mSpecialOpeningNote = findViewById(R.id.til_store_registration_special_hour_note);
 
         mPhoneInputLayout = findViewById(R.id.phone_input_layout);
-        mPhoneInputLayout.setDefaultCountry("MY");
-
-
-        setupMVP();
 
         Bundle bundle = getIntent().getExtras();
-        if(null!=bundle){
-            bundle.getString("edit");
+        if (null != bundle && bundle.getBoolean(getResources().getString(R.string.edit_store))) {
+            StoreDao storeResult = bundle.getParcelable(getResources().getString(R.string.store_result));
+            storeRegistrationPresenter.onRetrieveStoreDetail(storeResult);
+            ((TextView) findViewById(R.id.tv_store_registration_title)).setText(getResources().getString(R.string.store_edit_title));
+            ((TextView) findViewById(R.id.tv_store_registration_desc)).setText(getResources().getString(R.string.store_edit_desc));
+            mSubmitBtn.setText(R.string.update);
         }
+
+        mPhoneInputLayout.setDefaultCountry("MY");
+
+        mBackBtn.setOnClickListener(view -> finish());
 
 
         try {
@@ -126,7 +133,7 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
                         .setBottomViewColor(R.color.white) // Change Address View Background Color (Default: White)
                         .setMapRawResourceStyle(R.raw.default_map_style)  //Set Map Style (https://mapstyle.withgoogle.com/)
                         .setMapType(MapType.NORMAL)
-                        .setPlaceSearchBar(true, "AIzaSyA6VEfJPi3dhHcSU2Rt4EmrcjMf-mKdQY8") //Activate GooglePlace Search Bar. Default is false/not activated. SearchBar is a chargeable feature by Google
+                        .setPlaceSearchBar(true, getResources().getString(R.string.map_v2_api)) //Activate GooglePlace Search Bar. Default is false/not activated. SearchBar is a chargeable feature by Google
                         .build(StoreRegistrationActivity.this);
                 startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST);
             }
@@ -153,11 +160,6 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
     public String getStoreName() {
         return Objects.requireNonNull(mStoreName.getEditText()).getText().toString();
     }
-
-//    @Override
-//    public String getPhoneNumber() {
-//        return Objects.requireNonNull(mPhoneNumber.getEditText()).getText().toString();
-//    }
 
     @Override
     public String getAddress() {
@@ -200,6 +202,11 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
     }
 
     @Override
+    public void setStoreName(String storeName) {
+        Objects.requireNonNull(mStoreName.getEditText()).setText(storeName);
+    }
+
+    @Override
     public void setAddress(String address) {
         Objects.requireNonNull(mAddress.getEditText()).setText(address);
     }
@@ -220,6 +227,22 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
     public void setCountry(String country) {
         Objects.requireNonNull(mCountry.getEditText()).setText(country);
     }
+
+    @Override
+    public void setOpeningHour(String openingHour) {
+        Objects.requireNonNull(mOpeningHour.getEditText()).setText(openingHour);
+    }
+
+    @Override
+    public void setClosingHour(String closingHour) {
+        Objects.requireNonNull(mClosingHour.getEditText()).setText(closingHour);
+    }
+
+    @Override
+    public void setSpecialOpeningNote(String specialOpeningNote) {
+        Objects.requireNonNull(mSpecialOpeningNote.getEditText()).setText(specialOpeningNote);
+    }
+
 
     @Override
     public void displayErrorMessage(String s) {
@@ -247,6 +270,15 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
     public void navigateToNextScreen() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onFormSubmitted(StoreDao storeDetail) {
+        Intent intent = new Intent();
+        intent.putExtra(getResources().getString(R.string.message), "Store Detail successfully updated");
+        intent.putExtra(getResources().getString(R.string.store_result), storeDetail);
+        setResult(MerchantInfoActivity.UPDATE_FORM_REQUEST_CODE, intent);
         finish();
     }
 

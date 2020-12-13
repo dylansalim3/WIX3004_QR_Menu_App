@@ -3,4 +3,7 @@
 <!--    User Role-->
     <string name="merchant">MERCHANT</string>
     <string name="customer">CUSTOMER</string>
+
+<!--    API KEY-->
+    <string name="map_v2_api">AIzaSyA6VEfJPi3dhHcSU2Rt4EmrcjMf-mKdQY8</string>
 </resources>

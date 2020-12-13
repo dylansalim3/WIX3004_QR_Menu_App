@@ -22,10 +22,8 @@ import com.google.gson.Gson;
 import com.sucho.placepicker.AddressData;
 import com.sucho.placepicker.Constants;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import androidx.annotation.Nullable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -39,11 +37,30 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
     private double latitude;
     private double longitude;
     private List<DisposableObserver<?>> disposableObservers = new ArrayList<>();
+    private boolean isEdit = false;
+    private int editStoreId = -1;
 
     private static final String TAG = "SRPresenter";
 
     public StoreRegistrationPresenter(StoreRegistrationViewInterface srvi) {
         this.srvi = srvi;
+    }
+
+    @Override
+    public void onRetrieveStoreDetail(StoreDao storeDetail) {
+        if (null != storeDetail && null != srvi.getCustomPhoneInputLayout().getTextInputLayout().getEditText()) {
+            isEdit = true;
+            editStoreId = storeDetail.getId();
+            srvi.getCustomPhoneInputLayout().getTextInputLayout().getEditText().setText(storeDetail.getPhoneNum().substring(2));
+            srvi.setStoreName(storeDetail.getName());
+            srvi.setAddress(storeDetail.getAddress());
+            srvi.setCity(storeDetail.getCity());
+            srvi.setPostalCode(String.valueOf(storeDetail.getPostalCode()));
+            srvi.setCountry(storeDetail.getCountry());
+            srvi.setOpeningHour(storeDetail.getOpenHour());
+            srvi.setClosingHour(storeDetail.getClosingHour());
+            srvi.setSpecialOpeningNote(storeDetail.getSpecialOpeningNote());
+        }
     }
 
     @Override
@@ -53,20 +70,25 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
         int userId = getUserId(activity);
         StoreDao storeDao = validateStoreRegistrationForm(userId);
 
-        if (null != storeDao) {
+        if (null != storeDao && !isEdit) {
             Log.d(TAG, "Form submitted");
             disposableObservers.add(getStoreRegistrationNetworkClient().createStore(storeDao)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(getRegistrationFormObserver()));
-        }else{
+        } else if (null != storeDao && isEdit && editStoreId != -1) {
+            storeDao.setId(editStoreId);
+            disposableObservers.add(getStoreRegistrationNetworkClient().updateStore(storeDao)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(getUpdateFormObserver()));
+        } else {
             srvi.hideProgressBar();
         }
     }
 
     private StoreDao validateStoreRegistrationForm(int userId) {
         String storeName = srvi.getStoreName();
-//        String phoneNumber = srvi.getPhoneNumber();
         String address = srvi.getAddress();
         String postalCodeString = srvi.getPostalCode();
         String city = srvi.getCity();
@@ -138,6 +160,28 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
             @Override
             public void onNext(Result<String> result) {
                 srvi.navigateToNextScreen();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                srvi.displayErrorMessage(e.toString());
+                srvi.hideProgressBar();
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "Completed");
+                srvi.hideProgressBar();
+            }
+        };
+    }
+
+    public DisposableObserver<Result<StoreDao>> getUpdateFormObserver() {
+        return new DisposableObserver<Result<StoreDao>>() {
+
+            @Override
+            public void onNext(Result<StoreDao> result) {
+                srvi.onFormSubmitted(result.getData());
             }
 
             @Override

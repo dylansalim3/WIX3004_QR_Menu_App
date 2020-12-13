@@ -15,4 +15,8 @@ public interface StoreRegistrationNetworkInterface {
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("/stores/create-store")
     Observable<Result<String>> createStore(@Body StoreDao storeDao);
+
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @POST("/stores/update-store")
+    Observable<Result<StoreDao>> updateStore(@Body StoreDao storeDao);
 }

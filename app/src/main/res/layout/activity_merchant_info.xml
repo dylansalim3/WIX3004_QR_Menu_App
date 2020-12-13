@@ -30,12 +30,12 @@
             android:paddingHorizontal="10dp">
 
             <TextView
+                android:id="@+id/tv_merchant_info_store_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                style="@style/TitleTheme"
+                style="@style/ListItemTitleTheme"
                 android:gravity="center_vertical"
-                android:layout_alignParentStart="true"
-                android:text="KFC"/>
+                android:layout_alignParentStart="true"/>
 
             <Button android:id="@+id/merchant_info_btn_report"
                 android:layout_width="wrap_content"

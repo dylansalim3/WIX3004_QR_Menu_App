@@ -42,7 +42,7 @@ public class MainActivity extends FragmentActivity implements MainViewInterface 
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, MerchantActivity.class);
-                intent.putExtra("isStoreAdmin",true);
+                intent.putExtra(getResources().getString(R.string.is_store_admin),true);
 //                testing purpose
 //                intent.putExtra("storeId",7);
                 startActivity(intent);

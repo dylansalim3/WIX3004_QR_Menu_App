@@ -9,4 +9,13 @@
         android:id="@+id/recycler_view_merchant_review"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tv_merchant_review_empty_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/no_item_merchant"
+        android:visibility="gone"
+        style="@style/ListItemTitleTheme"/>
 </FrameLayout>

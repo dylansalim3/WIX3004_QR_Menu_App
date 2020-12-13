@@ -231,4 +231,22 @@ public class StoreDao implements Parcelable {
         parcel.writeString(this.specialOpeningNote);
     }
 
+    @Override
+    public String toString() {
+        return "StoreDao{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", postalCode=" + postalCode +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", phoneNum='" + phoneNum + '\'' +
+                ", userId=" + userId +
+                ", openHour='" + openHour + '\'' +
+                ", closingHour='" + closingHour + '\'' +
+                ", specialOpeningNote='" + specialOpeningNote + '\'' +
+                '}';
+    }
 }

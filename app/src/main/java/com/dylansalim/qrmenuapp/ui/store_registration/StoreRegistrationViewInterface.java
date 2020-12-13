@@ -1,12 +1,11 @@
 package com.dylansalim.qrmenuapp.ui.store_registration;
 
+import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.ui.component.CustomPhoneInputLayout;
 
 public interface StoreRegistrationViewInterface {
     String getStoreName();
-
-//    String getPhoneNumber();
 
     String getAddress();
 
@@ -24,6 +23,8 @@ public interface StoreRegistrationViewInterface {
 
     CustomPhoneInputLayout getCustomPhoneInputLayout();
 
+    void setStoreName(String storeName);
+
     void setAddress(String address);
 
     void setPostalCode(String postalCode);
@@ -32,6 +33,12 @@ public interface StoreRegistrationViewInterface {
 
     void setCountry(String country);
 
+    void setOpeningHour(String openingHour);
+
+    void setClosingHour(String closingHour);
+
+    void setSpecialOpeningNote(String specialOpeningNote);
+
     void displayErrorMessage(String s);
 
     void showProgressBar();
@@ -39,5 +46,7 @@ public interface StoreRegistrationViewInterface {
     void hideProgressBar();
 
     void navigateToNextScreen();
+
+    void onFormSubmitted(StoreDao storeDetail);
 
 }

@@ -18,4 +18,6 @@ public interface MerchantInfoViewInterface {
     void populateView(List<Fragment> fragments, StoreDao sotreDetail);
 
     void navigateToStoreQRActivity(StoreDao storeDetail);
+
+    void navigateToEditStoreActivity(StoreDao storeDetail);
 }

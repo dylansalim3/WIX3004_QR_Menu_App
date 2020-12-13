@@ -1,6 +1,7 @@
 package com.dylansalim.qrmenuapp.ui.merchant_info;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.dylansalim.qrmenuapp.models.dao.Rating;
 import com.dylansalim.qrmenuapp.models.dao.Result;
@@ -35,6 +36,7 @@ public class MerchantInfoPresenter implements MerchantInfoPresenterInterface {
 
     @Override
     public void setStoreInfo(StoreDao storeDetail, boolean isStoreAdmin) {
+        Log.d(TAG,storeDetail.toString());
         this.storeDetail = storeDetail;
         mivi.setupToolbar(storeDetail.getName());
         this.isStoreAdmin = isStoreAdmin;
@@ -52,6 +54,13 @@ public class MerchantInfoPresenter implements MerchantInfoPresenterInterface {
         // post req to retrieve qr
         if (null != storeDetail) {
             mivi.navigateToStoreQRActivity(storeDetail);
+        }
+    }
+
+    @Override
+    public void onEditBtnClick() {
+        if (null != storeDetail) {
+            mivi.navigateToEditStoreActivity(storeDetail);
         }
     }
 

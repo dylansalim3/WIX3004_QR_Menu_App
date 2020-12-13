@@ -3,6 +3,7 @@ package com.dylansalim.qrmenuapp.ui.merchant;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 import com.dylansalim.qrmenuapp.ui.component.SingleEditTextDialog;
 import com.dylansalim.qrmenuapp.ui.merchant_info.MerchantInfoActivity;
 import com.dylansalim.qrmenuapp.ui.new_item_form.NewItemFormActivity;
+import com.dylansalim.qrmenuapp.ui.store_qr.StoreQRActivity;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
@@ -43,10 +45,12 @@ public class MerchantActivity extends AppCompatActivity
     private TabLayout mTabLayout;
     private Menu menu;
     private int tabSelectedIndex;
+    CollapsingToolbarLayout mCollapsingToolbar;
     private static final String TAG = "MA";
     private ViewGroup progressView;
     protected boolean isProgressShowing = false;
     public static int SUBMISSION_FORM_REQUEST_CODE = 102;
+    public static int MERCHANT_INFO_REQUEST_CODE = 104;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,16 +64,15 @@ public class MerchantActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.merchant_toolbar);
         setSupportActionBar(toolbar);
 
-        CollapsingToolbarLayout mCollapsingToolbar = findViewById(R.id.merchant_collapsingToolbarLayout);
+        mCollapsingToolbar = findViewById(R.id.merchant_collapsingToolbarLayout);
         LinearLayout mExpandedTitle = findViewById(R.id.merchant_ll_title_expanded);
         setupMVP();
-
         Bundle bundle = getIntent().getExtras();
 
-        if (bundle != null && bundle.getBoolean("isStoreAdmin")) {
+        if (bundle != null && bundle.getBoolean(getResources().getString(R.string.is_store_admin))) {
             merchantPresenter.getAllItems(this, null);
         } else {
-            Integer storeId = bundle.getInt("storeId");
+            Integer storeId = bundle.getInt(getResources().getString(R.string.store_id));
             displayError(String.valueOf(storeId));
             merchantPresenter.getAllItems(this, storeId);
         }
@@ -117,7 +120,7 @@ public class MerchantActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null && bundle.getBoolean("isStoreAdmin")) {
+        if (bundle != null && bundle.getBoolean(getResources().getString(R.string.is_store_admin))) {
             getMenuInflater().inflate(R.menu.merchant_appbar_admin_action_menu, menu);
         } else {
             getMenuInflater().inflate(R.menu.merchant_appbar_action_menu, menu);
@@ -131,7 +134,7 @@ public class MerchantActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_share) {
-            displayError("Action share clicked");
+            merchantPresenter.onShareBtnClick();
             return true;
         }
         if (id == R.id.action_info) {
@@ -140,7 +143,7 @@ public class MerchantActivity extends AppCompatActivity
         }
 
         if (id == R.id.action_edit) {
-            merchantPresenter.onEditActionButtonClicked();
+            merchantPresenter.onEditActionButtonClick();
         }
 
         return super.onOptionsItemSelected(item);
@@ -158,6 +161,16 @@ public class MerchantActivity extends AppCompatActivity
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(editItemAdapter);
+
+        TextView mEmptyListTv = findViewById(R.id.tv_merchant_empty_list);
+
+        if(editListItems.size()>0){
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyListTv.setVisibility(View.GONE);
+        }else{
+            mEmptyListTv.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        }
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -218,8 +231,8 @@ public class MerchantActivity extends AppCompatActivity
 
     @Override
     public void setupToolbarTitle(String title) {
-        if (getSupportActionBar() != null && mToolbarExpandedTitle != null) {
-            getSupportActionBar().setTitle(title);
+        if (mCollapsingToolbar != null && mToolbarExpandedTitle != null) {
+            mCollapsingToolbar.setTitle(title);
             mToolbarExpandedTitle.setText(title);
         }
     }
@@ -247,8 +260,18 @@ public class MerchantActivity extends AppCompatActivity
         bundle.putParcelable(getResources().getString(R.string.store_result), storeResult);
         bundle.putBoolean(getResources().getString(R.string.is_store_admin), isStoreAdmin);
         intent.putExtras(bundle);
+        startActivityForResult(intent,MERCHANT_INFO_REQUEST_CODE);
+    }
+
+    @Override
+    public void navigateToStoreQRActivity(StoreDao storeResult) {
+        Intent intent = new Intent(MerchantActivity.this, StoreQRActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(getResources().getString(R.string.store_result), storeResult);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
+
 
     @Override
     public void applyTexts(String text) {
@@ -292,6 +315,9 @@ public class MerchantActivity extends AppCompatActivity
             String message = data.getStringExtra("MESSAGE");
             displayError(message);
             merchantPresenter.retrieveItemDetail();
+        }else if(requestCode == MERCHANT_INFO_REQUEST_CODE && null != data){
+            Log.d(TAG,"QWERTY");
+            merchantPresenter.retrieveStoreDetail(false);
         }
     }
 

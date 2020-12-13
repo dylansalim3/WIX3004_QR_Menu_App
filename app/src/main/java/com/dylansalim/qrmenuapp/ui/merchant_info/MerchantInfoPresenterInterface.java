@@ -16,6 +16,8 @@ public interface MerchantInfoPresenterInterface {
 
     void onQRActionBtnClick();
 
+    void onEditBtnClick();
+
     void onReviewSubmit(String text, float rating, Context context);
 
     void disposeObserver();

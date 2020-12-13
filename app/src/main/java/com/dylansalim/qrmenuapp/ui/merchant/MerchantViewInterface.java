@@ -27,4 +27,6 @@ public interface MerchantViewInterface {
     void showAddNewCategoryDialog();
 
     void navigateToMerchantInfoActivity(StoreDao storeResult,boolean isStoreAdmin);
+
+    void navigateToStoreQRActivity(StoreDao storeResult);
 }
