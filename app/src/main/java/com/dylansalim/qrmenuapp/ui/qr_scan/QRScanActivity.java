@@ -16,9 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
+import com.dylansalim.qrmenuapp.models.QRResult;
+import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.ui.login_registration.LoginRegistrationActivity;
 import com.dylansalim.qrmenuapp.ui.main.MainActivity;
 import com.dylansalim.qrmenuapp.ui.merchant.MerchantActivity;
 import com.dylansalim.qrmenuapp.ui.store_registration.StoreRegistrationActivity;
+import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -117,12 +121,17 @@ public class QRScanActivity extends AppCompatActivity implements QRScanViewInter
             if(result.getContents() == null){
                 Toast.makeText(getBaseContext(), "Scan Cancelled", Toast.LENGTH_LONG).show();
             }else{
-                int storeId = Integer.parseInt(result.getContents());
-                Intent navigateToMerchant = new Intent(this, MerchantActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("storeId", storeId);
-                navigateToMerchant.putExtras(bundle);
-                startActivity(navigateToMerchant);
+                try{
+                    QRResult qrResult = new Gson().fromJson(result.getContents(), QRResult.class);
+                    Intent navigateToMerchant = new Intent(this, MerchantActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("storeId", qrResult.getStoreId());
+                    navigateToMerchant.putExtras(bundle);
+                    startActivity(navigateToMerchant);
+                }catch(Exception e){
+                    e.printStackTrace();
+                    // show invalid qr
+                }
             }
         }else{
             super.onActivityResult(requestCode,resultCode,data);

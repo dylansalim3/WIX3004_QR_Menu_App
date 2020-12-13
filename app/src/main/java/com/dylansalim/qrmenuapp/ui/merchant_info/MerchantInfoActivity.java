@@ -59,6 +59,8 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
             if (storeResult != null) {
                 merchantInfoPresenter.setStoreInfo(storeResult, isStoreAdmin);
             }
+        }else{
+            finish();
         }
 
         // Populating fragments
@@ -84,15 +86,18 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
             }
         });
 
-        // Enable changing of tab by swiping
-        new TabLayoutMediator(mTabLayout, mViewPager2, (tab, position) -> {
-            tab.setText(TAB_TITLES[position]);
-        }).attach();
-
-
         // on back will go back
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    private void setupTabMediator() {
+        if (null != mTabLayout && null != mViewPager2) {
+            // Enable changing of tab by swiping
+            new TabLayoutMediator(mTabLayout, mViewPager2, (tab, position) -> {
+                tab.setText(TAB_TITLES[position]);
+            }).attach();
+        }
     }
 
     private void setupMVP() {
@@ -136,6 +141,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
         bundle.putParcelable(getResources().getString(R.string.store_result), storeDetail);
         pagerAdapter.setBundle(bundle);
         mViewPager2.setAdapter(pagerAdapter);
+        setupTabMediator();
     }
 
     @Override
@@ -170,6 +176,10 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
             case R.id.action_leave_review:
                 RatingDialog ratingDialog = new RatingDialog(this);
                 ratingDialog.show(getSupportFragmentManager(), "Review");
+                return true;
+
+            case R.id.action_edit:
+
                 return true;
         }
 

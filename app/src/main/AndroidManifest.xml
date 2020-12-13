@@ -12,10 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
+        <activity android:name=".ui.location_picker.LocationPickerActivity"></activity>
+        <activity android:name=".ui.store_edit.EditStoreActivity" />
         <activity
             android:name=".ui.store_qr.StoreQRActivity"
             android:label="@string/title_activity_store_qr"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.new_item_form.NewItemFormActivity" />
         <activity android:name=".ui.merchant_info.MerchantInfoActivity" />
         <activity
@@ -28,6 +30,7 @@
         <activity android:name=".ui.qr_scan.QRScanActivity" />
         <activity android:name=".ui.store_registration.StoreRegistrationActivity" />
         <activity android:name=".ui.login_registration.LoginRegistrationActivity" />
+
         <activity android:name=".ui.onboarding.SplashscreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,22 +38,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.onboarding.OnboardingActivity"/>
+        <activity android:name=".ui.onboarding.OnboardingActivity" />
         <activity android:name=".ui.report.ReportActivity" />
-        <activity android:name="com.journeyapps.barcodescanner.CaptureActivity"
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
-            tools:replace="android:screenOrientation"
             android:stateNotNeeded="true"
-            />
+            tools:replace="android:screenOrientation" />
+
+        <activity
+            android:name="com.sucho.placepicker.PlacePickerActivity"
+            android:theme="@style/PlacePickerTheme"/>
 
         <meta-data
             android:name="firebase_messaging_auto_init_enabled"
             android:value="false" />
-
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyA6VEfJPi3dhHcSU2Rt4EmrcjMf-mKdQY8" />
+
         <service
             android:name=".services.NotificationService"
             android:exported="false">
@@ -59,15 +65,15 @@
             </intent-filter>
         </service>
     </application>
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
-
     <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

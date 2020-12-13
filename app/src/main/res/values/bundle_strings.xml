@@ -2,4 +2,6 @@
 <resources>
     <string name="store_result">STORE RESULT</string>
     <string name="is_store_admin">IS STORE ADMIN</string>
+
+    <string name="edit_store">EDIT STORE</string>
 </resources>

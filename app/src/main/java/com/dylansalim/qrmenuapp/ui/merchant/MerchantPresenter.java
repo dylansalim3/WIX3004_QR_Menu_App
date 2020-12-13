@@ -2,7 +2,6 @@ package com.dylansalim.qrmenuapp.ui.merchant;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.EditListItem;
@@ -53,12 +52,18 @@ public class MerchantPresenter implements MerchantPresenterInterface {
         if (storeId == null) {
             getUserDetails(context);
             isStoreAdmin = true;
+            DisposableObserver disposableObserver = getMerchantItemNetworkInterface().getStoreDetailByUserId(userDetailDao.getId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(getStoreDetailObserver(true));
+            disposableObservers.add(disposableObserver);
+
         } else {
             this.storeId = storeId;
             isStoreAdmin = false;
+            retrieveStoreDetail(true);
+//            retrieveItemDetail();
         }
-        retrieveStoreDetail();
-        retrieveItemDetail();
     }
 
     @Override
@@ -70,11 +75,11 @@ public class MerchantPresenter implements MerchantPresenterInterface {
     }
 
     @Override
-    public void retrieveStoreDetail() {
+    public void retrieveStoreDetail(@Nullable Boolean retrieveItem) {
         disposableObservers.add(getMerchantItemNetworkInterface().getStoreDetail(this.storeId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(getStoreDetailObserver()));
+                .subscribeWith(getStoreDetailObserver(retrieveItem)));
     }
 
     private void setupStoreName(@Nullable String initialName) {
@@ -137,9 +142,9 @@ public class MerchantPresenter implements MerchantPresenterInterface {
 
     @Override
     public void onAddNewCategory(String categoryName) {
-        if (userDetailDao != null && categoryName != null && userDetailDao.getStoreId() != null && categoryName.length() > 0) {
+        if (userDetailDao != null && categoryName != null && storeId != -1 && categoryName.length() > 0) {
             mvi.showProgressBar();
-            ItemCategoryDao itemCategoryDao = new ItemCategoryDao(categoryName, userDetailDao.getStoreId());
+            ItemCategoryDao itemCategoryDao = new ItemCategoryDao(categoryName, storeId);
             disposableObservers.add(getMerchantItemNetworkInterface().createItemCategory(itemCategoryDao)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -232,10 +237,6 @@ public class MerchantPresenter implements MerchantPresenterInterface {
             }
             userDetailDao = new Gson().fromJson(dataString, UserDetailDao.class);
 
-            if (userDetailDao.getStoreId() != null) {
-                storeId = userDetailDao.getStoreId();
-            }
-
         }
     }
 
@@ -243,7 +244,7 @@ public class MerchantPresenter implements MerchantPresenterInterface {
         return NetworkClient.getNetworkClient().create(MerchantItemNetworkInterface.class);
     }
 
-    public DisposableObserver<Result<StoreDao>> getStoreDetailObserver() {
+    public DisposableObserver<Result<StoreDao>> getStoreDetailObserver(@Nullable Boolean retrieveItem) {
         return new DisposableObserver<Result<StoreDao>>() {
             @Override
             public void onNext(@NonNull Result<StoreDao> storeDaoResult) {
@@ -251,6 +252,10 @@ public class MerchantPresenter implements MerchantPresenterInterface {
                     String storeName = storeDaoResult.getData().getName();
                     storeResult = storeDaoResult.getData();
                     setupStoreName(storeName);
+                }
+
+                if (null != retrieveItem && retrieveItem) {
+                    retrieveItemDetail();
                 }
             }
 

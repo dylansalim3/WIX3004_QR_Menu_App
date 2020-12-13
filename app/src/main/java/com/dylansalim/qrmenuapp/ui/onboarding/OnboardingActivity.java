@@ -45,7 +45,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
 //      Check if the user used the app before, if yes, onboarding will not run again
         if(restorePrefData()){
-            Intent loginActivity = new Intent(getApplicationContext(), LoginRegistrationActivity.class);
+            Intent loginActivity = new Intent(getApplicationContext(), QRScanActivity.class);
             startActivity(loginActivity);
             finish();
         }

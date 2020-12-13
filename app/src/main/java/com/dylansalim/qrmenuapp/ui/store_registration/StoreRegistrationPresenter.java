@@ -2,7 +2,9 @@ package com.dylansalim.qrmenuapp.ui.store_registration;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
 import android.util.Log;
 
 import com.dylansalim.qrmenuapp.R;
@@ -13,10 +15,19 @@ import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.network.StoreRegistrationNetworkInterface;
 import com.dylansalim.qrmenuapp.services.GpsTracker;
+import com.dylansalim.qrmenuapp.ui.component.CustomPhoneInputLayout;
 import com.dylansalim.qrmenuapp.utils.JWTUtils;
 import com.dylansalim.qrmenuapp.utils.ValidationUtils;
 import com.google.gson.Gson;
+import com.sucho.placepicker.AddressData;
+import com.sucho.placepicker.Constants;
 
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+import androidx.annotation.Nullable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -27,6 +38,7 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
     private GpsTracker gpsTracker;
     private double latitude;
     private double longitude;
+    private List<DisposableObserver<?>> disposableObservers = new ArrayList<>();
 
     private static final String TAG = "SRPresenter";
 
@@ -37,51 +49,41 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
     @Override
     public void onRegisterButtonClicked(Activity activity) {
         srvi.showProgressBar();
+
+        int userId = getUserId(activity);
+        StoreDao storeDao = validateStoreRegistrationForm(userId);
+
+        if (null != storeDao) {
+            Log.d(TAG, "Form submitted");
+            disposableObservers.add(getStoreRegistrationNetworkClient().createStore(storeDao)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(getRegistrationFormObserver()));
+        }else{
+            srvi.hideProgressBar();
+        }
+    }
+
+    private StoreDao validateStoreRegistrationForm(int userId) {
         String storeName = srvi.getStoreName();
-        String phoneNumber = srvi.getPhoneNumber();
+//        String phoneNumber = srvi.getPhoneNumber();
         String address = srvi.getAddress();
         String postalCodeString = srvi.getPostalCode();
         String city = srvi.getCity();
         String country = srvi.getCountry();
-        int userId = getUserId(activity);
-        int postalCode = -1;
-        if (postalCodeString.length() > 0) {
-            postalCode = Integer.parseInt(postalCodeString);
-        }
-        StoreDao storeDao = new StoreDao(storeName, address, postalCode, city, country, latitude, longitude, phoneNumber, userId);
-
-        boolean isValidForm = validateStoreRegistrationForm(storeDao);
-        Log.d(TAG,Boolean.toString(isValidForm));
-        Log.d(TAG,"Validated");
-
-
-        if (isValidForm) {
-            Log.d(TAG,"Form submitted");
-            getStoreRegistrationNetworkClient().createStore(storeDao)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(getRegistrationFormObserver());
-        }
-
-    }
-
-    private boolean validateStoreRegistrationForm(StoreDao storeDao) {
-        String storeName = storeDao.getName();
-        String phoneNumber = storeDao.getPhoneNum();
-        String address = storeDao.getAddress();
-        String postalCode = Integer.toString(storeDao.getPostalCode());
-        String city = storeDao.getCity();
-        String country = storeDao.getCountry();
-        int userId = storeDao.getUserId();
+        String openingHour = srvi.getOpeningHour();
+        String closingHour = srvi.getClosingHour();
+        String specialNote = srvi.getSpecialOpeningNote();
+        CustomPhoneInputLayout phoneInputLayout = srvi.getCustomPhoneInputLayout();
 
         String[] nonNullFieldStrings = new String[]{
-                storeName, phoneNumber, address, postalCode,
-                city, country};
+                storeName, address, postalCodeString,
+                city, country, openingHour, closingHour, specialNote};
 
         for (String nonNullFieldString : nonNullFieldStrings) {
             if (!ValidationUtils.isNonNullFieldValid(nonNullFieldString)) {
                 srvi.displayErrorMessage("Cannot leave fields empty");
-                return false;
+                return null;
             }
         }
 
@@ -89,13 +91,27 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
             srvi.displayErrorMessage("Role is empty");
         }
 
-        if (!ValidationUtils.isValidPhoneNumber(phoneNumber)) {
+        // checks if the field is valid
+        if (phoneInputLayout.isValid()) {
+            phoneInputLayout.setError(null);
+        } else {
+            // set error message
             srvi.displayErrorMessage("Phone number is not in correct format");
-            return false;
+            return null;
         }
 
-        return true;
+        // Return the phone number as follows
 
+
+        try {
+            String phoneNumber = phoneInputLayout.getPhoneNumber();
+            int postalCode = Integer.parseInt(postalCodeString);
+            return new StoreDao(storeName, address, postalCode, city, country, latitude, longitude, phoneNumber, userId, openingHour, closingHour, specialNote);
+        } catch (Exception e) {
+            e.printStackTrace();
+            srvi.displayErrorMessage("Invalid fields");
+            return null;
+        }
     }
 
     private int getUserId(Activity activity) {
@@ -156,6 +172,34 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
             } else {
                 gpsTracker.showSettingsAlert();
             }
+        }
+    }
+
+    @Override
+    public void onLocationSelected(@Nullable Intent data) {
+        AddressData addressData = data.getParcelableExtra(Constants.ADDRESS_INTENT);
+        assert addressData != null;
+        Log.d("TAG", addressData.getAddressList().toString());
+        if (null != addressData.getAddressList() && addressData.getAddressList().size() > 0) {
+            Address address = addressData.getAddressList().get(0);
+            String addressString = address.getAddressLine(0);
+            String postalCode = address.getPostalCode();
+            String city = address.getLocality();
+            String country = address.getCountryName();
+            latitude = address.getLatitude();
+            longitude = address.getLongitude();
+
+            srvi.setAddress(addressString);
+            srvi.setPostalCode(postalCode);
+            srvi.setCity(city);
+            srvi.setCountry(country);
+        }
+    }
+
+    @Override
+    public void disposeObserver() {
+        for (DisposableObserver<?> disposableObserver : disposableObservers) {
+            disposableObserver.dispose();
         }
     }
 }

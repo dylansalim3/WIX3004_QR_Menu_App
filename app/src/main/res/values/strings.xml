@@ -21,6 +21,9 @@
 
     <string name="repeat_password">Repeat Password</string>
     <string name="phone_number">Phone Number</string>
+    <string name="opening_hour">Opening Hour</string>
+    <string name="closing_hour">Closing Hour</string>
+    <string name="special_hour_note">Special notes</string>
 
     <string name="store_name">Store Name</string>
     <string name="address">Address</string>
@@ -62,7 +65,7 @@
     <string name="pricing">RM 2.50</string>
 
 
-<!--    Merchant Activity-->
+    <!--    Merchant Activity-->
     <string name="btn_delete">Button Delete</string>
     <string name="btn_more">Button More</string>
 
@@ -106,4 +109,7 @@
     <string name="title_activity_store_qr">QR Scan</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+
+    <!--    Store Edit-->
+    <string name="submit">Submit</string>
 </resources>

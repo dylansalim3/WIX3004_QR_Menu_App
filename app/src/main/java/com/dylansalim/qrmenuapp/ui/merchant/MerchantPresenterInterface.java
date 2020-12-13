@@ -9,7 +9,7 @@ public interface MerchantPresenterInterface {
 
     void retrieveItemDetail();
 
-    void retrieveStoreDetail();
+    void retrieveStoreDetail(@Nullable Boolean retrieveItem);
 
     void onTabSelectionChanged(int tabIndex);
 

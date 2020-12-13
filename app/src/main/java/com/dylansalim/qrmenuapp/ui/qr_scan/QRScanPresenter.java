@@ -84,8 +84,6 @@ public class QRScanPresenter implements QRScanPresenterInterface {
                 if (roleName.equalsIgnoreCase("MERCHANT") && storeResult.getData() == null) {
                     qsvi.showStoreNotFoundAlert();
                 }else if(roleName.equalsIgnoreCase("MERCHANT")){
-                    // For testing purpose only
-                    qsvi.navigateToNextScreen(MainActivity.class);
                 }
             }
 
