@@ -6,6 +6,8 @@ import java.util.Date;
 
 public class NotificationDao {
 
+    private int id;
+
     private String title;
 
     private String body;
@@ -16,6 +18,14 @@ public class NotificationDao {
 
     @SerializedName("is_read")
     private boolean isRead;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

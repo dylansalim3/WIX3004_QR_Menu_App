@@ -1,7 +1,5 @@
 package com.dylansalim.qrmenuapp.ui.main.notifications;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,17 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.NotificationDao;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
-import com.dylansalim.qrmenuapp.ui.report.ReportActivity;
-import com.dylansalim.qrmenuapp.utils.JWTUtils;
-import com.google.gson.Gson;
+import com.dylansalim.qrmenuapp.utils.TokenData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 //TODO: fang -> max title length and max body length
-//TODO: fang -> the whole row item should be clickable not just the small image button
-//TODO: fang -> set notification as read after click
 
 public class NotificationsFragment extends Fragment implements NotificationViewInterface {
 
@@ -40,7 +32,7 @@ public class NotificationsFragment extends Fragment implements NotificationViewI
 
         recyclerView = root.findViewById(R.id.notification_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        notificationPresenter.getNotifications(getDataFromToken().userId);
+        notificationPresenter.getNotifications(TokenData.getUserDetailFromToken(requireContext()).getId());
         return root;
     }
 
@@ -49,10 +41,15 @@ public class NotificationsFragment extends Fragment implements NotificationViewI
         adapter = new NotificationAdapter(notificationDaos, (view, position) -> {
             // click listener
             NotificationDao dao = notificationDaos.get(position);
-            switch (dao.getActivity()) {
-                case "store":
-                    int storeId = dao.getData();
-                    // TODO: navigate to store activity
+            notificationPresenter.readNotification(dao.getId());
+            view.setBackgroundResource(R.drawable.dark_grey_rounded);
+
+            if (dao.getActivity() != null) {
+                switch (dao.getActivity()) {
+                    case "store":
+                        int storeId = dao.getData();
+                        // TODO: navigate to store activity
+                }
             }
         });
         recyclerView.setAdapter(adapter);
@@ -60,12 +57,12 @@ public class NotificationsFragment extends Fragment implements NotificationViewI
 
     @Override
     public void showLoading() {
-
+        //TODO: fang -> loading
     }
 
     @Override
     public void hideLoading() {
-
+        //TODO: fang -> close loading
     }
 
     @Override
@@ -82,31 +79,5 @@ public class NotificationsFragment extends Fragment implements NotificationViewI
         super.onDestroyView();
         notificationPresenter.disposeObserver();
         notificationPresenter = null;
-    }
-
-    private TokenData getDataFromToken() {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences(
-                this.getString(R.string.app_name), Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString(this.getString(R.string.token), "");
-        TokenData tokenData = new TokenData();
-
-        assert token != null;
-        if (!token.equals("")) {
-            String dataString = null;
-            try {
-                dataString = JWTUtils.getDataString(token);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            UserDetailDao userDetailDao = new Gson().fromJson(dataString, UserDetailDao.class);
-            tokenData.email = userDetailDao.getEmail();
-            tokenData.userId = userDetailDao.getId();
-        }
-        return tokenData;
-    }
-
-    private static class TokenData {
-        String email;
-        int userId;
     }
 }

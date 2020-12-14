@@ -80,6 +80,8 @@ public class NotificationService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         String body = remoteMessage.getData().get("body");
         String title = remoteMessage.getData().get("title");
+
+        //TODO: fang -> don't send notification if app is in foreground
         sendNotification(body, title);
     }
 

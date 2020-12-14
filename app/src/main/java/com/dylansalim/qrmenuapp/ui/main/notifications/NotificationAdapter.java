@@ -61,7 +61,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             title = view.findViewById(R.id.notification_item_title);
             body = view.findViewById(R.id.notification_item_body);
 
-            view.findViewById(R.id.notification_item_button).setOnClickListener(v -> {
+            view.setOnClickListener(v -> {
                 clickListener.onNotificationClick(view, getAdapterPosition());
             });
         }

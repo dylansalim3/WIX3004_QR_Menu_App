@@ -10,6 +10,6 @@ public class AccountPresenter implements AccountPresenterInterface {
 
     @Override
     public void switchRole(String currentRole) {
-
+        //TODO: fang -> switch role
     }
 }

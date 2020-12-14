@@ -1,25 +1,34 @@
 package com.dylansalim.qrmenuapp.ui.main.account;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
-import com.dylansalim.qrmenuapp.utils.JWTUtils;
-import com.google.gson.Gson;
+import com.dylansalim.qrmenuapp.ui.edit_profile.EditProfileActivity;
+import com.dylansalim.qrmenuapp.ui.login_registration.LoginRegistrationActivity;
+import com.dylansalim.qrmenuapp.ui.main.MainActivity;
+import com.dylansalim.qrmenuapp.ui.report.ReportActivity;
+import com.dylansalim.qrmenuapp.ui.setting.SettingActivity;
 
 
 public class AccountFragment extends Fragment implements AccountViewInterface {
 
+    final String TAG = "Account Fragment";
+
     AccountPresenterInterface presenter;
+    View editProfile;
+    View switchRole;
+    View settings;
+    View login;
+    View feedback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,52 +41,67 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
         View root = inflater.inflate(R.layout.fragment_account, container, false);
         setupMVP();
 
-        root.findViewById(R.id.account_edit_profile_button).setOnClickListener(view -> {
-            // TODO: fang -> navigate to edit profile activity
+        editProfile = root.findViewById(R.id.account_edit_profile_button);
+        switchRole = root.findViewById(R.id.account_switch_role_button);
+        settings = root.findViewById(R.id.account_settings_button);
+        login = root.findViewById(R.id.account_login_register_button);
+        feedback = root.findViewById(R.id.account_feedback_button);
+
+        if (isLogin()) {
+            login.setVisibility(View.GONE);
+        } else {
+            editProfile.setVisibility(View.GONE);
+            switchRole.setVisibility(View.GONE);
+            settings.setVisibility(View.GONE);
+        }
+
+        editProfile.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), ReportActivity.class);
+            startActivity(intent);
         });
-        root.findViewById(R.id.account_switch_role_button).setOnClickListener(view -> {
+
+        switchRole.setOnClickListener(view -> {
             presenter.switchRole("a");
+            // TODO: fang -> show dialog 'You have change your role, please login again'
+            Intent intent = new Intent(getContext(), LoginRegistrationActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         });
-        root.findViewById(R.id.account_settings_button).setOnClickListener(view -> {
-            Toast.makeText(getContext(), "setting", Toast.LENGTH_LONG).show();
+
+        settings.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), SettingActivity.class);
+            startActivity(intent);
         });
-        root.findViewById(R.id.account_feedback_button).setOnClickListener(view -> {
-            // TODO: fang -> navigate to playstore
+
+        login.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), LoginRegistrationActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        });
+
+        feedback.setOnClickListener(view -> {
+            String appPackageName = requireContext().getPackageName();
+            appPackageName = "com.whatsapp";
+            try {
+                Log.d(TAG, "Open market");
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=" + appPackageName)));
+            } catch (android.content.ActivityNotFoundException exception) {
+                Log.e(TAG, "Fail to open market, open webpage instead");
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+            }
         });
 
         return root;
     }
 
+    private Boolean isLogin() {
+        // TODO: fang -> check if a user has login
+        return true;
+    }
+
     private void setupMVP() {
         this.presenter = new AccountPresenter(this);
-    }
-
-    // TODO: fang -> extract into util
-    private TokenData getDataFromToken() {
-        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(
-                this.getString(R.string.app_name), Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString(this.getString(R.string.token), "");
-        TokenData tokenData = new TokenData();
-
-        assert token != null;
-        if (!token.equals("")) {
-            String dataString = null;
-            try {
-                dataString = JWTUtils.getDataString(token);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            UserDetailDao userDetailDao = new Gson().fromJson(dataString, UserDetailDao.class);
-            tokenData.email = userDetailDao.getEmail();
-            tokenData.userId = userDetailDao.getId();
-            tokenData.role = userDetailDao.getRole();
-        }
-        return tokenData;
-    }
-
-    private static class TokenData {
-        String email;
-        int userId;
-        String role;
     }
 }

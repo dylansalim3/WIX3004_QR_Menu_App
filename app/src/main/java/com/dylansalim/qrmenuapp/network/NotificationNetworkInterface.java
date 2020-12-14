@@ -22,6 +22,10 @@ public interface NotificationNetworkInterface {
     Observable<List<NotificationDao>> getNotifications(@Field("user_id") int userId);
 
     @FormUrlEncoded
+    @POST("/notification/read-notification")
+    Observable<Result<String>> readNotification(@Field("id") int notificationId);
+
+    @FormUrlEncoded
     @POST("/notification/delete-all-notifications")
     Observable<Result<String>> deleteAllNotifications(@Field("user_id") int userId);
 }

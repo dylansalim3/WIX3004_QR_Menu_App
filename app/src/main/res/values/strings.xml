@@ -115,6 +115,6 @@
     <string name="store_edit_title">Edit Merchant Info</string>
     <string name="store_edit_desc">Update the following field and submit to make changes</string>
 
-<!--    Empty recycler view-->
+    <!--    Empty recycler view-->
     <string name="no_item_merchant">There is no item</string>
 </resources>

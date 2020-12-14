@@ -5,8 +5,12 @@ import android.util.Log;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.network.NotificationNetworkInterface;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.Disposables;
 import io.reactivex.schedulers.Schedulers;
 
 public class NotificationPresenter implements NotificationPresenterInterface {
@@ -14,6 +18,7 @@ public class NotificationPresenter implements NotificationPresenterInterface {
     static final String TAG = "Notification Presenter";
 
     NotificationViewInterface notificationView;
+    List<Disposable> disposables = new ArrayList<>();
     Disposable disposable;
 
     public NotificationPresenter(NotificationViewInterface notificationView) {
@@ -37,11 +42,26 @@ public class NotificationPresenter implements NotificationPresenterInterface {
                     notificationView.hideLoading();
                     notificationView.showError("Get notifications failed");
                 });
+        disposables.add(disposable);
+    }
+
+    @Override
+    public void readNotification(int notificationId) {
+        disposable = NetworkClient.getNetworkClient().create(NotificationNetworkInterface.class)
+                .readNotification(notificationId)
+                .subscribeOn(Schedulers.io())
+                .subscribe(result -> {
+                    Log.d(TAG, "read notifications success");
+                }, error -> {
+                    Log.e(TAG, "read notifications failed -> " + error);
+                });
+        disposables.add(disposable);
     }
 
     @Override
     public void disposeObserver() {
-        if (disposable != null) {
+        Log.d(TAG, "dispose observers");
+        for (Disposable disposable : disposables) {
             disposable.dispose();
         }
     }

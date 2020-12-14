@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.ui.login_registration.LoginRegistrationActivity;
 import com.dylansalim.qrmenuapp.ui.qr_scan.QRScanActivity;
+import com.dylansalim.qrmenuapp.ui.report.ReportActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,7 +140,7 @@ public class OnboardingActivity extends AppCompatActivity {
             proceedBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent loginActivity = new Intent(getApplicationContext(), LoginRegistrationActivity.class);
+                    Intent loginActivity = new Intent(getApplicationContext(), ReportActivity.class);
                     startActivity(loginActivity);
 //                  save the footprint user entering the onboarding
                     savePrefsData();

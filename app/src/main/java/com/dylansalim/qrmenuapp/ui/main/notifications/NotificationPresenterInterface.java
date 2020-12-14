@@ -4,5 +4,7 @@ public interface NotificationPresenterInterface {
 
     void getNotifications(int userId);
 
+    void readNotification(int notificationId);
+
     void disposeObserver();
 }

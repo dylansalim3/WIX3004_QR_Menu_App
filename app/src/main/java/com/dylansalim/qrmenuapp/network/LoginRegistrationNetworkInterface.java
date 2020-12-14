@@ -1,6 +1,7 @@
 package com.dylansalim.qrmenuapp.network;
 
 
+import com.dylansalim.qrmenuapp.models.dao.Result;
 import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dao.RoleDao;
 import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
@@ -27,4 +28,14 @@ public interface LoginRegistrationNetworkInterface {
 
     @GET("/roles/get-all-roles")
     Observable<List<RoleDao>> getRoles();
+
+    @FormUrlEncoded
+    @POST("/users/update-profile")
+    Observable<Result<String>> updateProfile(
+            @Field("userid") int userId,
+            @Field("first_name") String firstName,
+            @Field("last_name") String lastName,
+            @Field("phonenum") String phoneNum,
+            @Field("address") String address
+    );
 }
