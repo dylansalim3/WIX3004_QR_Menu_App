@@ -56,7 +56,7 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
         }
 
         editProfile.setOnClickListener(view -> {
-            Intent intent = new Intent(getContext(), ReportActivity.class);
+            Intent intent = new Intent(getContext(), EditProfileActivity.class);
             startActivity(intent);
         });
 

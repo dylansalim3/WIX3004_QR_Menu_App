@@ -7,6 +7,11 @@ import android.widget.CheckBox;
 
 import com.dylansalim.qrmenuapp.R;
 
+//TODO: fang -> remove location service setting
+//TODO: fang -> change checkbox to toggle button
+//TODO: fang -> remove notification sound setting
+//TODO: fang -> add logout button here
+
 public class SettingActivity extends AppCompatActivity implements SettingViewInterface {
 
     final String TAG = "Setting Activity";

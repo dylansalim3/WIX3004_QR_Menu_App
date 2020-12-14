@@ -17,7 +17,6 @@ import com.dylansalim.qrmenuapp.utils.TokenData;
 
 import java.util.List;
 
-//TODO: fang -> max title length and max body length
 
 public class NotificationsFragment extends Fragment implements NotificationViewInterface {
 
