@@ -20,4 +20,6 @@ public interface MerchantInfoViewInterface {
     void navigateToStoreQRActivity(StoreDao storeDetail);
 
     void navigateToEditStoreActivity(StoreDao storeDetail);
+
+    void setProfileImg(String profileImg);
 }

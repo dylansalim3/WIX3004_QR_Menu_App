@@ -171,7 +171,7 @@ public class NewItemFormPresenter implements NewItemFormPresenterInterface {
         RequestBody priceRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(itemDao.getPrice()));
         RequestBody promoPriceRequestBody = null;
         RequestBody hiddenRequestBody = RequestBody.create(MediaType.parse("plain/text"), Boolean.toString(false));
-        RequestBody recommendedRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(Boolean.toString(recommended)));
+        RequestBody recommendedRequestBody = RequestBody.create(MediaType.parse("plain/text"), Boolean.toString(recommended));
 
         if (nifvi.getPromoPrice() != null && nifvi.getPromoPrice().length() > 0) {
             double promoPrice = Double.parseDouble(nifvi.getPromoPrice());
@@ -186,10 +186,6 @@ public class NewItemFormPresenter implements NewItemFormPresenterInterface {
             RequestBody requestBody1 = RequestBody.create(MediaType.parse("image/*"), file);
 
             imgBody = MultipartBody.Part.createFormData("file", "file.png", requestBody1);
-
-            String data = new Gson().toJson(itemDao).toString();
-            Log.d(TAG, data);
-
         }
 
         if (CREATE_ITEM.equals(submitType)) {

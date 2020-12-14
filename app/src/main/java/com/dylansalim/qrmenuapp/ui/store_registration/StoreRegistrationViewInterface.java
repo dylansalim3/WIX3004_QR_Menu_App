@@ -39,6 +39,8 @@ public interface StoreRegistrationViewInterface {
 
     void setSpecialOpeningNote(String specialOpeningNote);
 
+    void setProfileImg(String profileImg);
+
     void displayErrorMessage(String s);
 
     void showProgressBar();

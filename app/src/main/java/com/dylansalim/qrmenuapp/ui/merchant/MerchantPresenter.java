@@ -3,6 +3,7 @@ package com.dylansalim.qrmenuapp.ui.merchant;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.dylansalim.qrmenuapp.BuildConfig;
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.EditListItem;
 import com.dylansalim.qrmenuapp.models.dao.AllItemDao;
@@ -90,10 +91,15 @@ public class MerchantPresenter implements MerchantPresenterInterface {
                 .subscribeWith(getStoreDetailObserver(retrieveItem)));
     }
 
-    private void setupStoreName(@Nullable String initialName) {
+    private void setupStoreDetail(@Nullable String initialName, String profileImgUrl) {
         String storeName = initialName != null ? initialName : userDetailDao.getStoreName();
         if (storeName != null) {
+
             mvi.setupToolbarTitle(storeName);
+        }
+
+        if (profileImgUrl != null) {
+            mvi.setProfileImg(BuildConfig.SERVER_API_URL + "/" + profileImgUrl);
         }
     }
 
@@ -263,8 +269,9 @@ public class MerchantPresenter implements MerchantPresenterInterface {
             public void onNext(@NonNull Result<StoreDao> storeDaoResult) {
                 if (storeDaoResult.getData() != null) {
                     String storeName = storeDaoResult.getData().getName();
+                    String profileImgUrl = storeDaoResult.getData().getProfileImg();
                     storeResult = storeDaoResult.getData();
-                    setupStoreName(storeName);
+                    setupStoreDetail(storeName, profileImgUrl);
                     storeId = storeResult.getId();
                 }
                 retrieveOverallRating();

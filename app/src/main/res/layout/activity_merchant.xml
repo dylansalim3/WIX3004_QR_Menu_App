@@ -40,7 +40,7 @@
 
 
             <ImageView
-                android:id="@+id/merchant_iv"
+                android:id="@+id/merchant_iv_profile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="Store Picture"

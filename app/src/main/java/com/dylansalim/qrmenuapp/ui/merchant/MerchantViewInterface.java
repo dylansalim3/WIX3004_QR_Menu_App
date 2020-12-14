@@ -31,4 +31,6 @@ public interface MerchantViewInterface {
     void navigateToMerchantInfoActivity(StoreDao storeResult,boolean isStoreAdmin);
 
     void navigateToStoreQRActivity(StoreDao storeResult);
+
+    void setProfileImg(String profileImg);
 }

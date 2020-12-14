@@ -55,6 +55,17 @@
                 android:textColor="@color/colorBeige"
                 android:textSize="15sp" />
 
+            <ImageView
+                android:id="@+id/iv_store_registration"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_gravity="center"
+                android:src="@drawable/sample"
+                android:contentDescription="TODO" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_store_registration_name"
                 style="@style/merchant_textinput_layout">

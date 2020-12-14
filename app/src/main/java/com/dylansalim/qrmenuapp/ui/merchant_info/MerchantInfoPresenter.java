@@ -3,6 +3,7 @@ package com.dylansalim.qrmenuapp.ui.merchant_info;
 import android.content.Context;
 import android.util.Log;
 
+import com.dylansalim.qrmenuapp.BuildConfig;
 import com.dylansalim.qrmenuapp.models.dao.Rating;
 import com.dylansalim.qrmenuapp.models.dao.Result;
 import com.dylansalim.qrmenuapp.models.dao.StoreDao;
@@ -36,9 +37,12 @@ public class MerchantInfoPresenter implements MerchantInfoPresenterInterface {
 
     @Override
     public void setStoreInfo(StoreDao storeDetail, boolean isStoreAdmin) {
-        Log.d(TAG,storeDetail.toString());
+        Log.d(TAG, storeDetail.toString());
         this.storeDetail = storeDetail;
         mivi.setupToolbar(storeDetail.getName());
+        if (storeDetail.getProfileImg() != null) {
+            mivi.setProfileImg(BuildConfig.SERVER_API_URL + "/" + storeDetail.getProfileImg());
+        }
         this.isStoreAdmin = isStoreAdmin;
     }
 

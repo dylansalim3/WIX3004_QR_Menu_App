@@ -12,7 +12,7 @@
         android:layout_height="300dp"
         android:fitsSystemWindows="true"
         android:background="@null"
-        android:theme="@style/ThemeOverlay.MaterialComponents.Light">
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/merchant_info_toolbar"
@@ -20,7 +20,6 @@
             android:layout_height="200dp"
             android:background="@drawable/sample"
             android:gravity="top"
-            app:title="@string/action_share"
             app:titleMarginTop="15dp"
             app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"/>
 

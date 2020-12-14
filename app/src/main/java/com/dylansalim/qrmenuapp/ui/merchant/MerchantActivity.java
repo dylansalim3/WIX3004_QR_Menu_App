@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import com.dylansalim.qrmenuapp.ui.store_qr.StoreQRActivity;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Objects;
@@ -324,6 +326,14 @@ public class MerchantActivity extends AppCompatActivity
             Log.d(TAG, "QWERTY");
             merchantPresenter.retrieveStoreDetail(false);
         }
+    }
+
+    @Override
+    public void setProfileImg(String profileImg) {
+        ImageView mProfileImg = findViewById(R.id.merchant_iv_profile);
+        Picasso.get().load(profileImg)
+                .placeholder(R.drawable.common_google_signin_btn_icon_dark_focused)
+                .into(mProfileImg);
     }
 
     @Override

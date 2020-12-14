@@ -2,17 +2,24 @@ package com.dylansalim.qrmenuapp.ui.store_registration;
 
 import android.app.Activity;
 import android.app.TimePickerDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.services.FileIOService;
 import com.dylansalim.qrmenuapp.services.GpsTracker;
 import com.dylansalim.qrmenuapp.ui.component.CustomPhoneInputLayout;
 import com.dylansalim.qrmenuapp.ui.main.MainActivity;
@@ -20,6 +27,7 @@ import com.dylansalim.qrmenuapp.ui.merchant_info.MerchantInfoActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
+import com.squareup.picasso.Picasso;
 import com.sucho.placepicker.Constants;
 import com.sucho.placepicker.MapType;
 import com.sucho.placepicker.PlacePicker;
@@ -42,8 +50,11 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
     ViewGroup progressView;
     protected boolean isProgressShowing = false;
     TimePickerDialog picker;
+    private ImageView mItemImage;
 
     private CustomPhoneInputLayout mPhoneInputLayout;
+    private int RESULT_LOAD_IMAGE = 101;
+    private static final String TAG = "sra";
 
 
     @Override
@@ -67,6 +78,8 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
         mSpecialOpeningNote = findViewById(R.id.til_store_registration_special_hour_note);
 
         mPhoneInputLayout = findViewById(R.id.phone_input_layout);
+
+        mItemImage = findViewById(R.id.iv_store_registration);
 
         Bundle bundle = getIntent().getExtras();
         if (null != bundle && bundle.getBoolean(getResources().getString(R.string.edit_store))) {
@@ -138,7 +151,21 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
                 startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST);
             }
         });
+
+        mItemImage.setOnClickListener(view -> {
+            if (FileIOService.requestReadIOPermission(this)) {
+                pickImage();
+            }
+        });
     }
+
+    private void pickImage() {
+        Intent i = new Intent(
+                Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_LOAD_IMAGE);
+    }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -146,7 +173,11 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
             if (resultCode == Activity.RESULT_OK && data != null) {
                 storeRegistrationPresenter.onLocationSelected(data);
             }
-        } else {
+        } else if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Log.d(TAG, "IMAGE LOADED");
+            Uri selectedImage = data.getData();
+            storeRegistrationPresenter.onItemImageResult(selectedImage, getContentResolver());
+        }else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -241,6 +272,15 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
     @Override
     public void setSpecialOpeningNote(String specialOpeningNote) {
         Objects.requireNonNull(mSpecialOpeningNote.getEditText()).setText(specialOpeningNote);
+    }
+
+    @Override
+    public void setProfileImg(String profileImg) {
+        if (mItemImage != null) {
+            Picasso.get().load(profileImg)
+                    .placeholder(R.drawable.sample)
+                    .into(mItemImage);
+        }
     }
 
 
