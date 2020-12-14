@@ -2,7 +2,6 @@ package com.dylansalim.qrmenuapp.ui.store_qr;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.StoreDao;
-import com.dylansalim.qrmenuapp.services.FileIOService;
+import com.squareup.picasso.Picasso;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,7 +23,7 @@ public class StoreQRActivity extends AppCompatActivity implements StoreQRViewInt
     private ImageView mQRImage;
     private TextView mStoreTitle, mStoreDesc;
     private StoreQRPresenterInterface storeQRPresenterInterface;
-    private static final String TAG ="sqra";
+    private static final String TAG = "sqra";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +80,17 @@ public class StoreQRActivity extends AppCompatActivity implements StoreQRViewInt
 
 
     @Override
-    public void setQRDetail(Bitmap bitmap, String title, String desc) {
-        Log.d(TAG,"empty SET QR DETAIL");
+    public void setQRDetail(Bitmap bitmap, String title, String desc, String imageUrl) {
+        Log.d(TAG, "empty SET QR DETAIL");
+        if (null != imageUrl) {
+            ImageView mProfileImg = findViewById(R.id.iv_store_qr_profile);
+            Picasso.get().load(imageUrl)
+                    .placeholder(R.drawable.sample)
+                    .into(mProfileImg);
+        }
 
         if (null != bitmap && null != title && null != desc) {
-            Log.d(TAG,"SET QR DETAIL");
+            Log.d(TAG, "SET QR DETAIL");
             mQRImage.setImageBitmap(bitmap);
             mStoreTitle.setText(title);
             mStoreDesc.setText(desc);
@@ -96,8 +101,8 @@ public class StoreQRActivity extends AppCompatActivity implements StoreQRViewInt
     public void shareQR(Bitmap bitmap, String desc) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT,desc);
-        String url= MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "title", "description");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, desc);
+        String url = MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "title", "description");
         sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(url));
         sendIntent.setType("image/*");
         sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

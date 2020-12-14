@@ -3,6 +3,7 @@ package com.dylansalim.qrmenuapp.ui.store_qr;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.dylansalim.qrmenuapp.BuildConfig;
 import com.dylansalim.qrmenuapp.models.dao.Result;
 import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
@@ -56,7 +57,7 @@ public class StoreQRPresenter implements StoreQRPresenterInterface {
             public void onNext(@NonNull Result<String> result) {
                 qrBase64Result = result.getData();
                 Bitmap bitmap = BitmapUtils.base64ToBitmapConverter(result.getData());
-                sqvi.setQRDetail(bitmap, storeDetail.getName(), storeDetail.getAddress());
+                sqvi.setQRDetail(bitmap, storeDetail.getName(), storeDetail.getAddress(), BuildConfig.SERVER_API_URL + "/" + storeDetail.getProfileImg());
             }
 
             @Override
