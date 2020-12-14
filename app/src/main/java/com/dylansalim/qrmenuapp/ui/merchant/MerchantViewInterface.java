@@ -12,6 +12,8 @@ public interface MerchantViewInterface {
 
     void hideProgressBar();
 
+    void setOverallRating(String overallRating);
+
     void setupRecyclerView(List<EditListItem> editListItems);
 
     void setupTabLayout(List<String> title);
@@ -29,4 +31,6 @@ public interface MerchantViewInterface {
     void navigateToMerchantInfoActivity(StoreDao storeResult,boolean isStoreAdmin);
 
     void navigateToStoreQRActivity(StoreDao storeResult);
+
+    void setProfileImg(String profileImg);
 }

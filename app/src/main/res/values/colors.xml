@@ -25,6 +25,8 @@
 
     <color name="colorWhite">#ffffff</color>
 
+    <color name="colorLightYellow">#FFF200</color>
+
     <!-- colors for button style -->
 
     <color name="gradient_start_color">#4c84ff</color>

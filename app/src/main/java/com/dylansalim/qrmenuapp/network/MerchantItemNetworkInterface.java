@@ -2,6 +2,7 @@ package com.dylansalim.qrmenuapp.network;
 
 import com.dylansalim.qrmenuapp.models.dao.AllItemDao;
 import com.dylansalim.qrmenuapp.models.dao.ItemCategoryDao;
+import com.dylansalim.qrmenuapp.models.dao.OverallRating;
 import com.dylansalim.qrmenuapp.models.dao.Result;
 import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 
@@ -40,5 +41,8 @@ public interface MerchantItemNetworkInterface {
     @POST("/item-categories/delete-item-category")
     Observable<Result<String>> deleteItemCategory(@Field("item_category_id") int itemCategoryId);
 
+    @FormUrlEncoded
+    @POST("/rating/get-average-rating-by-store-id")
+    Observable<Result<OverallRating>> getRatingByStoreId(@Field("store_id") int storeId);
 
 }

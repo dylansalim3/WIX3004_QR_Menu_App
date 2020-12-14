@@ -46,6 +46,9 @@ public class StoreDao implements Parcelable {
     @SerializedName("special_opening_note")
     private String specialOpeningNote;
 
+    @SerializedName("profile_img")
+    private String profileImg;
+
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public StoreDao createFromParcel(Parcel in) {
             return new StoreDao(in);
@@ -70,9 +73,10 @@ public class StoreDao implements Parcelable {
         openHour = in.readString();
         closingHour = in.readString();
         specialOpeningNote = in.readString();
+        profileImg = in.readString();
     }
 
-    public StoreDao(int id, String name, String address, int postalCode, String city, String country, @Nullable Double latitude, @Nullable Double longitude, String phoneNum, int userId, String openHour, String closingHour, String specialOpeningNote) {
+    public StoreDao(int id, String name, String address, int postalCode, String city, String country, @Nullable Double latitude, @Nullable Double longitude, String phoneNum, int userId, String openHour, String closingHour, String specialOpeningNote,String profileImg) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -86,9 +90,11 @@ public class StoreDao implements Parcelable {
         this.openHour = openHour;
         this.closingHour = closingHour;
         this.specialOpeningNote = specialOpeningNote;
+        this.profileImg = profileImg;
+
     }
 
-    public StoreDao(String name, String address, int postalCode, String city, String country, @Nullable Double latitude, @Nullable Double longitude, String phoneNum, int userId, String openHour, String closingHour, String specialOpeningNote) {
+    public StoreDao(String name, String address, int postalCode, String city, String country, @Nullable Double latitude, @Nullable Double longitude, String phoneNum, int userId, String openHour, String closingHour, String specialOpeningNote,String profileImg) {
         this.name = name;
         this.address = address;
         this.postalCode = postalCode;
@@ -101,6 +107,7 @@ public class StoreDao implements Parcelable {
         this.openHour = openHour;
         this.closingHour = closingHour;
         this.specialOpeningNote = specialOpeningNote;
+        this.profileImg = profileImg;
     }
 
     public int getId() {
@@ -209,6 +216,14 @@ public class StoreDao implements Parcelable {
         this.specialOpeningNote = specialOpeningNote;
     }
 
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -229,6 +244,7 @@ public class StoreDao implements Parcelable {
         parcel.writeString(this.openHour);
         parcel.writeString(this.closingHour);
         parcel.writeString(this.specialOpeningNote);
+        parcel.writeString(this.profileImg);
     }
 
     @Override
@@ -247,6 +263,7 @@ public class StoreDao implements Parcelable {
                 ", openHour='" + openHour + '\'' +
                 ", closingHour='" + closingHour + '\'' +
                 ", specialOpeningNote='" + specialOpeningNote + '\'' +
+                ", profileImg='" + profileImg + '\'' +
                 '}';
     }
 }

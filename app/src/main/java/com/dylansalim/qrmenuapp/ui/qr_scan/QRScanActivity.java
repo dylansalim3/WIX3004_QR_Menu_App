@@ -41,6 +41,10 @@ public class QRScanActivity extends AppCompatActivity implements QRScanViewInter
         closeTV = findViewById(R.id.closeTV);
         qrActivityTV = findViewById(R.id.qrActivityTV);
         scanButton = findViewById(R.id.scanBtn);
+        ((Button)findViewById(R.id.qr_scan_login)).setOnClickListener(view -> {
+            Intent intent = new Intent(QRScanActivity.this,LoginRegistrationActivity.class);
+            startActivity(intent);
+        });
 
         setupMVP();
 

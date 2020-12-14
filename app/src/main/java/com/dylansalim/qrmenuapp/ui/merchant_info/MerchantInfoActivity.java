@@ -1,6 +1,9 @@
 package com.dylansalim.qrmenuapp.ui.merchant_info;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -21,6 +24,8 @@ import com.dylansalim.qrmenuapp.ui.store_qr.StoreQRActivity;
 import com.dylansalim.qrmenuapp.ui.store_registration.StoreRegistrationActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +41,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
         RatingDialog.RatingDialogListener {
 
     private MerchantInfoPresenter merchantInfoPresenter;
+    private Toolbar toolbar;
     private TabLayout mTabLayout;
     private ViewPager2 mViewPager2;
     private ViewGroup progressView;
@@ -52,7 +58,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant_info);
 
-        Toolbar toolbar = findViewById(R.id.merchant_info_toolbar);
+        toolbar = findViewById(R.id.merchant_info_toolbar);
         setSupportActionBar(toolbar);
 
         setupMVP();
@@ -227,6 +233,31 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
     @Override
     public void submitReviewDialog(String text, float rating) {
         merchantInfoPresenter.onReviewSubmit(text, rating, this);
+    }
+
+    @Override
+    public void setProfileImg(String profileImg) {
+        if (getSupportActionBar() != null) {
+            Picasso.get().load(profileImg)
+                    .placeholder(R.drawable.sample)
+                    .into(new Target() {
+                        @Override
+                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                            Drawable d = new BitmapDrawable(getResources(), bitmap);
+                            getSupportActionBar().setBackgroundDrawable(d);
+                        }
+
+                        @Override
+                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                        }
+
+                        @Override
+                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                        }
+                    });
+        }
     }
 
     @Override

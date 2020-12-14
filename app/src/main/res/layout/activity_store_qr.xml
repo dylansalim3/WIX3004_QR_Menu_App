@@ -9,6 +9,7 @@
     >
 
     <ImageView
+        android:id="@+id/iv_store_qr_profile"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@drawable/curve_white_background"

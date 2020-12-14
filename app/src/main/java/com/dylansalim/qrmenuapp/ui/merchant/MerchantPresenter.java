@@ -3,10 +3,12 @@ package com.dylansalim.qrmenuapp.ui.merchant;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.dylansalim.qrmenuapp.BuildConfig;
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.EditListItem;
 import com.dylansalim.qrmenuapp.models.dao.AllItemDao;
 import com.dylansalim.qrmenuapp.models.dao.ItemCategoryDao;
+import com.dylansalim.qrmenuapp.models.dao.OverallRating;
 import com.dylansalim.qrmenuapp.models.dao.Result;
 import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
@@ -42,6 +44,7 @@ public class MerchantPresenter implements MerchantPresenterInterface {
     private HashMap<Integer, Integer> tabIndexHashMap;
     private List<DisposableObserver<?>> disposableObservers = new ArrayList<>();
     private boolean isStoreAdmin = false;
+    private String overallRating;
     private static final String TAG = "mvi";
 
     private StoreDao storeResult;
@@ -62,7 +65,6 @@ public class MerchantPresenter implements MerchantPresenterInterface {
             this.storeId = storeId;
             isStoreAdmin = false;
             retrieveStoreDetail(true);
-//            retrieveItemDetail();
         }
     }
 
@@ -74,6 +76,13 @@ public class MerchantPresenter implements MerchantPresenterInterface {
                 .subscribeWith(getAllItemObserver()));
     }
 
+    public void retrieveOverallRating() {
+        disposableObservers.add(getMerchantItemNetworkInterface().getRatingByStoreId(this.storeId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(getOverallRatingObserver()));
+    }
+
     @Override
     public void retrieveStoreDetail(@Nullable Boolean retrieveItem) {
         disposableObservers.add(getMerchantItemNetworkInterface().getStoreDetail(this.storeId)
@@ -82,10 +91,15 @@ public class MerchantPresenter implements MerchantPresenterInterface {
                 .subscribeWith(getStoreDetailObserver(retrieveItem)));
     }
 
-    private void setupStoreName(@Nullable String initialName) {
+    private void setupStoreDetail(@Nullable String initialName, String profileImgUrl) {
         String storeName = initialName != null ? initialName : userDetailDao.getStoreName();
         if (storeName != null) {
+
             mvi.setupToolbarTitle(storeName);
+        }
+
+        if (profileImgUrl != null) {
+            mvi.setProfileImg(BuildConfig.SERVER_API_URL + "/" + profileImgUrl);
         }
     }
 
@@ -255,10 +269,12 @@ public class MerchantPresenter implements MerchantPresenterInterface {
             public void onNext(@NonNull Result<StoreDao> storeDaoResult) {
                 if (storeDaoResult.getData() != null) {
                     String storeName = storeDaoResult.getData().getName();
+                    String profileImgUrl = storeDaoResult.getData().getProfileImg();
                     storeResult = storeDaoResult.getData();
-                    setupStoreName(storeName);
+                    setupStoreDetail(storeName, profileImgUrl);
                     storeId = storeResult.getId();
                 }
+                retrieveOverallRating();
 
                 if (null != retrieveItem && retrieveItem) {
                     retrieveItemDetail();
@@ -323,6 +339,30 @@ public class MerchantPresenter implements MerchantPresenterInterface {
 
             @Override
             public void onComplete() {
+            }
+        };
+    }
+
+    public DisposableObserver<Result<OverallRating>> getOverallRatingObserver() {
+        return new DisposableObserver<Result<OverallRating>>() {
+            @Override
+            public void onNext(@NonNull Result<OverallRating> allItemsDao) {
+                if (null != allItemsDao.getData()) {
+                    OverallRating rating = allItemsDao.getData();
+                    overallRating = String.format("%.2f (%d)", rating.getAverage(), rating.getCount());
+                    mvi.setOverallRating(overallRating);
+                }
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                e.printStackTrace();
+                mvi.displayError(e.toString());
+            }
+
+            @Override
+            public void onComplete() {
+                mvi.hideProgressBar();
             }
         };
     }

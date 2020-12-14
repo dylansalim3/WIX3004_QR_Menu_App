@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import com.dylansalim.qrmenuapp.ui.store_qr.StoreQRActivity;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Objects;
@@ -117,6 +119,11 @@ public class MerchantActivity extends AppCompatActivity
     }
 
     @Override
+    public void setOverallRating(String overallRating) {
+        ((TextView) findViewById(R.id.merchant_overall_rating)).setText(overallRating);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         Bundle bundle = getIntent().getExtras();
@@ -164,10 +171,10 @@ public class MerchantActivity extends AppCompatActivity
 
         TextView mEmptyListTv = findViewById(R.id.tv_merchant_empty_list);
 
-        if(editListItems.size()>0){
+        if (editListItems.size() > 0) {
             mRecyclerView.setVisibility(View.VISIBLE);
             mEmptyListTv.setVisibility(View.GONE);
-        }else{
+        } else {
             mEmptyListTv.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
         }
@@ -260,7 +267,7 @@ public class MerchantActivity extends AppCompatActivity
         bundle.putParcelable(getResources().getString(R.string.store_result), storeResult);
         bundle.putBoolean(getResources().getString(R.string.is_store_admin), isStoreAdmin);
         intent.putExtras(bundle);
-        startActivityForResult(intent,MERCHANT_INFO_REQUEST_CODE);
+        startActivityForResult(intent, MERCHANT_INFO_REQUEST_CODE);
     }
 
     @Override
@@ -315,10 +322,18 @@ public class MerchantActivity extends AppCompatActivity
             String message = data.getStringExtra("MESSAGE");
             displayError(message);
             merchantPresenter.retrieveItemDetail();
-        }else if(requestCode == MERCHANT_INFO_REQUEST_CODE && null != data){
-            Log.d(TAG,"QWERTY");
+        } else if (requestCode == MERCHANT_INFO_REQUEST_CODE && null != data) {
+            Log.d(TAG, "QWERTY");
             merchantPresenter.retrieveStoreDetail(false);
         }
+    }
+
+    @Override
+    public void setProfileImg(String profileImg) {
+        ImageView mProfileImg = findViewById(R.id.merchant_iv_profile);
+        Picasso.get().load(profileImg)
+                .placeholder(R.drawable.common_google_signin_btn_icon_dark_focused)
+                .into(mProfileImg);
     }
 
     @Override

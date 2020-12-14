@@ -100,6 +100,18 @@
            android:textColor="@color/colorBeige"
            app:cornerRadius="10dp" />
 
+    <Button
+        android:id="@+id/qr_scan_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginHorizontal="20dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/proxima_nova_regular"
+        android:text="@string/login_here"
+        android:textColor="@color/colorBeige"
+        app:cornerRadius="10dp" />
+
 
 
 </LinearLayout>
