@@ -9,7 +9,7 @@ import android.widget.EditText;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
-import com.dylansalim.qrmenuapp.utils.TokenData;
+import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
 // TODO: fang -> address editText multiline (refer report reason)
 
@@ -36,7 +36,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         address = findViewById(R.id.profile_address);
         saveButton = findViewById(R.id.profile_save_button);
 
-        UserDetailDao userDetailDao = TokenData.getUserDetailFromToken(this);
+        UserDetailDao userDetailDao = SharedPrefUtil.getUserDetail(this);
 
         if (userDetailDao == null) {
             Log.e(TAG, "user detail token missing");

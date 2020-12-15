@@ -1,20 +1,15 @@
 package com.dylansalim.qrmenuapp.ui.report;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.databinding.ActivityReportBinding;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
-import com.dylansalim.qrmenuapp.utils.JWTUtils;
-import com.dylansalim.qrmenuapp.utils.TokenData;
-import com.google.gson.Gson;
+import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
 /**
  * Start activity with intent as below
@@ -37,7 +32,7 @@ public class ReportActivity extends AppCompatActivity implements ReportViewInter
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_report);
         setupMVP();
-        UserDetailDao userDetail = TokenData.getUserDetailFromToken(this);
+        UserDetailDao userDetail = SharedPrefUtil.getUserDetail(this);
 
         storeId = getIntent().getIntExtra("store_id", 0);
         storeName = getIntent().getStringExtra("store_name");

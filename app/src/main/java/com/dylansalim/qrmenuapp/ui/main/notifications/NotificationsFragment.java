@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.NotificationDao;
-import com.dylansalim.qrmenuapp.utils.TokenData;
+import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class NotificationsFragment extends Fragment implements NotificationViewI
 
         recyclerView = root.findViewById(R.id.notification_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        notificationPresenter.getNotifications(TokenData.getUserDetailFromToken(requireContext()).getId());
+        notificationPresenter.getNotifications(SharedPrefUtil.getUserDetail(requireContext()).getId());
         return root;
     }
 
