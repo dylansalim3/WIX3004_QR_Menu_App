@@ -31,7 +31,7 @@ public interface LoginRegistrationNetworkInterface {
 
     @FormUrlEncoded
     @POST("/users/update-profile")
-    Observable<Result<String>> updateProfile(
+    Observable<TokenDao> updateProfile(
             @Field("userid") int userId,
             @Field("first_name") String firstName,
             @Field("last_name") String lastName,

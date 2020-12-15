@@ -40,109 +40,115 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingHorizontal="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="40dp">
+        android:layout_height="match_parent">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="10dp"
-            android:text="First name"
-            android:textColor="#FFF7F4"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="40dp">
 
-        <EditText
-            android:id="@+id/profile_firstname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/dark_grey_rounded"
-            android:elevation="30dp"
-            android:hint="@string/first_name"
-            android:textColor="#FFF7F4"
-            android:textColorHint="#7E7F7F"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:text="First name"
+                android:textColor="#FFF7F4"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="10dp"
-            android:text="Last name"
-            android:textColor="#FFF7F4"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <EditText
+                android:id="@+id/profile_firstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dark_grey_rounded"
+                android:elevation="30dp"
+                android:hint="@string/first_name"
+                android:textColor="#FFF7F4"
+                android:textColorHint="#7E7F7F"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/profile_lastname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/dark_grey_rounded"
-            android:elevation="30dp"
-            android:hint="@string/last_name"
-            android:textColor="#FFF7F4"
-            android:textColorHint="#7E7F7F"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:text="Last name"
+                android:textColor="#FFF7F4"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="10dp"
-            android:text="Phone number"
-            android:textColor="#FFF7F4"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <EditText
+                android:id="@+id/profile_lastname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dark_grey_rounded"
+                android:elevation="30dp"
+                android:hint="@string/last_name"
+                android:textColor="#FFF7F4"
+                android:textColorHint="#7E7F7F"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/profile_phonenumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/dark_grey_rounded"
-            android:elevation="30dp"
-            android:inputType="phone"
-            android:hint="@string/phone_number"
-            android:textColor="#FFF7F4"
-            android:textColorHint="#7E7F7F"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:text="Phone number"
+                android:textColor="#FFF7F4"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="10dp"
-            android:text="Address"
-            android:textColor="#FFF7F4"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <EditText
+                android:id="@+id/profile_phonenumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dark_grey_rounded"
+                android:elevation="30dp"
+                android:hint="@string/phone_number"
+                android:inputType="phone"
+                android:textColor="#FFF7F4"
+                android:textColorHint="#7E7F7F"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/profile_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/dark_grey_rounded"
-            android:elevation="30dp"
-            android:hint="@string/address"
-            android:textColor="#FFF7F4"
-            android:textColorHint="#7E7F7F"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:text="Address"
+                android:textColor="#FFF7F4"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/profile_save_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/dark_grey_rounded"
-            android:elevation="30dp"
-            android:paddingVertical="6dp"
-            android:text="Save Profile"
-            android:textAllCaps="false"
-            android:textColor="#FFF7F4"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <EditText
+                android:id="@+id/profile_address"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/dark_grey_rounded"
+                android:elevation="30dp"
+                android:gravity="top"
+                android:hint="@string/address"
+                android:textColor="#FFF7F4"
+                android:textColorHint="#7E7F7F"
+                android:textStyle="bold" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/profile_save_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/dark_grey_rounded"
+                android:elevation="30dp"
+                android:paddingVertical="6dp"
+                android:text="Save Profile"
+                android:textAllCaps="false"
+                android:textColor="#FFF7F4"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

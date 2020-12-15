@@ -12,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dylansalim.qrmenuapp.R;
+import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
 import com.dylansalim.qrmenuapp.ui.edit_profile.EditProfileActivity;
 import com.dylansalim.qrmenuapp.ui.login_registration.LoginRegistrationActivity;
+import com.dylansalim.qrmenuapp.ui.qr_scan.QRScanActivity;
 import com.dylansalim.qrmenuapp.ui.setting.SettingActivity;
 import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
@@ -91,10 +93,8 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
     }
 
     @Override
-    public void login() {
-        Intent intent = new Intent(getContext(), LoginRegistrationActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+    public void saveUserToken(TokenDao tokenDao) {
+        SharedPrefUtil.setUserDetail(getContext(), tokenDao);
     }
 
     @Override
@@ -102,8 +102,21 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
         SharedPrefUtil.removeUserDetail(getContext());
     }
 
+    @Override
+    public void reopenApp() {
+        Intent intent = new Intent(getContext(), QRScanActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
     private Boolean isLogin() {
         return SharedPrefUtil.getUserDetail(requireContext()) != null;
+    }
+
+    private void login() {
+        Intent intent = new Intent(getContext(), LoginRegistrationActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     private void logout() {

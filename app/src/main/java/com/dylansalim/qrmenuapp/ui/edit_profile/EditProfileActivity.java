@@ -8,10 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.dylansalim.qrmenuapp.R;
+import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
 import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
-// TODO: fang -> address editText multiline (refer report reason)
 
 public class EditProfileActivity extends AppCompatActivity implements EditProfileViewInterface {
 
@@ -61,6 +61,12 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     }
 
     @Override
+    public void saveToken(TokenDao tokenDao) {
+        SharedPrefUtil.setUserDetail(this, tokenDao);
+        Log.d(TAG, "new token saved");
+    }
+
+    @Override
     public void showLoading() {
         //TODO: fang -> loading
     }
@@ -71,8 +77,16 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     }
 
     @Override
-    public void showError(String error) {
-
+    public void showError(ErrorType type) {
+        Log.e(TAG, "error -> " + type);
+        switch (type) {
+            case EMPTY_FIRST_NAME:
+            case EMPTY_LAST_NAME:
+            case EMPTY_PHONE_NUM:
+            case EMPTY_ADDRESS:
+            case REQUEST_FAILED:
+            case INVALID_PHONE_NUMBER:
+        }
     }
 
     @Override

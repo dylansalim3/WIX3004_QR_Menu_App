@@ -21,6 +21,7 @@ import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.network.NotificationNetworkInterface;
 import com.dylansalim.qrmenuapp.ui.main.MainActivity;
 import com.dylansalim.qrmenuapp.utils.JWTUtils;
+import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
@@ -81,8 +82,9 @@ public class NotificationService extends FirebaseMessagingService {
         String body = remoteMessage.getData().get("body");
         String title = remoteMessage.getData().get("title");
 
-        //TODO: fang -> don't send notification if app is in foreground
-        sendNotification(body, title);
+        if (SharedPrefUtil.getNotificationPref(this)) {
+            sendNotification(body, title);
+        }
     }
 
 
@@ -106,8 +108,11 @@ public class NotificationService extends FirebaseMessagingService {
                         .setContentTitle(messageTitle)
                         .setContentText(messageBody)
                         .setAutoCancel(true)
-                        .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
+
+        if (SharedPrefUtil.getNotificationSoundPref(this)) {
+            notificationBuilder.setSound(defaultSoundUri);
+        }
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

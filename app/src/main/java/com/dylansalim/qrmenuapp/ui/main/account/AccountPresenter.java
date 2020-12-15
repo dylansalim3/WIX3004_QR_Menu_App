@@ -27,11 +27,11 @@ public class AccountPresenter implements AccountPresenterInterface {
                 .updateRole(userId, role)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
+                .subscribe(tokenDao -> {
                     Log.d(TAG, "role switch success");
                     accountView.hideLoading();
-                    accountView.removeUserToken();
-                    accountView.showDialog(view -> accountView.login());
+                    accountView.saveUserToken(tokenDao);
+                    accountView.showDialog(view -> accountView.reopenApp());
                 }, error -> {
                     accountView.hideLoading();
                     Log.e(TAG, "role switch fail");

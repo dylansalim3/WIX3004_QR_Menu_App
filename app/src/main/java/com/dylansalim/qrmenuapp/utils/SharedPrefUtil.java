@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.dylansalim.qrmenuapp.R;
+import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
 import com.google.gson.Gson;
 
@@ -25,6 +26,13 @@ public class SharedPrefUtil {
             userDetailDao = new Gson().fromJson(dataString, UserDetailDao.class);
         }
         return userDetailDao;
+    }
+
+    public static void setUserDetail(Context context, TokenDao tokenDao) {
+        getSharedPreferences(context)
+                .edit()
+                .putString(context.getString(R.string.token), tokenDao.getToken())
+                .apply();
     }
 
     public static void removeUserDetail(Context context) {
