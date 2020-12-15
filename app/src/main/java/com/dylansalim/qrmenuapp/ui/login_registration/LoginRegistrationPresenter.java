@@ -137,7 +137,7 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
     }
 
     private void setupFCM() {
-        Log.i(TAG, "FCM init");
+        Log.d(TAG, "FCM init");
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
     }
 }

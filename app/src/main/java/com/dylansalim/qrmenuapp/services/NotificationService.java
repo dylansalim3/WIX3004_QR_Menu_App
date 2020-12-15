@@ -47,7 +47,7 @@ public class NotificationService extends FirebaseMessagingService {
      * Send fcm token to server. Fcm token is unique to every device.
      */
     private void updateFCMToken(String fcm_token) {
-        Log.i("NOTIFICATION: ", "Updating fcm token");
+        Log.d("NOTIFICATION: ", "Updating fcm token");
         SharedPreferences sharedPreferences = getSharedPreferences("QRMenuApp", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("TOKEN", "");
 
@@ -61,7 +61,7 @@ public class NotificationService extends FirebaseMessagingService {
         try {
             dataString = JWTUtils.getDataString(token);
         } catch (Exception e) {
-            Log.i("NOTIFICATION: ", "Jwt decode failed");
+            Log.d("NOTIFICATION: ", "Jwt decode failed");
             e.printStackTrace();
         }
         UserDetailDao userDetailDao = new Gson().fromJson(dataString, UserDetailDao.class);
@@ -72,7 +72,7 @@ public class NotificationService extends FirebaseMessagingService {
                 .subscribeOn(Schedulers.io())
                 .subscribe();
 
-        Log.i("NOTIFICATION: ", "Fcm token updated");
+        Log.d("NOTIFICATION: ", "Fcm token updated");
     }
 
     @Override
@@ -81,7 +81,7 @@ public class NotificationService extends FirebaseMessagingService {
         String body = remoteMessage.getData().get("body");
         String title = remoteMessage.getData().get("title");
 
-
+        //TODO: fang -> don't send notification if app is in foreground
         sendNotification(body, title);
     }
 
@@ -102,7 +102,7 @@ public class NotificationService extends FirebaseMessagingService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
-                        .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                        .setSmallIcon(R.drawable.qrmenu_logo)
                         .setContentTitle(messageTitle)
                         .setContentText(messageBody)
                         .setAutoCancel(true)
