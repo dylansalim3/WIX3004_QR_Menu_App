@@ -1,6 +1,7 @@
 package com.dylansalim.qrmenuapp.ui.main.notifications;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class NotificationsFragment extends Fragment implements NotificationViewI
     NotificationPresenterInterface notificationPresenter;
     RecyclerView recyclerView;
     NotificationAdapter adapter;
+    View progressBar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,12 +58,18 @@ public class NotificationsFragment extends Fragment implements NotificationViewI
 
     @Override
     public void showLoading() {
-        //TODO: fang -> loading
+        if (progressBar == null) {
+            progressBar = getLayoutInflater().inflate(R.layout.progressbar_layout, null);
+            ((ViewGroup) getActivity().findViewById(android.R.id.content).getRootView()).addView(progressBar);
+        }
     }
 
     @Override
     public void hideLoading() {
-        //TODO: fang -> close loading
+        if (progressBar != null) {
+            ((ViewGroup) progressBar.getParent()).removeView(progressBar);
+            progressBar = null;
+        }
     }
 
     @Override

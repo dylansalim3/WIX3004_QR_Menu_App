@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -23,6 +25,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     EditText phoneNumber;
     EditText address;
     Button saveButton;
+    View progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +71,18 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
 
     @Override
     public void showLoading() {
-        //TODO: fang -> loading
+        if (progressBar == null) {
+            progressBar = getLayoutInflater().inflate(R.layout.progressbar_layout, null);
+            ((ViewGroup) this.findViewById(android.R.id.content).getRootView()).addView(progressBar);
+        }
     }
 
     @Override
     public void hideLoading() {
-
+        if (progressBar != null) {
+            ((ViewGroup) progressBar.getParent()).removeView(progressBar);
+            progressBar = null;
+        }
     }
 
     @Override

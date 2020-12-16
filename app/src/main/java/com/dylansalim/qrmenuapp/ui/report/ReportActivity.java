@@ -1,6 +1,8 @@
 package com.dylansalim.qrmenuapp.ui.report;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,8 +15,8 @@ import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
 /**
  * Start activity with intent as below
- *   - "store_id"   -> int
- *   - "store_name" -> String
+ * - "store_id"   -> int
+ * - "store_name" -> String
  */
 public class ReportActivity extends AppCompatActivity implements ReportViewInterface {
 
@@ -22,6 +24,7 @@ public class ReportActivity extends AppCompatActivity implements ReportViewInter
 
     ReportPresenterInterface reportPresenter;
     ActivityReportBinding binding;
+    View progressBar;
 
     int storeId;
     String storeName;
@@ -53,12 +56,18 @@ public class ReportActivity extends AppCompatActivity implements ReportViewInter
 
     @Override
     public void showLoading() {
-        //TODO: fang -> loading
+        if (progressBar == null) {
+            progressBar = getLayoutInflater().inflate(R.layout.progressbar_layout, null);
+            ((ViewGroup) this.findViewById(android.R.id.content).getRootView()).addView(progressBar);
+        }
     }
 
     @Override
     public void hideLoading() {
-        //TODO: fang -> hide loading
+        if (progressBar != null) {
+            ((ViewGroup) progressBar.getParent()).removeView(progressBar);
+            progressBar = null;
+        }
     }
 
     @Override

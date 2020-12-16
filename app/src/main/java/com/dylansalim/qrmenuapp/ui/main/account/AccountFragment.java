@@ -26,6 +26,7 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
     final String TAG = "Account Fragment";
 
     AccountPresenterInterface presenter;
+    View progressBar;
     View editProfile;
     View switchRole;
     View settings;
@@ -84,12 +85,18 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
 
     @Override
     public void showLoading() {
-
+        if (progressBar == null) {
+            progressBar = getLayoutInflater().inflate(R.layout.progressbar_layout, null);
+            ((ViewGroup) getActivity().findViewById(android.R.id.content).getRootView()).addView(progressBar);
+        }
     }
 
     @Override
     public void hideLoading() {
-
+        if (progressBar != null) {
+            ((ViewGroup) progressBar.getParent()).removeView(progressBar);
+            progressBar = null;
+        }
     }
 
     @Override
