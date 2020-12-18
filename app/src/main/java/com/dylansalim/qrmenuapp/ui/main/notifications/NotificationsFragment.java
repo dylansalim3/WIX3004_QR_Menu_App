@@ -1,5 +1,6 @@
 package com.dylansalim.qrmenuapp.ui.main.notifications;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.NotificationDao;
+import com.dylansalim.qrmenuapp.ui.merchant.MerchantActivity;
 import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
 import java.util.List;
@@ -46,11 +48,11 @@ public class NotificationsFragment extends Fragment implements NotificationViewI
             view.setBackgroundResource(R.drawable.dark_grey_rounded);
 
             if (dao.getActivity() != null) {
-                switch (dao.getActivity()) {
-                    case "store":
-                        int storeId = dao.getData();
-                        // TODO: navigate to store activity
-                }
+                Intent intent = new Intent(getContext(), MerchantActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(getResources().getString(R.string.store_id), dao.getData());
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
         recyclerView.setAdapter(adapter);

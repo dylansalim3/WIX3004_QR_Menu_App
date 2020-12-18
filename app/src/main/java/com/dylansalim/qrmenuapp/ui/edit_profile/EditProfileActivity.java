@@ -66,7 +66,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
 
     @Override
     public void saveToken(TokenDao tokenDao) {
-        SharedPrefUtil.setUserDetail(this, tokenDao);
+        SharedPrefUtil.setUserToken(this, tokenDao);
         Log.d(TAG, "new token saved");
     }
 

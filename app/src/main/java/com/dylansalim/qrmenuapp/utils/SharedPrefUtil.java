@@ -28,14 +28,19 @@ public class SharedPrefUtil {
         return userDetailDao;
     }
 
-    public static void setUserDetail(Context context, TokenDao tokenDao) {
+    public static String getUserToken(Context context) {
+        SharedPreferences pref = getSharedPreferences(context);
+        return pref.getString(context.getString(R.string.token), "");
+    }
+
+    public static void setUserToken(Context context, TokenDao tokenDao) {
         getSharedPreferences(context)
                 .edit()
                 .putString(context.getString(R.string.token), tokenDao.getToken())
                 .apply();
     }
 
-    public static void removeUserDetail(Context context) {
+    public static void removeUserToken(Context context) {
         SharedPreferences pref = getSharedPreferences(context);
         pref.edit().remove(context.getString(R.string.token)).apply();
     }

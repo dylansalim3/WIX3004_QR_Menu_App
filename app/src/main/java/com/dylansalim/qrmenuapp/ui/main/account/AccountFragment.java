@@ -119,7 +119,7 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
 
     @Override
     public void saveUserToken(TokenDao tokenDao) {
-        SharedPrefUtil.setUserDetail(getContext(), tokenDao);
+        SharedPrefUtil.setUserToken(getContext(), tokenDao);
     }
 
     @Override
@@ -140,7 +140,7 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
     }
 
     private void logout() {
-        SharedPrefUtil.removeUserDetail(getContext());
+        SharedPrefUtil.removeUserToken(getContext());
         showDialog(DialogType.LOGOUT, v -> login());
     }
 
