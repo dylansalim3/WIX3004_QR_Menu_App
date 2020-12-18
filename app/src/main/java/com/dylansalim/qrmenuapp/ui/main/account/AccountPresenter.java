@@ -29,12 +29,18 @@ public class AccountPresenter implements AccountPresenterInterface {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tokenDao -> {
                     Log.d(TAG, "role switch success");
-                    accountView.hideLoading();
                     accountView.saveUserToken(tokenDao);
-                    accountView.showDialog(view -> accountView.reopenApp());
-                }, error -> {
                     accountView.hideLoading();
+                    accountView.showDialog(
+                            role.equals("MERCHANT")
+                                    ? AccountViewInterface.DialogType.SWITCH_MERCHANT
+                                    : AccountViewInterface.DialogType.SWITCH_CUSTOMER,
+                            view -> accountView.reopenApp()
+                    );
+                }, error -> {
                     Log.e(TAG, "role switch fail");
+                    accountView.hideLoading();
+                    accountView.showDialog(AccountViewInterface.DialogType.ERROR, null);
                 });
     }
 }

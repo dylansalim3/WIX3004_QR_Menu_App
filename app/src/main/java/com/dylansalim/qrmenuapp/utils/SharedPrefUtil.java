@@ -42,7 +42,7 @@ public class SharedPrefUtil {
 
     public static Boolean getNotificationPref(Context context) {
         SharedPreferences pref = getSharedPreferences(context);
-        return pref.getBoolean(context.getString(R.string.notification), false);
+        return pref.getBoolean(context.getString(R.string.notification), true);
     }
 
     public static void setNotificationPref(Context context, Boolean notificationPref) {
@@ -52,7 +52,7 @@ public class SharedPrefUtil {
 
     public static Boolean getNotificationSoundPref(Context context) {
         SharedPreferences pref = getSharedPreferences(context);
-        return pref.getBoolean(context.getString(R.string.notification_sound), false);
+        return pref.getBoolean(context.getString(R.string.notification_sound), true);
     }
 
     public static void setNotificationSoundPref(Context context, Boolean notificationPref) {

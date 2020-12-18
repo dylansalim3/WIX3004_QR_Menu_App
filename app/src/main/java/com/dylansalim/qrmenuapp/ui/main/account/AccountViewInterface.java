@@ -8,11 +8,13 @@ public interface AccountViewInterface {
 
     void saveUserToken(TokenDao tokenDao);
 
-    void removeUserToken();
-
     void reopenApp();
 
-    void showDialog(View.OnClickListener clickListener);
+    enum DialogType {
+        SWITCH_MERCHANT, SWITCH_CUSTOMER, LOGOUT, ERROR
+    }
+
+    void showDialog(DialogType dialogType, View.OnClickListener clickListener);
 
     void showLoading();
 

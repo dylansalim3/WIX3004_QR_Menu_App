@@ -12,6 +12,7 @@ import android.widget.EditText;
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.ui.component.ConfirmDialog;
 import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
 
@@ -86,16 +87,38 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     }
 
     @Override
+    public void showSuccess() {
+        ConfirmDialog dialog = new ConfirmDialog(this);
+        dialog.setDialogText("Your profile is updated");
+        dialog.setListener(v -> finish());
+        dialog.show();
+    }
+
+    @Override
     public void showError(ErrorType type) {
         Log.e(TAG, "error -> " + type);
+        ConfirmDialog dialog = new ConfirmDialog(this);
         switch (type) {
             case EMPTY_FIRST_NAME:
+                dialog.setDialogText("First name cannot be empty");
+                break;
             case EMPTY_LAST_NAME:
+                dialog.setDialogText("Last name cannot be empty");
+                break;
             case EMPTY_PHONE_NUM:
-            case EMPTY_ADDRESS:
-            case REQUEST_FAILED:
+                dialog.setDialogText("Phone number cannot be empty");
+                break;
             case INVALID_PHONE_NUMBER:
+                dialog.setDialogText("Phone number is not valid");
+                break;
+            case EMPTY_ADDRESS:
+                dialog.setDialogText("Address cannot be empty");
+                break;
+            case REQUEST_FAILED:
+                dialog.setDialogText("Error occurred. Please try again");
+                break;
         }
+        dialog.show();
     }
 
     @Override

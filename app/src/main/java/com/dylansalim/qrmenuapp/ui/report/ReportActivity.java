@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.databinding.ActivityReportBinding;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.ui.component.ConfirmDialog;
 import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
 /**
@@ -72,14 +73,16 @@ public class ReportActivity extends AppCompatActivity implements ReportViewInter
 
     @Override
     public void showFinish() {
-        //TODO: fang -> show success dialog
-        Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_LONG).show();
+        ConfirmDialog dialog = new ConfirmDialog(this);
+        dialog.setDialogText("Your report has been filled successfully");
+        dialog.show();
     }
 
     @Override
     public void showError(String error) {
-        //TODO: fang -> show error dialog
-        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+        ConfirmDialog dialog = new ConfirmDialog(this);
+        dialog.setDialogText("Error occurred. Please try again");
+        dialog.show();
     }
 
     private void setupMVP() {

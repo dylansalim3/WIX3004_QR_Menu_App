@@ -19,5 +19,7 @@ public interface EditProfileViewInterface {
 
     void showError(ErrorType error);
 
+    void showSuccess();
+
     void saveToken(TokenDao tokenDao);
 }

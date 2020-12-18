@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.ui.component.ConfirmDialog;
 import com.dylansalim.qrmenuapp.ui.edit_profile.EditProfileActivity;
 import com.dylansalim.qrmenuapp.ui.login_registration.LoginRegistrationActivity;
 import com.dylansalim.qrmenuapp.ui.qr_scan.QRScanActivity;
@@ -79,15 +80,32 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
     }
 
     @Override
-    public void showDialog(View.OnClickListener clickListener) {
-
+    public void showDialog(DialogType dialogType, View.OnClickListener clickListener) {
+        ConfirmDialog dialog = new ConfirmDialog(getContext());
+        dialog.setListener(clickListener);
+        switch (dialogType) {
+            case SWITCH_MERCHANT:
+                dialog.setDialogText("Your role has been switched to merchant");
+                break;
+            case SWITCH_CUSTOMER:
+                dialog.setDialogText("Your role has been switched to customer");
+                break;
+            case LOGOUT:
+                dialog.setDialogText("You have been logged out");
+                break;
+            case ERROR:
+                dialog.setDialogText("Error occurred. Please try again");
+                break;
+        }
+        dialog.show();
     }
 
     @Override
     public void showLoading() {
         if (progressBar == null) {
             progressBar = getLayoutInflater().inflate(R.layout.progressbar_layout, null);
-            ((ViewGroup) getActivity().findViewById(android.R.id.content).getRootView()).addView(progressBar);
+            ((ViewGroup) getActivity().findViewById(android.R.id.content).getRootView())
+                    .addView(progressBar);
         }
     }
 
@@ -102,11 +120,6 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
     @Override
     public void saveUserToken(TokenDao tokenDao) {
         SharedPrefUtil.setUserDetail(getContext(), tokenDao);
-    }
-
-    @Override
-    public void removeUserToken() {
-        SharedPrefUtil.removeUserDetail(getContext());
     }
 
     @Override
@@ -127,8 +140,8 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
     }
 
     private void logout() {
-        removeUserToken();
-        login();
+        SharedPrefUtil.removeUserDetail(getContext());
+        showDialog(DialogType.LOGOUT, v -> login());
     }
 
     private void openEditProfile() {
@@ -143,7 +156,7 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
 
     private void openMarket() {
         String appPackageName = requireContext().getPackageName();
-        appPackageName = "com.whatsapp";
+        appPackageName = "com.whatsapp"; // TODO: remove this after published to play store
         try {
             Log.d(TAG, "Open market");
             startActivity(new Intent(Intent.ACTION_VIEW,

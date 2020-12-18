@@ -26,7 +26,10 @@ public class EditProfilePresenter implements EditProfilePresenterInterface {
         view.showLoading();
 
         Boolean valid = validateInput(firstName, lastName, phoneNum, address);
-        if (!valid) return;
+        if (!valid) {
+            view.hideLoading();
+            return;
+        }
 
         disposable = NetworkClient.getNetworkClient().create(LoginRegistrationNetworkInterface.class)
                 .updateProfile(userId, firstName, lastName, phoneNum, address)
@@ -36,6 +39,7 @@ public class EditProfilePresenter implements EditProfilePresenterInterface {
                     Log.d(TAG, "profile updated successfully");
                     view.saveToken(tokenDao);
                     view.hideLoading();
+                    view.showSuccess();
                 }, error -> {
                     Log.e(TAG, "profile updated failed");
                     view.hideLoading();
