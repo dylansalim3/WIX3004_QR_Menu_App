@@ -1,26 +1,40 @@
 package com.dylansalim.qrmenuapp.ui.edit_profile;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.services.FileIOService;
 import com.dylansalim.qrmenuapp.ui.component.ConfirmDialog;
 import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.FilePermission;
 
 
 public class EditProfileActivity extends AppCompatActivity implements EditProfileViewInterface {
 
     final String TAG = "Edit Profile Activity";
+    final int REQUEST = 6393;
 
     EditProfilePresenterInterface presenter;
+    ImageView picture;
     EditText firstName;
     EditText lastName;
     EditText phoneNumber;
@@ -34,6 +48,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         setContentView(R.layout.activity_edit_profile);
         setupMVP();
 
+        picture = findViewById(R.id.profile_picture);
         firstName = findViewById(R.id.profile_firstname);
         lastName = findViewById(R.id.profile_lastname);
         phoneNumber = findViewById(R.id.profile_phonenumber);
@@ -41,15 +56,22 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         saveButton = findViewById(R.id.profile_save_button);
 
         UserDetailDao userDetailDao = SharedPrefUtil.getUserDetail(this);
+        presenter.getProfileImage(userDetailDao.getId());
 
         if (userDetailDao == null) {
-            Log.e(TAG, "user detail token missing");
+            Log.e(TAG, "user token missing");
             return;
         }
 
         firstName.setText(userDetailDao.getFirstName());
         lastName.setText(userDetailDao.getLastName());
         phoneNumber.setText(userDetailDao.getPhoneNum());
+
+        picture.setOnClickListener(view -> {
+            if (FileIOService.requestReadIOPermission(this)) {
+                pickImage();
+            }
+        });
 
         saveButton.setOnClickListener(view -> {
             presenter.saveProfile(
@@ -62,6 +84,49 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         });
 
         findViewById(R.id.profile_back_button).setOnClickListener(view -> finish());
+    }
+
+    private void pickImage() {
+        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, REQUEST);
+    }
+
+    @Override
+    public void loadImage(File imageFile) {
+        Picasso.get()
+                .load(imageFile)
+                .placeholder(R.drawable.ic_account_circle_white_24dp)
+                .fit()
+                .into(picture);
+    }
+
+    @Override
+    public void loadImage(String imageUrl) {
+        Picasso.get()
+                .load(imageUrl)
+                .placeholder(R.drawable.ic_account_circle_white_24dp)
+                .fit()
+                .into(picture);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST && resultCode == RESULT_OK && data != null) {
+            Log.d(TAG, "Image picked");
+            Uri image = data.getData();
+            presenter.savePicture(SharedPrefUtil.getUserDetail(this).getId(), image);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults.length > 0 && requestCode == FileIOService.PICK_IMAGE
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            pickImage();
+        }
     }
 
     @Override

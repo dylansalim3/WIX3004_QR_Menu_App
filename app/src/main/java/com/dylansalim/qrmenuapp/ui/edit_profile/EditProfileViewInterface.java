@@ -1,8 +1,18 @@
 package com.dylansalim.qrmenuapp.ui.edit_profile;
 
+import android.content.ContentResolver;
+
 import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 
+import java.io.File;
+
 public interface EditProfileViewInterface {
+
+    ContentResolver getContentResolver();
+
+    void loadImage(File imageFile);
+
+    void loadImage(String imageUrl);
 
     void showLoading();
 

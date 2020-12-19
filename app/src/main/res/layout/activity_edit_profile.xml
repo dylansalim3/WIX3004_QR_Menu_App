@@ -14,8 +14,7 @@
         android:layout_height="240dp"
         android:background="#E45E32"
         android:paddingHorizontal="30dp"
-        android:paddingTop="30dp"
-        android:paddingBottom="40dp">
+        android:paddingVertical="30dp">
 
         <ImageButton
             android:id="@+id/profile_back_button"
@@ -28,16 +27,25 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profile_picture"
             android:layout_width="140dp"
             android:layout_height="140dp"
-            android:background="@drawable/oval_layer"
-            android:elevation="10dp"
-            android:src="@drawable/qrmenu_logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/roundedCornersImageView"
+            app:srcCompat="@drawable/ic_account_circle_white_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap to change"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_picture" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
