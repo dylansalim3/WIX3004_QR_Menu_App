@@ -6,9 +6,9 @@ public interface EditProfilePresenterInterface {
 
     void getProfileImage(int userId);
 
-    void saveProfile(int userId, String firstName, String lastName, String phoneNum, String address);
+    void saveProfile(String firstName, String lastName, String phoneNum, String address, String token);
 
-    void savePicture(int userId, Uri image);
+    void savePicture(int userId, Uri image, String token);
 
     void disposeObserver();
 }

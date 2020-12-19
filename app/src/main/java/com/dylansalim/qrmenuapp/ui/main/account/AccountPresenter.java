@@ -21,10 +21,10 @@ public class AccountPresenter implements AccountPresenterInterface {
     }
 
     @Override
-    public void switchRole(int userId, String role) {
+    public void switchRole(String role, String token) {
         accountView.showLoading();
-        disposable = NetworkClient.getNetworkClient().create(AccountNetworkInterface.class)
-                .updateRole(userId, role)
+        disposable = NetworkClient.getNetworkClient(token).create(AccountNetworkInterface.class)
+                .updateRole(role)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tokenDao -> {

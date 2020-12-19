@@ -60,18 +60,17 @@ public class EditProfilePresenter implements EditProfilePresenterInterface {
     }
 
     @Override
-    public void savePicture(int userId, Uri imageUri) {
+    public void savePicture(int userId, Uri imageUri, String token) {
         File imageFile = getImage(imageUri);
         MultipartBody.Part imgBody = MultipartBody.Part.createFormData(
                 "img",
                 userId + ".jpeg",
                 RequestBody.create(MediaType.parse("image/jpeg"), imageFile)
         );
-        RequestBody userIdBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(userId));
 
         view.showLoading();
-        disposable = NetworkClient.getNetworkClient().create(AccountNetworkInterface.class)
-                .updatePicture(userIdBody, imgBody)
+        disposable = NetworkClient.getNetworkClient(token).create(AccountNetworkInterface.class)
+                .updatePicture(imgBody)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
@@ -87,7 +86,7 @@ public class EditProfilePresenter implements EditProfilePresenterInterface {
     }
 
     @Override
-    public void saveProfile(int userId, String firstName, String lastName, String phoneNum, String address) {
+    public void saveProfile(String firstName, String lastName, String phoneNum, String address, String token) {
         view.showLoading();
 
         Boolean valid = validateInput(firstName, lastName, phoneNum, address);
@@ -96,8 +95,8 @@ public class EditProfilePresenter implements EditProfilePresenterInterface {
             return;
         }
 
-        disposable = NetworkClient.getNetworkClient().create(AccountNetworkInterface.class)
-                .updateProfile(userId, firstName, lastName, phoneNum, address)
+        disposable = NetworkClient.getNetworkClient(token).create(AccountNetworkInterface.class)
+                .updateProfile(firstName, lastName, phoneNum, address)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tokenDao -> {

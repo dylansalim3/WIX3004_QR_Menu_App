@@ -3,13 +3,11 @@ package com.dylansalim.qrmenuapp.ui.report;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.databinding.ActivityReportBinding;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
 import com.dylansalim.qrmenuapp.ui.component.ConfirmDialog;
 import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
@@ -24,7 +22,6 @@ public class ReportActivity extends AppCompatActivity implements ReportViewInter
     static final String TAG = "Report Activity";
 
     ReportPresenterInterface reportPresenter;
-    ActivityReportBinding binding;
     View progressBar;
 
     int storeId;
@@ -33,19 +30,22 @@ public class ReportActivity extends AppCompatActivity implements ReportViewInter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_report);
+        setContentView(R.layout.activity_report);
         setupMVP();
-        UserDetailDao userDetail = SharedPrefUtil.getUserDetail(this);
 
+        UserDetailDao userDetail = SharedPrefUtil.getUserDetail(this);
         storeId = getIntent().getIntExtra("store_id", 0);
         storeName = getIntent().getStringExtra("store_name");
-        binding.reportStoreNameInput.setText(getIntent().getStringExtra("store_name"));
 
-        binding.reportBackButton.setOnClickListener(view -> finish());
-        binding.reportSubmitButton.setOnClickListener(view -> {
-            String desc = binding.reportReasonInput.getText().toString();
-            reportPresenter.sendReport(userDetail.getId(), storeId, userDetail.getEmail(), storeName, desc);
+        ((EditText) findViewById(R.id.report_store_name_input))
+                .setText(getIntent().getStringExtra("store_name"));
+
+        findViewById(R.id.report_back_button).setOnClickListener(view -> finish());
+
+        findViewById(R.id.report_submit_button).setOnClickListener(view -> {
+            String desc = ((EditText) findViewById(R.id.report_reason_input)).getText().toString();
+            String token = SharedPrefUtil.getUserToken(this);
+            reportPresenter.sendReport(storeId, userDetail.getEmail(), storeName, desc, token);
         });
     }
 
@@ -75,6 +75,7 @@ public class ReportActivity extends AppCompatActivity implements ReportViewInter
     public void showFinish() {
         ConfirmDialog dialog = new ConfirmDialog(this);
         dialog.setDialogText("Your report has been filled successfully");
+        dialog.setListener(v -> finish());
         dialog.show();
     }
 

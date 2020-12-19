@@ -18,6 +18,7 @@ import com.dylansalim.qrmenuapp.ui.component.ConfirmDialog;
 import com.dylansalim.qrmenuapp.ui.edit_profile.EditProfileActivity;
 import com.dylansalim.qrmenuapp.ui.login_registration.LoginRegistrationActivity;
 import com.dylansalim.qrmenuapp.ui.qr_scan.QRScanActivity;
+import com.dylansalim.qrmenuapp.ui.report.ReportActivity;
 import com.dylansalim.qrmenuapp.ui.setting.SettingActivity;
 import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
@@ -73,7 +74,10 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
             String currentRole = userDetail.getRole();
             String merchant = getString(R.string.merchant);
             String customer = getString(R.string.customer);
-            presenter.switchRole(userDetail.getId(), currentRole.equals(customer) ? merchant : customer);
+            presenter.switchRole(
+                    currentRole.equals(customer) ? merchant : customer,
+                    SharedPrefUtil.getUserToken(getContext())
+            );
         });
 
         return root;

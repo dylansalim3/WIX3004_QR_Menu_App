@@ -17,15 +17,13 @@ public interface NotificationNetworkInterface {
     @POST("/users/update-fcm")
     Observable<Result<String>> updateFCMToken(@Body FcmDto fcmDto);
 
-    @FormUrlEncoded
     @POST("/notification/get-all-notifications")
-    Observable<List<NotificationDao>> getNotifications(@Field("user_id") int userId);
+    Observable<List<NotificationDao>> getNotifications();
 
     @FormUrlEncoded
     @POST("/notification/read-notification")
     Observable<Result<String>> readNotification(@Field("id") int notificationId);
 
-    @FormUrlEncoded
     @POST("/notification/delete-all-notifications")
-    Observable<Result<String>> deleteAllNotifications(@Field("user_id") int userId);
+    Observable<Result<String>> deleteAllNotifications();
 }

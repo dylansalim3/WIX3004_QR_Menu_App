@@ -35,16 +35,15 @@ public class NotificationsFragment extends Fragment implements NotificationViewI
 
         recyclerView = root.findViewById(R.id.notification_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        notificationPresenter.getNotifications(SharedPrefUtil.getUserDetail(requireContext()).getId());
+        notificationPresenter.getNotifications(SharedPrefUtil.getUserToken(getContext()));
         return root;
     }
 
     @Override
     public void populateNotifications(List<NotificationDao> notificationDaos) {
-        adapter = new NotificationAdapter(notificationDaos, (view, position) -> {
-            // click listener
+        adapter = new NotificationAdapter(notificationDaos, (view, position) -> { //click listener
             NotificationDao dao = notificationDaos.get(position);
-            notificationPresenter.readNotification(dao.getId());
+            notificationPresenter.readNotification(dao.getId(), SharedPrefUtil.getUserToken(getContext()));
             view.setBackgroundResource(R.drawable.dark_grey_rounded);
 
             if (dao.getActivity() != null) {

@@ -17,12 +17,11 @@ public interface AccountNetworkInterface {
 
     @FormUrlEncoded
     @POST("/users/update-role")
-    Observable<TokenDao> updateRole(@Field("user_id") int userId, @Field("role") String role);
+    Observable<TokenDao> updateRole(@Field("role") String role);
 
     @FormUrlEncoded
     @POST("/users/update-profile")
     Observable<TokenDao> updateProfile(
-            @Field("userid") int userId,
             @Field("first_name") String firstName,
             @Field("last_name") String lastName,
             @Field("phonenum") String phoneNum,
@@ -31,7 +30,7 @@ public interface AccountNetworkInterface {
 
     @Multipart
     @POST("/users/update-picture")
-    Observable<Result<String>> updatePicture(@Part("user_id") RequestBody userId, @Part MultipartBody.Part image);
+    Observable<Result<String>> updatePicture(@Part MultipartBody.Part image);
 
     @FormUrlEncoded
     @POST("/users/get-picture")

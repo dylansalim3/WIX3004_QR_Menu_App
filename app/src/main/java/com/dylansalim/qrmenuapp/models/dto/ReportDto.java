@@ -8,9 +8,8 @@ public class ReportDto {
     private String desc;
     private String email;
 
-    public ReportDto(int store_id, int user_id, String title, String desc, String email) {
+    public ReportDto(int store_id, String title, String desc, String email) {
         this.store_id = store_id;
-        this.user_id = user_id;
         this.title = title;
         this.desc = desc;
         this.email = email;

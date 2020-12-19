@@ -75,11 +75,11 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
 
         saveButton.setOnClickListener(view -> {
             presenter.saveProfile(
-                    userDetailDao.getId(),
                     firstName.getText().toString(),
                     lastName.getText().toString(),
                     phoneNumber.getText().toString(),
-                    address.getText().toString()
+                    address.getText().toString(),
+                    SharedPrefUtil.getUserToken(this)
             );
         });
 
@@ -93,6 +93,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
 
     @Override
     public void loadImage(File imageFile) {
+        Log.d(TAG, "load image file");
         Picasso.get()
                 .load(imageFile)
                 .placeholder(R.drawable.ic_account_circle_white_24dp)
@@ -102,6 +103,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
 
     @Override
     public void loadImage(String imageUrl) {
+        Log.d(TAG, "load image url");
         Picasso.get()
                 .load(imageUrl)
                 .placeholder(R.drawable.ic_account_circle_white_24dp)
@@ -116,7 +118,8 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         if (requestCode == REQUEST && resultCode == RESULT_OK && data != null) {
             Log.d(TAG, "Image picked");
             Uri image = data.getData();
-            presenter.savePicture(SharedPrefUtil.getUserDetail(this).getId(), image);
+            presenter.savePicture(SharedPrefUtil.getUserDetail(this).getId(),
+                    image, SharedPrefUtil.getUserToken(this));
         }
     }
 
