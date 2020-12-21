@@ -2,35 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#22262A"
-    android:orientation="vertical"
+    style="@style/profile_parent"
     tools:context=".ui.edit_profile.EditProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/report_top_bar"
-        android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:background="#E45E32"
-        android:paddingHorizontal="30dp"
-        android:paddingVertical="30dp">
+        style="@style/profile_top_bar">
 
         <ImageButton
             android:id="@+id/profile_back_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:scaleType="fitXY"
+            style="@style/profile_back_btn"
             android:src="@drawable/back"
-            android:tint="@color/colorWhite"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profile_picture"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            style="@style/profile_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tap to change"
+            android:text="@string/profile_change"
             android:textColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,108 +41,51 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="40dp">
+            style="@style/profile_content"
+            android:paddingTop="20dp">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
-                android:text="First name"
-                android:textColor="#FFF7F4"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                style="@style/profile_text"
+                android:text="@string/first_name" />
 
             <EditText
                 android:id="@+id/profile_firstname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/dark_grey_rounded"
-                android:elevation="30dp"
-                android:hint="@string/first_name"
-                android:textColor="#FFF7F4"
-                android:textColorHint="#7E7F7F"
-                android:textStyle="bold" />
+                style="@style/profile_input"
+                android:hint="@string/first_name" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
-                android:text="Last name"
-                android:textColor="#FFF7F4"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                style="@style/profile_text"
+                android:text="@string/last_name" />
 
             <EditText
                 android:id="@+id/profile_lastname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/dark_grey_rounded"
-                android:elevation="30dp"
-                android:hint="@string/last_name"
-                android:textColor="#FFF7F4"
-                android:textColorHint="#7E7F7F"
-                android:textStyle="bold" />
+                style="@style/profile_input"
+                android:hint="@string/last_name" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
-                android:text="Phone number"
-                android:textColor="#FFF7F4"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                style="@style/profile_text"
+                android:text="@string/phone_number" />
 
             <EditText
                 android:id="@+id/profile_phonenumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/dark_grey_rounded"
-                android:elevation="30dp"
-                android:hint="@string/phone_number"
-                android:inputType="phone"
-                android:textColor="#FFF7F4"
-                android:textColorHint="#7E7F7F"
-                android:textStyle="bold" />
+                style="@style/profile_input"
+                android:hint="@string/phone_number" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
-                android:text="Address"
-                android:textColor="#FFF7F4"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                style="@style/profile_text"
+                android:text="@string/address" />
 
             <EditText
                 android:id="@+id/profile_address"
-                android:layout_width="match_parent"
+                style="@style/profile_input"
                 android:layout_height="100dp"
-                android:background="@drawable/dark_grey_rounded"
-                android:elevation="30dp"
                 android:gravity="top"
-                android:hint="@string/address"
-                android:textColor="#FFF7F4"
-                android:textColorHint="#7E7F7F"
-                android:textStyle="bold" />
+                android:hint="@string/address" />
 
             <Button
                 android:id="@+id/profile_save_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/dark_grey_rounded"
-                android:elevation="30dp"
-                android:paddingVertical="6dp"
-                android:text="Save Profile"
-                android:textAllCaps="false"
-                android:textColor="#FFF7F4"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                style="@style/profile_button"
+                android:text="@string/save_profile" />
 
         </LinearLayout>
     </ScrollView>

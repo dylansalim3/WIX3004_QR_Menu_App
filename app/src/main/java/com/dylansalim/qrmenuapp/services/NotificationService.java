@@ -35,6 +35,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class NotificationService extends FirebaseMessagingService {
 
+    final String TAG = "NOTIFICATION_SERVICE";
 
     /**
      * Called if FCM registration token is updated. This may occur if the security of
@@ -44,7 +45,7 @@ public class NotificationService extends FirebaseMessagingService {
      */
     @Override
     public void onNewToken(@NonNull String token) {
-        Log.d("NOTIFICATION: ", "Refreshed token: " + token);
+        Log.d(TAG, "Refreshed token: " + token);
         updateFCMToken(token);
     }
 
@@ -52,13 +53,13 @@ public class NotificationService extends FirebaseMessagingService {
      * Send fcm token to server. Fcm token is unique to every device.
      */
     private void updateFCMToken(String fcm_token) {
-        Log.d("NOTIFICATION: ", "Updating fcm token");
+        Log.d(TAG, "Updating fcm token");
         SharedPreferences sharedPreferences = getSharedPreferences("QRMenuApp", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("TOKEN", "");
 
         assert token != null;
         if (token.equals("")) {
-            Log.e("NOTIFICATION: ", "Jwt token is empty");
+            Log.e(TAG, "Jwt token is empty");
             return;
         }
 
@@ -66,7 +67,7 @@ public class NotificationService extends FirebaseMessagingService {
         try {
             dataString = JWTUtils.getDataString(token);
         } catch (Exception e) {
-            Log.d("NOTIFICATION: ", "Jwt decode failed");
+            Log.d(TAG, "Jwt decode failed");
             e.printStackTrace();
         }
         UserDetailDao userDetailDao = new Gson().fromJson(dataString, UserDetailDao.class);
@@ -77,7 +78,7 @@ public class NotificationService extends FirebaseMessagingService {
                 .subscribeOn(Schedulers.io())
                 .subscribe();
 
-        Log.d("NOTIFICATION: ", "Fcm token updated");
+        Log.d(TAG, "Fcm token updated");
     }
 
     @Override

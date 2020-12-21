@@ -25,8 +25,10 @@ public class NotificationPresenter implements NotificationPresenterInterface {
     }
 
     @Override
-    public void getNotifications(String token) {
-        notificationView.showLoading();
+    public void getNotifications(String token, Boolean onCreate) {
+        if (onCreate) {
+            notificationView.showLoading();
+        }
 
         disposable = NetworkClient.getNetworkClient(token).create(NotificationNetworkInterface.class)
                 .getNotifications()

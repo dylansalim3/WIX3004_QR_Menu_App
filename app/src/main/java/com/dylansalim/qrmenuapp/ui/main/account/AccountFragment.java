@@ -18,7 +18,6 @@ import com.dylansalim.qrmenuapp.ui.component.ConfirmDialog;
 import com.dylansalim.qrmenuapp.ui.edit_profile.EditProfileActivity;
 import com.dylansalim.qrmenuapp.ui.login_registration.LoginRegistrationActivity;
 import com.dylansalim.qrmenuapp.ui.qr_scan.QRScanActivity;
-import com.dylansalim.qrmenuapp.ui.report.ReportActivity;
 import com.dylansalim.qrmenuapp.ui.setting.SettingActivity;
 import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 

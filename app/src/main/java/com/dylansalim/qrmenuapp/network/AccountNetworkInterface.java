@@ -6,7 +6,6 @@ import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;

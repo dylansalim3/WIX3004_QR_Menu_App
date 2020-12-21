@@ -23,6 +23,8 @@ import java.util.List;
 
 public class NotificationsFragment extends Fragment implements NotificationViewInterface {
 
+    final String TAG = "Notification Fragment";
+
     NotificationPresenterInterface notificationPresenter;
     RecyclerView recyclerView;
     NotificationAdapter adapter;
@@ -35,8 +37,14 @@ public class NotificationsFragment extends Fragment implements NotificationViewI
 
         recyclerView = root.findViewById(R.id.notification_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        notificationPresenter.getNotifications(SharedPrefUtil.getUserToken(getContext()));
+        notificationPresenter.getNotifications(SharedPrefUtil.getUserToken(getContext()), false);
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        notificationPresenter.getNotifications(SharedPrefUtil.getUserToken(getContext()), false);
     }
 
     @Override
