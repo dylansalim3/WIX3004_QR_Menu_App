@@ -1,5 +1,6 @@
 package com.dylansalim.qrmenuapp.ui.login_registration.registration;
 
+import android.util.Patterns;
 import android.widget.TextView;
 
 import com.dylansalim.qrmenuapp.models.dao.RoleDao;
@@ -101,7 +102,7 @@ public class RegistrationPresenter implements RegistrationPresenterInterface {
 
     @Override
     public void validatePhoneNumber(TextView textView, String text) {
-        if (!ValidationUtils.isValidPhoneNumber(text)) {
+        if (!Patterns.PHONE.matcher(text).matches()) {
             textView.setError("Phone number invalid");
         }
     }

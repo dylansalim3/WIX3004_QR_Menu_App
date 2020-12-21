@@ -2,6 +2,8 @@ package com.dylansalim.qrmenuapp.network;
 
 import com.dylansalim.qrmenuapp.BuildConfig;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.Request;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -18,7 +20,11 @@ public class NetworkClient {
         if (retrofit == null) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .connectTimeout(2,TimeUnit.MINUTES)
+                    .readTimeout(2,TimeUnit.MINUTES)
+                    .writeTimeout(2, TimeUnit.MINUTES)
+                    .addInterceptor(interceptor).build();
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(BuildConfig.SERVER_API_URL)

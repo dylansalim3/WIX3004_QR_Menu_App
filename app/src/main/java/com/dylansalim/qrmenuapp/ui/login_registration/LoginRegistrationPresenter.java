@@ -2,6 +2,7 @@ package com.dylansalim.qrmenuapp.ui.login_registration;
 
 import android.util.Log;
 
+import com.dylansalim.qrmenuapp.models.dao.Result;
 import com.dylansalim.qrmenuapp.models.dao.RoleDao;
 import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
@@ -57,7 +58,7 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
 
     @Override
     public void disposeObserver() {
-        for(DisposableObserver<?> disposableObserver : disposableObservers){
+        for (DisposableObserver<?> disposableObserver : disposableObservers) {
             disposableObserver.dispose();
         }
     }
@@ -88,13 +89,15 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
         };
     }
 
-    public DisposableObserver<TokenDao> getLoginFormObserver() {
-        return new DisposableObserver<TokenDao>() {
+    public DisposableObserver<Result<TokenDao>> getLoginFormObserver() {
+        return new DisposableObserver<Result<TokenDao>>() {
             @Override
-            public void onNext(@NonNull TokenDao tokenDao) {
-                Log.d(TAG, "OnNext " + tokenDao.getToken());
-                setupFCM();
-                lrvi.navigateToNextActivity(tokenDao);
+            public void onNext(@NonNull Result<TokenDao> tokenDao) {
+                Log.d(TAG, "OnNext " + tokenDao);
+                if (tokenDao.getData() != null) {
+                    setupFCM();
+                    lrvi.navigateToNextActivity(tokenDao.getData());
+                }
             }
 
             @Override
@@ -112,13 +115,13 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
         };
     }
 
-    public DisposableObserver<TokenDao> getRegistrationFormObserver() {
-        return new DisposableObserver<TokenDao>() {
+    public DisposableObserver<Result<TokenDao>> getRegistrationFormObserver() {
+        return new DisposableObserver<Result<TokenDao>>() {
             @Override
-            public void onNext(@NonNull TokenDao tokenDao) {
+            public void onNext(@NonNull Result<TokenDao> tokenDao) {
                 Log.d(TAG, "getRegistrationFormObserver" + tokenDao);
                 setupFCM();
-                lrvi.navigateToNextActivity(tokenDao);
+                lrvi.navigateToNextActivity(tokenDao.getData());
             }
 
             @Override

@@ -20,11 +20,11 @@ public interface LoginRegistrationNetworkInterface {
 
     @FormUrlEncoded
     @POST("/users/login")
-    Observable<TokenDao> submitLoginRequest(@Field(encoded = false, value = "email") String email, @Field("password") String password);
+    Observable<Result<TokenDao>> submitLoginRequest(@Field(encoded = false, value = "email") String email, @Field("password") String password);
 
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("/users/register-user")
-    Observable<TokenDao> submitRegistrationRequest(@Body RegistrationDto registrationDto);
+    Observable<Result<TokenDao>> submitRegistrationRequest(@Body RegistrationDto registrationDto);
 
     @GET("/roles/get-all-roles")
     Observable<List<RoleDao>> getRoles();

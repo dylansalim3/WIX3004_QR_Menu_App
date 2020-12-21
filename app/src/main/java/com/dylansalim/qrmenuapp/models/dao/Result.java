@@ -39,7 +39,6 @@ public class Result<T> {
     public String toString() {
         return "Result{" +
                 "msg='" + msg + '\'' +
-                ", data=" + data.toString() +
                 '}';
     }
 }

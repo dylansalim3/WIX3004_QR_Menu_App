@@ -1,11 +1,7 @@
 package com.dylansalim.qrmenuapp.models.dao;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 public class TokenDao {
-    @Expose
-    @SerializedName("token")
+
     public String token;
 
     public TokenDao(String token) {
