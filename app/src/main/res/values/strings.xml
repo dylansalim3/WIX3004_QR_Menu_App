@@ -126,5 +126,8 @@
     <string name="feedback">Feedback</string>
     <string name="log_out">Log out</string>
 
+    <!--    Setting-->
+    <string name="setting_notification">Get notifications</string>
+    <string name="setting_notification_sound">Notification sound</string>
 
 </resources>

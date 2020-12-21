@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#22262A"
-    android:foregroundTint="#FFFFFF"
+    android:background="@color/colorBackground"
+    android:foregroundTint="@color/colorWhite"
     android:orientation="vertical"
     tools:context=".ui.setting.SettingActivity">
 
@@ -14,7 +14,7 @@
         android:id="@+id/report_top_bar"
         android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:background="#E45E32"
+        android:background="@color/colorPrimary"
         android:paddingHorizontal="30dp"
         android:paddingTop="30dp"
         android:paddingBottom="40dp">
@@ -54,8 +54,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="40dp"
-            android:text="Settings"
-            android:textColor="#FFF7F4"
+            android:text="@string/settings"
+            android:textColor="@color/colorBeige"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -71,8 +71,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:text="Get notifications"
-                android:textColor="#FFF7F4"
+                android:text="@string/setting_notification"
+                android:textColor="@color/colorBeige"
                 android:textSize="20sp" />
 
             <androidx.appcompat.widget.SwitchCompat
@@ -96,8 +96,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:text="Notification sound"
-                android:textColor="#FFF7F4"
+                android:text="@string/setting_notification_sound"
+                android:textColor="@color/colorBeige"
                 android:textSize="20sp" />
 
             <androidx.appcompat.widget.SwitchCompat
