@@ -10,7 +10,6 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.disposables.Disposables;
 import io.reactivex.schedulers.Schedulers;
 
 public class NotificationPresenter implements NotificationPresenterInterface {
@@ -26,11 +25,13 @@ public class NotificationPresenter implements NotificationPresenterInterface {
     }
 
     @Override
-    public void getNotifications(int userId) {
-        notificationView.showLoading();
+    public void getNotifications(String token, Boolean onCreate) {
+        if (onCreate) {
+            notificationView.showLoading();
+        }
 
-        disposable = NetworkClient.getNetworkClient().create(NotificationNetworkInterface.class)
-                .getNotifications(userId)
+        disposable = NetworkClient.getNetworkClient(token).create(NotificationNetworkInterface.class)
+                .getNotifications()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(notificationDaos -> {
@@ -46,8 +47,8 @@ public class NotificationPresenter implements NotificationPresenterInterface {
     }
 
     @Override
-    public void readNotification(int notificationId) {
-        disposable = NetworkClient.getNetworkClient().create(NotificationNetworkInterface.class)
+    public void readNotification(int notificationId, String token) {
+        disposable = NetworkClient.getNetworkClient(token).create(NotificationNetworkInterface.class)
                 .readNotification(notificationId)
                 .subscribeOn(Schedulers.io())
                 .subscribe(result -> {

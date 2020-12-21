@@ -2,34 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#22262A"
-    android:orientation="vertical"
-    android:paddingHorizontal="30dp"
+    style="@style/account_parent"
     tools:context=".ui.main.notifications.NotificationsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="40dp">
+    <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_top_bar">
 
         <TextView
             android:id="@+id/notification_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Notifications"
-            android:textColor="#FFF7F4"
-            android:textSize="40sp"
-            android:textStyle="bold"
+            style="@style/account_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:background="@drawable/oval_layer"
+            style="@style/account_small_logo"
             android:src="@drawable/qrmenu_logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

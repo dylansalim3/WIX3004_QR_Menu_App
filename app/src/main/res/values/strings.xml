@@ -108,4 +108,26 @@
 
     <!--    Empty recycler view-->
     <string name="no_item_merchant">There is no item</string>
+
+    <!--    Profile-->
+    <string name="profile_change">Tap to change</string>
+    <string name="save_profile">Save Profile</string>
+
+    <!--    Report-->
+    <string name="report_merchant">Report Merchant</string>
+    <string name="reason_hint">Type in reason</string>
+    <string name="file_report">File Report</string>
+
+    <!--    Account-->
+    <string name="edit_profile">Edit Profile</string>
+    <string name="switch_role">Switch Role</string>
+    <string name="settings">Settings</string>
+    <string name="login_register">Login / Register</string>
+    <string name="feedback">Feedback</string>
+    <string name="log_out">Log out</string>
+
+    <!--    Setting-->
+    <string name="setting_notification">Get notifications</string>
+    <string name="setting_notification_sound">Notification sound</string>
+
 </resources>

@@ -1,106 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/profile_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#22262A"
-        android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/report_top_bar"
+        style="@style/profile_top_bar"
+        android:paddingBottom="40dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/report_top_bar"
-            android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:background="#E45E32"
-            android:paddingHorizontal="30dp"
-            android:paddingTop="30dp"
-            android:paddingBottom="40dp">
+        <ImageButton
+            android:id="@+id/report_back_button"
+            style="@style/profile_back_btn"
+            android:src="@drawable/back"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/report_back_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:scaleType="fitXY"
-                android:src="@drawable/back"
-                android:tint="@color/colorWhite"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            style="@style/profile_image"
+            android:background="@drawable/oval_layer"
+            android:elevation="10dp"
+            android:src="@drawable/qrmenu_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:background="@drawable/oval_layer"
-                android:elevation="10dp"
-                android:src="@drawable/qrmenu_logo"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout style="@style/profile_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="20dp"
-            android:paddingBottom="40dp">
+        <TextView
+            android:id="@+id/report_title"
+            style="@style/profile_text"
+            android:paddingTop="40dp"
+            android:paddingBottom="40dp"
+            android:text="@string/report_merchant"
+            android:textSize="30sp"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/report_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="40dp"
-                android:text="Report Merchant"
-                android:textColor="#FFF7F4"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/report_store_name_input"
+            style="@style/profile_input"
+            android:editable="false" />
 
-            <EditText
-                android:id="@+id/report_store_name_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/dark_grey_rounded"
-                android:editable="false"
-                android:elevation="30dp"
-                android:text="Name:"
-                android:textColor="#FFF7F4"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/report_title" />
+        <EditText
+            android:id="@+id/report_reason_input"
+            style="@style/profile_input"
+            android:layout_height="200dp"
+            android:layout_marginTop="20dp"
+            android:gravity="top"
+            android:hint="@string/reason_hint"
+            android:maxLength="700"
+            android:maxLines="20" />
 
-            <EditText
-                android:id="@+id/report_reason_input"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/dark_grey_rounded"
-                android:elevation="30dp"
-                android:gravity="top"
-                android:hint="Type in reason"
-                android:maxLength="700"
-                android:maxLines="20"
-                android:textColor="#FFF7F4"
-                android:textColorHint="#7E7F7F"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/report_store_name_input" />
+        <Button
+            android:id="@+id/report_submit_button"
+            style="@style/profile_button"
+            android:text="@string/file_report" />
 
-            <Button
-                android:id="@+id/report_submit_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/dark_grey_rounded"
-                android:elevation="30dp"
-                android:paddingVertical="6dp"
-                android:text="File Report"
-                android:textAllCaps="false"
-                android:textColor="#FFF7F4"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/report_reason_input" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
-</layout>
+</LinearLayout>
