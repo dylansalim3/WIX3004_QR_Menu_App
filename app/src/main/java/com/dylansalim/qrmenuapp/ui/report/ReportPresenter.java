@@ -22,11 +22,11 @@ public class ReportPresenter implements ReportPresenterInterface {
     }
 
     @Override
-    public void sendReport(int userId, int storeId, String email, String title, String desc) {
+    public void sendReport(int storeId, String email, String title, String desc, String token) {
         reportActivity.showLoading();
-        ReportDto reportDto = new ReportDto(storeId, userId, title, desc, email);
+        ReportDto reportDto = new ReportDto(storeId, title, desc, email);
 
-        disposable = NetworkClient.getNetworkClient().create(ReportNetworkInterface.class)
+        disposable = NetworkClient.getNetworkClient(token).create(ReportNetworkInterface.class)
                 .submitReport(reportDto)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

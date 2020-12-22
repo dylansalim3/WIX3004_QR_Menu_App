@@ -17,9 +17,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.dylan.phoneNumberInput.PhoneInputLayout;
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.RoleDao;
 import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
+import com.dylansalim.qrmenuapp.ui.component.CustomPhoneInputLayout;
 import com.dylansalim.qrmenuapp.ui.login_registration.login.LoginFragment;
 import com.dylansalim.qrmenuapp.utils.TextValidator;
 
@@ -30,11 +32,12 @@ public class RegistrationFragment extends Fragment implements RegistrationViewIn
     OnChangeFragmentListener mChangeFragmentCallback;
     OnSubmitRegistrationFormListener mOnSubmitRegistrationFormCallback;
     ArrayList<RoleDao> roles;
-    EditText mEmail, mPassword, mRepeatPassword, mPhoneNumber, mFirstName, mLastName, mAddress;
+    EditText mEmail, mPassword, mRepeatPassword, mFirstName, mLastName, mAddress;
     Spinner mRoles;
     Button mSubmitBtn;
     RegistrationPresenter registrationPresenter;
     TextView mLoginText;
+    private CustomPhoneInputLayout mPhoneInputLayout;
 
     public static final int REGISTER_FRAGMENT_INDEX = 0;
 
@@ -65,7 +68,7 @@ public class RegistrationFragment extends Fragment implements RegistrationViewIn
 
     @Override
     public String getPhoneNumber() {
-        return mPhoneNumber.getText().toString();
+        return mPhoneInputLayout.getPhoneNumber();
     }
 
     @Override
@@ -134,13 +137,14 @@ public class RegistrationFragment extends Fragment implements RegistrationViewIn
         mRepeatPassword = (EditText) view.findViewById(R.id.et_registration_password_repeat);
         mFirstName = (EditText) view.findViewById(R.id.et_registration_first_name);
         mLastName = (EditText) view.findViewById(R.id.et_registration_last_name);
-        mPhoneNumber = (EditText) view.findViewById(R.id.et_registration_phone_number);
+        mPhoneInputLayout = (CustomPhoneInputLayout) view.findViewById(R.id.registration_phone_input_layout);
         mAddress = (EditText) view.findViewById(R.id.et_registration_address);
         mLoginText = (TextView) view.findViewById(R.id.tv_register_login_here);
         mSubmitBtn = (Button) view.findViewById(R.id.btn_registration_submit);
+        mPhoneInputLayout.setDefaultCountry("MY");
+
 
         validateForm();
-
         mRoles = (Spinner) view.findViewById(R.id.sp_role);
         mRoles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -155,24 +159,13 @@ public class RegistrationFragment extends Fragment implements RegistrationViewIn
             }
         });
 
-        ArrayAdapter<RoleDao> arrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.support_simple_spinner_dropdown_item, roles);
+        ArrayAdapter<RoleDao> arrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.spinner_item, roles);
 
         mRoles.setAdapter(arrayAdapter);
 
-        mSubmitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registrationPresenter.onRegistrationButtonClicked();
-            }
-        });
+        mSubmitBtn.setOnClickListener(view1 -> registrationPresenter.onRegistrationButtonClicked());
 
-        mLoginText.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                mChangeFragmentCallback.onChangeFragment(LoginFragment.LOGIN_FRAGMENT_INDEX);
-            }
-        });
+        mLoginText.setOnClickListener(view12 -> mChangeFragmentCallback.onChangeFragment(LoginFragment.LOGIN_FRAGMENT_INDEX));
 
         setupMVP();
 
@@ -206,12 +199,15 @@ public class RegistrationFragment extends Fragment implements RegistrationViewIn
                 registrationPresenter.validateRepeatPassword(textView, text, mPassword.getText().toString());
             }
         });
-        mPhoneNumber.addTextChangedListener(new TextValidator(mPhoneNumber) {
-            @Override
-            public void validate(TextView textView, String text) {
-                registrationPresenter.validatePhoneNumber(textView, text);
-            }
-        });
+        EditText mPhoneNumber = mPhoneInputLayout.getTextInputLayout().getEditText();
+        if(mPhoneNumber!=null){
+            mPhoneNumber.addTextChangedListener(new TextValidator(mPhoneNumber) {
+                @Override
+                public void validate(TextView textView, String text) {
+                    registrationPresenter.validatePhoneNumber(textView, getPhoneNumber());
+                }
+            });
+        }
         mAddress.addTextChangedListener(new TextValidator(mAddress) {
             @Override
             public void validate(TextView textView, String text) {

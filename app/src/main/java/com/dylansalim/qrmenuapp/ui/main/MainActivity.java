@@ -57,13 +57,7 @@ public class MainActivity extends FragmentActivity implements MainViewInterface 
             }
         });
 
-        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                mainPresenter.onPageSelected(position);
-            }
-        });
+
 
     }
 
@@ -96,6 +90,14 @@ public class MainActivity extends FragmentActivity implements MainViewInterface 
         viewPager2 = (ViewPager2) findViewById(R.id.home_view_pager2);
         FragmentStateAdapter pagerAdapter = new FragmentSlidePagerAdapter(this, fragments);
         viewPager2.setAdapter(pagerAdapter);
+
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                mainPresenter.onPageSelected(position);
+            }
+        });
     }
 
     @Override

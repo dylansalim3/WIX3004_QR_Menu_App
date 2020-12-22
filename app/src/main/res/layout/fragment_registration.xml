@@ -136,17 +136,10 @@
                         android:selectAllOnFocus="true"
                         android:text="test123" />
 
-                    <EditText
-                        android:id="@+id/et_registration_phone_number"
+                    <com.dylansalim.qrmenuapp.ui.component.CustomPhoneInputLayout
+                        android:id="@+id/registration_phone_input_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/phone_number"
-                        android:imeActionLabel="@string/phone_number"
-                        android:imeOptions="actionDone"
-                        android:inputType="phone"
-                        android:selectAllOnFocus="true"
-                        android:paddingBottom="20dp"
-                        style="@style/input_text"/>
+                        android:layout_height="wrap_content"/>
 
                     <EditText
                         android:id="@+id/et_registration_address"
@@ -184,12 +177,13 @@
                         android:paddingBottom="20dp"
                         style="@style/input_text"/>
 
-            <Spinner
-                android:id="@+id/sp_role"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:backgroundTint="@color/colorBeige"
-                />
+                    <Spinner
+                        android:id="@+id/sp_role"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textColor="@color/white"
+                        android:popupBackground="@color/pf_grey"
+                        />
 
                 </LinearLayout>
             </ScrollView>

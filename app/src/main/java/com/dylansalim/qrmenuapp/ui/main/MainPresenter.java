@@ -39,22 +39,24 @@ public class MainPresenter implements MainPresenterInterface {
 
     @Override
     public void populateView(Activity activity) {
-        userRole = getUserRole(activity);
+        UserDetailDao userDetail = getUserDetail(activity);
         MERCHANT = activity.getString(R.string.merchant);
         CUSTOMER = activity.getString(R.string.customer);
         Log.d(TAG, "user role " + userRole);
-        if (userRole.length() > 0) {
-            if (MERCHANT.equalsIgnoreCase(userRole)) {
+        if (userDetail != null) {
+            userRole = userDetail.getRole();
+            if (MERCHANT.equalsIgnoreCase(userRole) && userDetail.getStoreId() != null) {
                 mvi.populateBottomNavBar(R.menu.merchant_bottom_nav_menu);
                 mvi.showFab();
                 mvi.populateFragmentAdapter(MERCHANT_FRAGMENTS);
-            } else if (CUSTOMER.equalsIgnoreCase(userRole)) {
+            } else {
                 mvi.populateBottomNavBar(R.menu.customer_bottom_nav_menu);
                 mvi.populateFragmentAdapter(CUSTOMER_FRAGMENTS);
             }
         } else {
             //only home fragment
-            mvi.populateBottomNavBar(null);
+            mvi.populateBottomNavBar(R.menu.customer_bottom_nav_menu);
+            mvi.populateFragmentAdapter(CUSTOMER_FRAGMENTS);
         }
     }
 
@@ -88,7 +90,7 @@ public class MainPresenter implements MainPresenterInterface {
         }
     }
 
-    private String getUserRole(Activity activity) {
+    private UserDetailDao getUserDetail(Activity activity) {
         SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.app_name), Context.MODE_PRIVATE);
         String token = sharedPreferences.getString(activity.getString(R.string.token), "");
 
@@ -101,10 +103,10 @@ public class MainPresenter implements MainPresenterInterface {
                 e.printStackTrace();
             }
             UserDetailDao userDetailDao = new Gson().fromJson(dataString, UserDetailDao.class);
-            Log.d(TAG, userDetailDao.toString());
-            return userDetailDao.getRole();
+
+            return userDetailDao;
         }
-        return "";
+        return null;
     }
 
 }
