@@ -36,6 +36,7 @@
         android:src="@drawable/ic_baseline_storefront_24"
         app:layout_anchor="@id/bottomAppBar"
         app:maxImageSize="25dp"
+        android:backgroundTint="@color/colorPrimary"
         app:tint="@color/colorWhite"
         android:visibility="invisible"/>
 
