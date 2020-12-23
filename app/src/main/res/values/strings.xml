@@ -130,4 +130,7 @@
     <string name="setting_notification">Get notifications</string>
     <string name="setting_notification_sound">Notification sound</string>
 
+<!--    Error Message-->
+    <string name="error_occurred">Error Occurred. Please try again later.</string>
+
 </resources>

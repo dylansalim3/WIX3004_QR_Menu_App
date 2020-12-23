@@ -70,9 +70,12 @@ public class AboutFragmentPresenter implements AboutFragmentPresenterInterface {
     public void initStoreDetailView(Activity activity) {
         if (null != storeDetail) {
             String address = storeDetail.getAddress();
+            String openHour = storeDetail.getOpenHour();
+            String closingHour = storeDetail.getClosingHour();
+            String specialOpeningNote = storeDetail.getSpecialOpeningNote();
 
             AboutListItem[] aboutListItems = new AboutListItem[]{new AboutListItem(activity.getResources().getDrawable(R.drawable.ic_baseline_location_on_24, activity.getTheme()), address),
-                    new AboutListItem(activity.getResources().getDrawable(R.drawable.ic_baseline_access_time_24, activity.getTheme()), "Opening times", new String[]{"Mon-Fri: 08:00 - 23:00", "Sat: 08:00 - 20:00"})};
+                    new AboutListItem(activity.getResources().getDrawable(R.drawable.ic_baseline_access_time_24, activity.getTheme()), "Opening times", new String[]{String.format("%s - %s",openHour,closingHour), specialOpeningNote})};
             afvi.setupListView(aboutListItems);
         }
     }

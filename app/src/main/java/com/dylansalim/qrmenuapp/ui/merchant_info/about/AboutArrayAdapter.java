@@ -40,8 +40,6 @@ public class AboutArrayAdapter extends ArrayAdapter<AboutListItem[]> {
         ImageView mIcon = (ImageView) rowView.findViewById(R.id.about_list_item_icon);
 
         AboutListItem aboutListItem = values[position];
-        Log.d(TAG, "getView");
-        Log.d(TAG, String.valueOf(position));
 
         StringBuilder descStringBuilder = new StringBuilder("");
         if (null != aboutListItem.getDesc() && aboutListItem.getDesc().length > 0) {
@@ -50,7 +48,6 @@ public class AboutArrayAdapter extends ArrayAdapter<AboutListItem[]> {
                 descStringBuilder.append(descPart);
                 descStringBuilder.append("\n");
             }
-            Log.d(TAG, "get desc" + descStringBuilder.toString());
             mDescText.setVisibility(View.VISIBLE);
             mDescText.setText(descStringBuilder.toString());
         }

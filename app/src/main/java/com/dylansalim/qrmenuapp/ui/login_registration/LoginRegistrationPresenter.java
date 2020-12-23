@@ -78,7 +78,8 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
 
             @Override
             public void onError(Throwable e) {
-                lrvi.displayError("Error occurred");
+                lrvi.displayError("Error Occurred. Please try again later.");
+                lrvi.hideProgressBar();
             }
 
             @Override
@@ -104,7 +105,8 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "Error" + e);
                 e.printStackTrace();
-                lrvi.displayError("Error fetching Data");
+                lrvi.displayError("Error Occurred. Please try again later.");
+                lrvi.hideProgressBar();
             }
 
             @Override
@@ -128,7 +130,8 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "Error" + e);
                 e.printStackTrace();
-                lrvi.displayError("Error fetching Data");
+                lrvi.displayError("Error Occurred. Please try again later.");
+                lrvi.hideProgressBar();
             }
 
             @Override

@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment;
 
 public class AboutMerchantFragment extends Fragment implements AboutFragmentViewInterface, OnMapReadyCallback {
 
-    public static final int FRAGMENT_INDEX = 0;
     private MapView mapView;
     private ListView listView;
     private AboutFragmentPresenterInterface aboutFragmentPresenterInterface;
