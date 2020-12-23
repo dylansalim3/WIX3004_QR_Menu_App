@@ -47,7 +47,7 @@ public interface StoreRegistrationViewInterface {
 
     void hideProgressBar();
 
-    void navigateToNextScreen();
+    void navigateToNextScreen(TokenDao token);
 
     void onFormSubmitted(StoreDao storeDetail);
 

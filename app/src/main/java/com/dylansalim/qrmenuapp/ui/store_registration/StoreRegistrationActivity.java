@@ -2,13 +2,12 @@ package com.dylansalim.qrmenuapp.ui.store_registration;
 
 import android.app.Activity;
 import android.app.TimePickerDialog;
-import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.services.FileIOService;
 import com.dylansalim.qrmenuapp.services.GpsTracker;
 import com.dylansalim.qrmenuapp.ui.component.CustomPhoneInputLayout;
@@ -127,7 +127,11 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
 
         mUseCurrentLocation.setOnCheckedChangeListener((compoundButton, b) -> storeRegistrationPresenter.getCurrentLocation(b, StoreRegistrationActivity.this));
 
-        mSubmitBtn.setOnClickListener(view -> storeRegistrationPresenter.onRegisterButtonClicked(StoreRegistrationActivity.this));
+        mSubmitBtn.setOnClickListener(view -> {
+
+            storeRegistrationPresenter.onRegisterButtonClicked(StoreRegistrationActivity.this);
+        });
+
 
         mChooseLocationBtn.setOnClickListener(view -> {
             GpsTracker gpsTracker = new GpsTracker(this);
@@ -166,7 +170,6 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == Constants.PLACE_PICKER_REQUEST) {
@@ -177,7 +180,7 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
             Log.d(TAG, "IMAGE LOADED");
             Uri selectedImage = data.getData();
             storeRegistrationPresenter.onItemImageResult(selectedImage, getContentResolver());
-        }else {
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -306,8 +309,18 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
         isProgressShowing = false;
     }
 
+    private void storeToken(TokenDao tokenDao) {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(getString(R.string.token), tokenDao.getToken());
+        editor.apply();
+    }
+
     @Override
-    public void navigateToNextScreen() {
+    public void navigateToNextScreen(TokenDao token) {
+        if (token != null) {
+            storeToken(token);
+        }
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

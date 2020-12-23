@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.services.SessionService;
 import com.dylansalim.qrmenuapp.ui.component.RatingDialog;
 import com.dylansalim.qrmenuapp.ui.main.FragmentSlidePagerAdapter;
 import com.dylansalim.qrmenuapp.ui.merchant.MerchantActivity;
@@ -152,7 +154,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
     public void setupToolbar(String title) {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("");
-            ((TextView)findViewById(R.id.tv_merchant_info_store_title)).setText(title);
+            ((TextView) findViewById(R.id.tv_merchant_info_store_title)).setText(title);
         }
     }
 
@@ -200,8 +202,13 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Bundle bundle = getIntent().getExtras();
+        UserDetailDao userDetail = SessionService.getUserDetails(this);
         if (bundle != null && bundle.getBoolean(getResources().getString(R.string.is_store_admin))) {
             getMenuInflater().inflate(R.menu.merchant_info_admin_action_menu, menu);
+        } else if (userDetail != null) {
+            getMenuInflater().inflate(R.menu.merchant_info_customer_action_menu, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.merchant_info_action_menu, menu);
         }
         return true;
     }

@@ -75,7 +75,6 @@ public class MerchantActivity extends AppCompatActivity
             merchantPresenter.getAllItems(this, null);
         } else {
             Integer storeId = bundle.getInt(getResources().getString(R.string.store_id));
-            displayError(String.valueOf(storeId));
             merchantPresenter.getAllItems(this, storeId);
         }
 

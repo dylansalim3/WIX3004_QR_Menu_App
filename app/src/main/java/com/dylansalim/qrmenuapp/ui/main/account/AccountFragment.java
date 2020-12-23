@@ -1,9 +1,11 @@
 package com.dylansalim.qrmenuapp.ui.main.account;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -23,6 +25,10 @@ import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
 
 public class AccountFragment extends Fragment implements AccountViewInterface {
+    ReloadPageListener reloadPageListener;
+    public interface ReloadPageListener{
+        void reloadPage();
+    }
 
     final String TAG = "Account Fragment";
 
@@ -36,6 +42,12 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
     View logout;
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        reloadPageListener = (ReloadPageListener) context;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -45,6 +57,7 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_account, container, false);
         setupMVP();
+
 
         editProfile = root.findViewById(R.id.account_edit_profile_button);
         switchRole = root.findViewById(R.id.account_switch_role_button);
@@ -144,7 +157,9 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
 
     private void logout() {
         SharedPrefUtil.removeUserToken(getContext());
-        showDialog(DialogType.LOGOUT, v -> login());
+        showDialog(DialogType.LOGOUT, v -> {
+            reloadPageListener.reloadPage();
+        });
     }
 
     private void openEditProfile() {

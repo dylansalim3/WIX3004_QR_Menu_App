@@ -16,6 +16,7 @@ import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dao.AddressDao;
 import com.dylansalim.qrmenuapp.models.dao.Result;
 import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.network.StoreRegistrationNetworkInterface;
@@ -101,45 +102,48 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
         int userId = getUserId(activity);
         StoreDao storeDao = validateStoreRegistrationForm(userId);
 
-        RequestBody nameBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getName());
-        RequestBody addressBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getAddress());
-        RequestBody poscodeRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(storeDao.getPostalCode()));
-        RequestBody cityRequestBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getCity());
-        RequestBody countryRequestBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getCountry());
-        RequestBody latitudeBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(storeDao.getLatitude()));
-        RequestBody longitudeBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(storeDao.getLongitude()));
-        RequestBody phoneNumRequestBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getPhoneNum());
-        RequestBody userIdRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(storeDao.getUserId()));
-        RequestBody openHourRequestBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getOpenHour());
-        RequestBody closingHourBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getClosingHour());
-        RequestBody specialOpeningNoteRequestBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getSpecialOpeningNote());
+        if (storeDao != null) {
 
-        MultipartBody.Part imgBody = null;
+            RequestBody nameBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getName());
+            RequestBody addressBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getAddress());
+            RequestBody poscodeRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(storeDao.getPostalCode()));
+            RequestBody cityRequestBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getCity());
+            RequestBody countryRequestBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getCountry());
+            RequestBody latitudeBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(storeDao.getLatitude()));
+            RequestBody longitudeBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(storeDao.getLongitude()));
+            RequestBody phoneNumRequestBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getPhoneNum());
+            RequestBody userIdRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(storeDao.getUserId()));
+            RequestBody openHourRequestBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getOpenHour());
+            RequestBody closingHourBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getClosingHour());
+            RequestBody specialOpeningNoteRequestBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getSpecialOpeningNote());
 
-        if (profileImg != null) {
-            File file = new File(profileImg);
+            MultipartBody.Part imgBody = null;
 
-            RequestBody requestBody1 = RequestBody.create(MediaType.parse("image/*"), file);
+            if (profileImg != null) {
+                File file = new File(profileImg);
 
-            imgBody = MultipartBody.Part.createFormData("file", "file.png", requestBody1);
-        }
+                RequestBody requestBody1 = RequestBody.create(MediaType.parse("image/*"), file);
 
-        if (!isEdit) {
-            // Create new Store
-            disposableObservers.add(getStoreRegistrationNetworkClient().createStore(imgBody, nameBody, addressBody, poscodeRequestBody, cityRequestBody, countryRequestBody, latitudeBody, longitudeBody, phoneNumRequestBody, userIdRequestBody, openHourRequestBody, closingHourBody, specialOpeningNoteRequestBody)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(getRegistrationFormObserver()));
-        } else if (isEdit && editStoreId != -1) {
-            // Edit Store
-            RequestBody storeIdRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(editStoreId));
+                imgBody = MultipartBody.Part.createFormData("file", "file.png", requestBody1);
+            }
 
-            disposableObservers.add(getStoreRegistrationNetworkClient().updateStore(imgBody, storeIdRequestBody, nameBody, addressBody, poscodeRequestBody, cityRequestBody, countryRequestBody, latitudeBody, longitudeBody, phoneNumRequestBody, userIdRequestBody, openHourRequestBody, closingHourBody, specialOpeningNoteRequestBody)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(getUpdateFormObserver()));
-        } else {
-            srvi.hideProgressBar();
+            if (!isEdit) {
+                // Create new Store
+                disposableObservers.add(getStoreRegistrationNetworkClient().createStore(imgBody, nameBody, addressBody, poscodeRequestBody, cityRequestBody, countryRequestBody, latitudeBody, longitudeBody, phoneNumRequestBody, userIdRequestBody, openHourRequestBody, closingHourBody, specialOpeningNoteRequestBody)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(getRegistrationFormObserver()));
+            } else if (isEdit && editStoreId != -1) {
+                // Edit Store
+                RequestBody storeIdRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(editStoreId));
+
+                disposableObservers.add(getStoreRegistrationNetworkClient().updateStore(imgBody, storeIdRequestBody, nameBody, addressBody, poscodeRequestBody, cityRequestBody, countryRequestBody, latitudeBody, longitudeBody, phoneNumRequestBody, userIdRequestBody, openHourRequestBody, closingHourBody, specialOpeningNoteRequestBody)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(getUpdateFormObserver()));
+            } else {
+                srvi.hideProgressBar();
+            }
         }
     }
 
@@ -156,17 +160,20 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
 
         String[] nonNullFieldStrings = new String[]{
                 storeName, address, postalCodeString,
-                city, country, openingHour, closingHour, specialNote};
+                city, country, openingHour, closingHour};
 
         for (String nonNullFieldString : nonNullFieldStrings) {
             if (!ValidationUtils.isNonNullFieldValid(nonNullFieldString)) {
                 srvi.displayErrorMessage("Cannot leave fields empty");
+                srvi.hideProgressBar();
                 return null;
             }
         }
 
         if (userId == -1) {
             srvi.displayErrorMessage("Role is empty");
+            srvi.hideProgressBar();
+            return null;
         }
 
         // checks if the field is valid
@@ -175,6 +182,7 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
         } else {
             // set error message
             srvi.displayErrorMessage("Phone number is not in correct format");
+            srvi.hideProgressBar();
             return null;
         }
 
@@ -186,6 +194,7 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
         } catch (Exception e) {
             e.printStackTrace();
             srvi.displayErrorMessage("Invalid fields");
+            srvi.hideProgressBar();
             return null;
         }
     }
@@ -208,12 +217,14 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
         return NetworkClient.getNetworkClient().create(StoreRegistrationNetworkInterface.class);
     }
 
-    public DisposableObserver<Result<String>> getRegistrationFormObserver() {
-        return new DisposableObserver<Result<String>>() {
+    public DisposableObserver<Result<TokenDao>> getRegistrationFormObserver() {
+        return new DisposableObserver<Result<TokenDao>>() {
 
             @Override
-            public void onNext(Result<String> result) {
-                srvi.navigateToNextScreen();
+            public void onNext(Result<TokenDao> result) {
+                Log.d(TAG,result.getData().toString());
+
+                srvi.navigateToNextScreen(result.getData());
             }
 
             @Override

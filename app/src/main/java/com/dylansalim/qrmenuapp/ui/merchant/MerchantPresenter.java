@@ -136,8 +136,10 @@ public class MerchantPresenter implements MerchantPresenterInterface {
     public void onEditActionButtonClick() {
         editMode = !editMode;
         if (editMode) {
+            mvi.updateEditActionIcon(R.drawable.ic_baseline_done_24);
             restoreRecyclerViewWithAddBtn();
         } else {
+            mvi.updateEditActionIcon(R.drawable.ic_baseline_edit_24);
             restoreRecyclerView();
         }
     }
@@ -148,13 +150,11 @@ public class MerchantPresenter implements MerchantPresenterInterface {
     }
 
     private void restoreRecyclerViewWithAddBtn() {
-        mvi.updateEditActionIcon(R.drawable.ic_baseline_done_24);
         addNewEditableTab();
         setupRecyclerViewWithAddNewButton();
     }
 
     private void restoreRecyclerView() {
-        mvi.updateEditActionIcon(R.drawable.ic_baseline_edit_24);
         mvi.setupTabLayout(titles);
         mvi.setupRecyclerView(editListItems);
     }

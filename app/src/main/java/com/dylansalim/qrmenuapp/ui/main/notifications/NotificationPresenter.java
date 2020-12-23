@@ -41,7 +41,6 @@ public class NotificationPresenter implements NotificationPresenterInterface {
                 }, error -> {
                     Log.e(TAG, "get notifications failed -> " + error);
                     notificationView.hideLoading();
-                    notificationView.showError("Get notifications failed");
                 });
         disposables.add(disposable);
     }

@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.dylansalim.qrmenuapp.R;
+import com.dylansalim.qrmenuapp.ui.main.account.AccountFragment;
 import com.dylansalim.qrmenuapp.ui.merchant.MerchantActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,7 +20,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-public class MainActivity extends FragmentActivity implements MainViewInterface {
+public class MainActivity extends FragmentActivity implements MainViewInterface, AccountFragment.ReloadPageListener {
 
     private MainPresenter mainPresenter;
 
@@ -113,5 +114,12 @@ public class MainActivity extends FragmentActivity implements MainViewInterface 
     @Override
     public void setSelectedBottomNavBar(int itemId) {
         navView.setSelectedItemId(itemId);
+    }
+
+    public void reloadPage(){
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
     }
 }
