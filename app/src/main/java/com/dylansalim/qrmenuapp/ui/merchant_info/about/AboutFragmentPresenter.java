@@ -9,6 +9,7 @@ import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.AboutListItem;
 import com.dylansalim.qrmenuapp.models.dao.StoreDao;
 import com.dylansalim.qrmenuapp.services.GpsTracker;
+import com.dylansalim.qrmenuapp.utils.DateStringUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.UiSettings;
@@ -75,7 +76,7 @@ public class AboutFragmentPresenter implements AboutFragmentPresenterInterface {
             String specialOpeningNote = storeDetail.getSpecialOpeningNote();
 
             AboutListItem[] aboutListItems = new AboutListItem[]{new AboutListItem(activity.getResources().getDrawable(R.drawable.ic_baseline_location_on_24, activity.getTheme()), address),
-                    new AboutListItem(activity.getResources().getDrawable(R.drawable.ic_baseline_access_time_24, activity.getTheme()), "Opening times", new String[]{String.format("%s - %s",openHour,closingHour), specialOpeningNote})};
+                    new AboutListItem(activity.getResources().getDrawable(R.drawable.ic_baseline_access_time_24, activity.getTheme()), "Opening times", new String[]{String.format("%s - %s", DateStringUtils.convert24HourTo12Hour(openHour), DateStringUtils.convert24HourTo12Hour(closingHour)), specialOpeningNote})};
             afvi.setupListView(aboutListItems);
         }
     }
@@ -88,7 +89,7 @@ public class AboutFragmentPresenter implements AboutFragmentPresenterInterface {
             StringBuilder uriStringBuilder = new StringBuilder("geo:");
             uriStringBuilder.append(storeDetail.getLatitude() + ",");
             uriStringBuilder.append(storeDetail.getLongitude());
-            String mappedAddress = storeDetail.getAddress().replace(",", "+").replace(" ","");
+            String mappedAddress = storeDetail.getAddress().replace(",", "+").replace(" ", "");
             uriStringBuilder.append("?q=" + mappedAddress);
             Log.d(TAG, "query map string" + uriStringBuilder.toString());
             return Uri.parse(uriStringBuilder.toString());

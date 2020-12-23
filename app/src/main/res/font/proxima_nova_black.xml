@@ -3,5 +3,5 @@
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="@font/proxima_nova_black_res" />
+        android:font="@font/proxima_nova_bold_res" />
 </font-family>
