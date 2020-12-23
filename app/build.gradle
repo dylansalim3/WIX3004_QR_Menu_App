@@ -11,12 +11,11 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        buildConfigField "String", "SERVER_API_URL", API_URL
 
-        buildConfigField "String", "SERVER_API_URL", DEBUG_API_URL
 
         // Required when setting minSdkVersion to 20 or lower
         multiDexEnabled true
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
