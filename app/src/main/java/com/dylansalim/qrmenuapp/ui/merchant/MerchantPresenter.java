@@ -376,7 +376,7 @@ public class MerchantPresenter implements MerchantPresenterInterface {
         allItems.stream().forEach(category -> {
             editListItems.add(new EditListItem(category.getName(), category.getId()));
             List<EditListItem> categoryChildItems = category.getItems().stream()
-                    .map(item -> new EditListItem(item.getName(), item.getDesc(), item.getId(), item.getPrice(), item.getItemCategoryId(), item.getItemImg())).collect(Collectors.toList());
+                    .map(item -> new EditListItem(item.getName(), item.getDesc(), item.getId(), item.getPrice(), item.isRecommmended(), item.getPromoPrice(), item.getItemCategoryId(), item.getItemImg(), item.getCurrency())).collect(Collectors.toList());
             editListItems.addAll(categoryChildItems);
         });
         return editListItems;

@@ -82,21 +82,46 @@
                     android:inputType="textShortMessage" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_new_item_form_item_price"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:background="@android:color/transparent"
-                android:maxLines="1"
-                app:boxBackgroundColor="@android:color/transparent">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_new_item_form_item_price_currency"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="70dp"
+                    android:background="@android:color/transparent"
+                    android:maxLines="1"
+                    app:boxBackgroundColor="@android:color/transparent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/item_price"
-                    android:digits="0123456789."
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/currency"
+                        android:textAllCaps="true"
+                        android:inputType="textCapWords" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_new_item_form_item_price"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="70dp"
+                    android:background="@android:color/transparent"
+                    android:maxLines="1"
+                    app:boxBackgroundColor="@android:color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/item_price"
+                        android:digits="0123456789."
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_new_item_form_item_promo_price"

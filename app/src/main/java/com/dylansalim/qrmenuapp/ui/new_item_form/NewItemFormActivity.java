@@ -2,7 +2,6 @@ package com.dylansalim.qrmenuapp.ui.new_item_form;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class NewItemFormActivity extends AppCompatActivity implements NewItemFormViewInterface {
 
     private NewItemFormPresenter newItemFormPresenter;
-    private TextInputLayout mItemName, mDesc, mPrice, mPromoPrice;
+    private TextInputLayout mItemName, mDesc, mPriceCurrency, mPrice, mPromoPrice;
     private SwitchMaterial mIsPromo, mIsRecommended;
     private Button mBackBtn, mSubmitBtn;
     private ViewGroup progressView;
@@ -50,6 +49,8 @@ public class NewItemFormActivity extends AppCompatActivity implements NewItemFor
         mSubmitBtn = (Button) findViewById(R.id.btn_new_item_form_submit);
         mItemImage = (ImageView) findViewById(R.id.iv_avatar_new_item);
 
+        mPriceCurrency = (TextInputLayout) findViewById(R.id.til_new_item_form_item_price_currency);
+
         setupMVP();
 
         Bundle bundle = getIntent().getExtras();
@@ -70,7 +71,7 @@ public class NewItemFormActivity extends AppCompatActivity implements NewItemFor
 
         mIsPromo.setOnCheckedChangeListener((compoundButton, b) -> {
             newItemFormPresenter.setIsPromo(b);
-            mPromoPrice.setVisibility(b ? View.VISIBLE : View.INVISIBLE);
+            mPromoPrice.setVisibility(b ? View.VISIBLE : View.VISIBLE);
         });
 
         mIsRecommended.setOnCheckedChangeListener((compoundButton, b) -> newItemFormPresenter.setRecommended(b));
@@ -142,6 +143,11 @@ public class NewItemFormActivity extends AppCompatActivity implements NewItemFor
     }
 
     @Override
+    public String getPriceCurrency() {
+        return mPriceCurrency.getEditText().getText().toString();
+    }
+
+    @Override
     public void setItemName(String itemName) {
         mItemName.getEditText().setText(itemName);
     }
@@ -173,6 +179,11 @@ public class NewItemFormActivity extends AppCompatActivity implements NewItemFor
                     .placeholder(R.drawable.common_google_signin_btn_icon_dark)
                     .into(mItemImage);
         }
+    }
+
+    @Override
+    public void setPriceCurrency(String priceCurrency) {
+        mPriceCurrency.getEditText().setText(priceCurrency);
     }
 
     @Override

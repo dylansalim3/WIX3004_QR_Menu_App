@@ -14,6 +14,21 @@
         android:layout_height="match_parent"
         android:padding="10dp">
 
+        <ImageButton
+            android:id="@+id/ibtn_list_item_more"
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+            android:background="@null"
+            android:contentDescription="@string/btn_more"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.016" />
+
+
         <ImageView
             android:id="@+id/iv_edit_list_item"
             android:layout_width="130dp"
@@ -28,40 +43,45 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.2" />
 
-        <TextView
-            android:id="@+id/tv_edit_item_list_desc"
-            android:layout_width="184dp"
-            android:layout_height="49dp"
-            android:layout_marginEnd="53dp"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:scrollHorizontally="true"
-            android:padding="1dp"
-            android:text="@string/desc"
+        <LinearLayout
+            android:id="@+id/ll_edit_list_item"
+            android:layout_width="150dp"
+            android:layout_height="24dp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/iv_edit_list_item"
             app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.504" />
+            app:layout_constraintVertical_bias="0.92">
 
-        <TextView
-            android:id="@+id/tv_edit_item_list_pricing"
-            android:layout_width="208dp"
-            android:layout_height="28dp"
-            android:layout_marginEnd="25dp"
-            android:padding="1dp"
-            android:text="@string/pricing"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/iv_edit_list_item"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.991" />
+            <TextView
+                android:id="@+id/tv_edit_item_list_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:padding="1dp"
+                android:text="MYR " />
+
+            <TextView
+                android:id="@+id/tv_edit_item_list_pricing"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:padding="1dp"
+                android:text="@string/pricing" />
+
+            <TextView
+                android:id="@+id/tv_edit_item_list_promo_pricing"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:padding="1dp"
+                android:text="@string/pricing"
+                android:visibility="gone"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_edit_item_list_title"
-            android:layout_width="202dp"
+            android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:padding="1dp"
             android:text="@string/title_account"
@@ -71,21 +91,25 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            app:drawableTint="@color/quantum_yellow"/>
 
-        <ImageButton
-            android:id="@+id/ibtn_list_item_more"
-            android:layout_width="20dp"
-            android:layout_height="30dp"
-            android:background="@null"
-            android:src="@drawable/ic_baseline_more_vert_24"
+        <TextView
+            android:id="@+id/tv_edit_item_list_desc"
+            android:layout_width="184dp"
+            android:layout_height="49dp"
+            android:layout_marginEnd="53dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="1dp"
+            android:scrollHorizontally="true"
+            android:text="@string/desc"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintEnd_toStartOf="@+id/iv_edit_list_item"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.016"
-            android:contentDescription="@string/btn_more" />
+            app:layout_constraintVertical_bias="0.524" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

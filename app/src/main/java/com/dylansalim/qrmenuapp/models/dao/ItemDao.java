@@ -17,6 +17,8 @@ public class ItemDao {
 
     private double price;
 
+    private String currency;
+
     @SerializedName("promo_price")
     private double promoPrice;
 
@@ -108,6 +110,18 @@ public class ItemDao {
 
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public boolean isRecommended() {
+        return recommended;
     }
 
     @Override

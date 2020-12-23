@@ -9,6 +9,8 @@ public interface NewItemFormViewInterface {
 
     String getPromoPrice();
 
+    String getPriceCurrency();
+
     void setItemName(String itemName);
 
     void setDesc(String desc);
@@ -20,6 +22,8 @@ public interface NewItemFormViewInterface {
     void setRecommended(boolean recommended);
 
     void setItemImage(String itemImageUrl);
+
+    void setPriceCurrency(String priceCurrency);
 
     void showProgressBar();
 

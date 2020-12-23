@@ -12,7 +12,6 @@ import com.dylansalim.qrmenuapp.models.dao.Result;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.network.NewItemFormNetworkInterface;
 import com.dylansalim.qrmenuapp.utils.ValidationUtils;
-import com.google.gson.Gson;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -70,6 +69,9 @@ public class NewItemFormPresenter implements NewItemFormPresenterInterface {
 
     @Override
     public void setIsPromo(boolean isPromo) {
+        if (!isPromo) {
+            nifvi.setPromoPrice("");
+        }
         this.isPromo = isPromo;
     }
 
@@ -110,9 +112,9 @@ public class NewItemFormPresenter implements NewItemFormPresenterInterface {
         String desc = nifvi.getDesc();
         String priceString = nifvi.getPrice();
         String promoPriceString = nifvi.getPromoPrice();
+        String priceCurrency = nifvi.getPriceCurrency();
 
-
-        List<String> nonNullFieldStrings = new ArrayList<>(Arrays.asList(itemName, desc, priceString));
+        List<String> nonNullFieldStrings = new ArrayList<>(Arrays.asList(itemName, desc, priceString, priceCurrency));
         if (isPromo) {
             nonNullFieldStrings.add(promoPriceString);
         }
@@ -155,6 +157,7 @@ public class NewItemFormPresenter implements NewItemFormPresenterInterface {
     private void submitForm(String submitType) {
         String itemName = nifvi.getItemName();
         String desc = nifvi.getDesc();
+        String priceCurrency = nifvi.getPriceCurrency();
         double price = Double.parseDouble(nifvi.getPrice());
 
 
@@ -163,13 +166,15 @@ public class NewItemFormPresenter implements NewItemFormPresenterInterface {
         itemDao.setName(itemName);
         itemDao.setDesc(desc);
         itemDao.setPrice(price);
+        itemDao.setCurrency(priceCurrency);
         itemDao.setRecommended(recommended);
 
-
+        RequestBody priceCurrencyBody = RequestBody.create(MediaType.parse("plain/text"), itemDao.getCurrency());
         RequestBody nameBody = RequestBody.create(MediaType.parse("plain/text"), itemDao.getName());
         RequestBody descBody = RequestBody.create(MediaType.parse("plain/text"), itemDao.getDesc());
         RequestBody priceRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(itemDao.getPrice()));
-        RequestBody promoPriceRequestBody = null;
+        RequestBody promoPriceRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(0));
+        ;
         RequestBody hiddenRequestBody = RequestBody.create(MediaType.parse("plain/text"), Boolean.toString(false));
         RequestBody recommendedRequestBody = RequestBody.create(MediaType.parse("plain/text"), Boolean.toString(recommended));
 
@@ -191,13 +196,13 @@ public class NewItemFormPresenter implements NewItemFormPresenterInterface {
         if (CREATE_ITEM.equals(submitType)) {
 
             RequestBody itemDescriptionIdBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(itemDao.getItemCategoryId()));
-            disposableObservers.add(getNewItemFormNetworkInterface().createItem(imgBody, itemDescriptionIdBody, nameBody, descBody, priceRequestBody, promoPriceRequestBody, hiddenRequestBody, recommendedRequestBody)
+            disposableObservers.add(getNewItemFormNetworkInterface().createItem(imgBody, itemDescriptionIdBody, nameBody, descBody, priceRequestBody, promoPriceRequestBody, hiddenRequestBody, recommendedRequestBody, priceCurrencyBody)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(getSubmitFormObserver(CREATE_ITEM)));
         } else if (UPDATE_ITEM.equals(submitType)) {
             RequestBody itemIdBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(itemId));
-            disposableObservers.add(getNewItemFormNetworkInterface().updateItem(imgBody, itemIdBody, nameBody, descBody, priceRequestBody, promoPriceRequestBody, hiddenRequestBody, recommendedRequestBody)
+            disposableObservers.add(getNewItemFormNetworkInterface().updateItem(imgBody, itemIdBody, nameBody, descBody, priceRequestBody, promoPriceRequestBody, hiddenRequestBody, recommendedRequestBody, priceCurrencyBody)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(getSubmitFormObserver(UPDATE_ITEM)));
@@ -269,6 +274,7 @@ public class NewItemFormPresenter implements NewItemFormPresenterInterface {
             nifvi.setItemName(itemDao.getName());
             nifvi.setDesc(itemDao.getDesc());
             nifvi.setPrice(Double.toString(itemDao.getPrice()));
+            nifvi.setPriceCurrency(itemDao.getCurrency());
             if (itemDao.getPromoPrice() > 0) {
                 setIsPromo(true);
                 nifvi.setPromoPrice(Double.toString(itemDao.getPromoPrice()));

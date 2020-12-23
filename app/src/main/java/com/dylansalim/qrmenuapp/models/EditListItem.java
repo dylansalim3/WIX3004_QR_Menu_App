@@ -1,9 +1,12 @@
 package com.dylansalim.qrmenuapp.models;
 
-public class EditListItem extends Header  {
+public class EditListItem extends Header {
     private String name;
     private String desc;
     private double pricing;
+    private double promoPricing;
+    private String currency;
+    private boolean recommended;
     private int categoryId;
     private boolean isHeader;
     private boolean isAddNewBtn = false;
@@ -12,13 +15,16 @@ public class EditListItem extends Header  {
     public EditListItem() {
     }
 
-    public EditListItem(String name, String desc, int id, double pricing, int categoryId,String imgUrl) {
+    public EditListItem(String name, String desc, int id, double pricing, boolean recommended, double promoPricing, int categoryId, String imgUrl,String currency) {
         this.name = name;
         this.desc = desc;
         this.id = id;
         this.pricing = pricing;
         this.categoryId = categoryId;
         this.imgUrl = imgUrl;
+        this.recommended = recommended;
+        this.promoPricing = promoPricing;
+        this.currency = currency;
         isHeader = false;
     }
 
@@ -28,9 +34,9 @@ public class EditListItem extends Header  {
         isHeader = true;
     }
 
-    public EditListItem(int id){
+    public EditListItem(int id) {
         this.categoryId = id;
-        isAddNewBtn=true;
+        isAddNewBtn = true;
     }
 
     public String getName() {
@@ -97,6 +103,30 @@ public class EditListItem extends Header  {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public double getPromoPricing() {
+        return promoPricing;
+    }
+
+    public void setPromoPricing(double promoPricing) {
+        this.promoPricing = promoPricing;
+    }
+
+    public boolean isRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(boolean recommended) {
+        this.recommended = recommended;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     @Override

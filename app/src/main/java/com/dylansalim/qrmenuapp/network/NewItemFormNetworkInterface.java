@@ -22,13 +22,15 @@ public interface NewItemFormNetworkInterface {
     Observable<Result<ItemDao>> createItem(@Part MultipartBody.Part image, @Part("item_category_id") RequestBody itemCategoryId,
                                            @Part("name") RequestBody name, @Part("desc") RequestBody desc,
                                            @Part("price") RequestBody price, @Part("promo_price") RequestBody promoPrice,
-                                           @Part("hidden") RequestBody hidden, @Part("recommended") RequestBody recommended);
+                                           @Part("hidden") RequestBody hidden, @Part("recommended") RequestBody recommended,
+                                           @Part("currency") RequestBody currency);
 
     @Multipart
     @POST("/items/update-item")
-    Observable<Result<ItemDao>> updateItem(@Part MultipartBody.Part image,@Part("id") RequestBody id,
+    Observable<Result<ItemDao>> updateItem(@Part MultipartBody.Part image, @Part("id") RequestBody id,
                                            @Part("name") RequestBody name, @Part("desc") RequestBody desc,
                                            @Part("price") RequestBody price, @Part("promo_price") RequestBody promoPrice,
-                                           @Part("hidden") RequestBody hidden, @Part("recommended") RequestBody recommended);
+                                           @Part("hidden") RequestBody hidden, @Part("recommended") RequestBody recommended,
+                                           @Part("currency") RequestBody currency);
 
 }

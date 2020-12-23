@@ -1,6 +1,9 @@
 package com.dylansalim.qrmenuapp.ui.merchant;
 
 import android.annotation.SuppressLint;
+import android.text.Spannable;
+import android.text.Spanned;
+import android.text.style.StrikethroughSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -33,6 +36,7 @@ public class EditItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private OnItemListener onItemListener;
     private OnAddNewBtnListener onAddNewBtnListener;
     private static String TAG = "eia";
+    private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
 
     private List<EditListItem> editListItems;
 
@@ -80,8 +84,26 @@ public class EditItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             VHItem VHitem = (VHItem) holder;
             VHitem.mTitle.setText(currentItem.getName());
             VHitem.mDesc.setText(currentItem.getDesc());
-            VHitem.mPricing.setText(Double.toString(currentItem.getPricing()));
-            VHitem.itemId = getItem(position).getId();
+            VHitem.mCurrency.setText(currentItem.getCurrency());
+            String pricing = String.format("%.2f", currentItem.getPricing());
+            String promoPricing = String.format("%.2f", currentItem.getPromoPricing());
+
+            VHitem.mPricing.setText(pricing);
+            VHitem.itemId = currentItem.getId();
+
+            if (currentItem.isRecommended()) {
+
+                VHitem.mTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_rate_24, 0, 0, 0);
+            }
+
+            if (currentItem.getPromoPricing() > 0) {
+                VHitem.mPricing.setText(pricing, TextView.BufferType.SPANNABLE);
+                Spannable spannable = (Spannable) VHitem.mPricing.getText();
+                spannable.setSpan(STRIKE_THROUGH_SPAN, 0, pricing.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                VHitem.mPromoPricing.setVisibility(View.VISIBLE);
+                VHitem.mPromoPricing.setText(promoPricing);
+            }
 
             Picasso.get().load(BuildConfig.SERVER_API_URL + "/" + getItem(position).getImgUrl())
                     .placeholder(R.drawable.common_google_signin_btn_icon_dark_focused)
@@ -140,6 +162,8 @@ public class EditItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView mTitle;
         TextView mDesc;
         TextView mPricing;
+        TextView mPromoPricing;
+        TextView mCurrency;
         ImageView mImageView;
         ImageButton mMoreMenuBtn;
         OnItemListener onItemListener;
@@ -150,8 +174,10 @@ public class EditItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             this.mTitle = (TextView) itemView.findViewById(R.id.tv_edit_item_list_title);
             this.mDesc = (TextView) itemView.findViewById(R.id.tv_edit_item_list_desc);
             this.mPricing = (TextView) itemView.findViewById(R.id.tv_edit_item_list_pricing);
+            this.mPromoPricing = (TextView) itemView.findViewById(R.id.tv_edit_item_list_promo_pricing);
             this.mImageView = (ImageView) itemView.findViewById(R.id.iv_edit_list_item);
             this.mMoreMenuBtn = (ImageButton) itemView.findViewById(R.id.ibtn_list_item_more);
+            this.mCurrency = (TextView) itemView.findViewById(R.id.tv_edit_item_list_currency);
             this.onItemListener = onItemListener;
             mMoreMenuBtn.setOnClickListener(this);
 

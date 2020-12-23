@@ -75,6 +75,7 @@
     <string name="edit_item">Edit Item</string>
     <string name="item_name">Item Name</string>
     <string name="item_desc">Description</string>
+    <string name="currency">Ccy.</string>
     <string name="item_price">Price</string>
     <string name="isPromo">Is the item having promotion?</string>
     <string name="item_promo_price">Promo Price</string>
