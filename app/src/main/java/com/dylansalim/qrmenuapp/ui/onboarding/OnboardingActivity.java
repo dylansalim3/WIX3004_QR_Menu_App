@@ -73,7 +73,7 @@ public class OnboardingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 position = onboardingViewPager.getCurrentItem();
-                if(position < onboardingAdapter.getItemCount()){
+                if(position < onboardingAdapter.getItemCount()-1){
                     position++;
                     onboardingViewPager.setCurrentItem(position);
                     backBtn.startAnimation(btnAnim);
