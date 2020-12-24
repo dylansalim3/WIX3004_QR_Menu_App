@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,109 +9,102 @@
     android:background="@color/colorBackground">
 
     <TextView
+        style="@style/qr_scan_closebutton"
         android:id="@+id/closeTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/proxima_nova_regular"
-        android:textColor="@color/colorBeige"
-        android:textSize="20sp"
         android:text="@string/close_button"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_gravity="right"/>
+        android:layout_alignParentEnd="true"
+        />
 
     <ImageView
         android:id="@+id/qrActivityLogo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_below="@+id/closeTV"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:src="@drawable/qrmenu_logo"
         />
 
     <androidx.cardview.widget.CardView
+        style="@style/qr_scan_cardView"
         android:id="@+id/qrCard"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        app:cardCornerRadius="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/qrActivityLogo"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="10dp"
         app:cardElevation="5dp"
+        app:cardCornerRadius="20dp"
         app:cardBackgroundColor="@color/colorLightGray">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
+            >
 
             <ImageView
-                android:layout_width="150dp"
+                android:layout_width="100dp"
                 android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="15dp"
+                android:layout_below="@+id/btmLine"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
                 android:src="@drawable/scanqr" />
 
             <TextView
+                style="@style/qr_scan_cardView_text"
                 android:id="@+id/qrActivityTV"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/proxima_nova_extrabold_res"
+                android:layout_below="@+id/welcome"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:paddingTop="5dp"
-                android:textAlignment="center"
-                android:textColor="@color/colorBeige"
-                android:textSize="25sp" />
+                android:textSize="23sp" />
 
             <TextView
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/proxima_nova_extrabold_res"
+                style="@style/qr_scan_cardView_text"
+                android:id="@+id/welcome"
                 android:paddingTop="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:text="@string/welcome_textView"
-                android:textAlignment="center"
-                android:textColor="@color/colorBeige"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <View
-                android:layout_width="200dp"
+                android:id="@+id/btmLine"
+                android:layout_centerHorizontal="true"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_height="1dp"
-                android:layout_gravity="center"
+                android:layout_below="@id/qrActivityTV"
                 android:layout_marginTop="15dp"
                 android:background="@color/colorAccent" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 
 
        <Button
+           style="@style/qr_scan_button"
            android:id="@+id/scanBtn"
-           android:layout_width="match_parent"
+           android:layout_below="@+id/qrCard"
+           android:layout_marginTop="20dp"
            android:layout_height="wrap_content"
-           android:layout_gravity="bottom"
-           android:layout_margin="20dp"
-           android:backgroundTint="@color/colorPrimary"
-           android:fontFamily="@font/proxima_nova_regular"
            android:text="@string/scan_button"
-           android:textColor="@color/colorBeige"
            app:cornerRadius="10dp" />
 
     <Button
+        style="@style/qr_scan_button"
         android:id="@+id/qr_scan_login"
-        android:layout_width="match_parent"
+        android:layout_below="@+id/scanBtn"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginHorizontal="20dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:fontFamily="@font/proxima_nova_regular"
+        android:layout_marginBottom="10dp"
         android:text="@string/login_here"
-        android:textColor="@color/colorBeige"
         app:cornerRadius="10dp" />
 
 
-
-</LinearLayout>
+</RelativeLayout>

@@ -70,7 +70,11 @@ public class QRScanActivity extends AppCompatActivity implements QRScanViewInter
         });
 
         qrScanPresenter.checkUserType(this);
-        qrActivityTV.setText(qrScanPresenter.getUserName());
+        if(qrScanPresenter.getUserName() != null){
+            qrActivityTV.setText(qrScanPresenter.getUserName());
+        }else{
+            qrActivityTV.setText("Beloved Guest");
+        }
     }
 
     private void setupMVP() {

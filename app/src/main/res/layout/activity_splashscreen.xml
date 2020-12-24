@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,15 +10,13 @@
 
     <ImageView
         android:id="@+id/splashLogo"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
         android:src="@drawable/qrmenu_logo"
         android:elevation="2dp"
-        app:layout_constraintVertical_bias=".2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+         />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieSplash"
@@ -27,10 +25,8 @@
         android:elevation="2dp"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/splashLogo" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/splashLogo" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

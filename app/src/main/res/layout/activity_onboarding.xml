@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     tools:context=".ui.onboarding.OnboardingActivity">
@@ -10,32 +10,37 @@
 
 
     <Button
+        style="@style/onboarding_button"
         android:id="@+id/proceedBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
+        android:layout_alignTop="@+id/ignoreRegisterBtn"
         android:text="@string/proceed_button"
-        android:textColor="@color/colorBeige"
         app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.53" />
+        android:layout_below="@id/backImg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-50dp"
+         />
 
     <Button
+        style="@style/onboarding_button"
         android:id="@+id/ignoreRegisterBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
         android:text="@string/ignore_register_button"
-        android:textColor="@color/colorBeige"
+        android:layout_marginTop="-100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/btn_next"
         app:cornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/layoutOnboardingIndicators"
-        app:layout_constraintEnd_toEndOf="@+id/proceedBtn"
-        app:layout_constraintStart_toStartOf="@+id/proceedBtn"
-        app:layout_constraintTop_toBottomOf="@+id/proceedBtn"
-        app:layout_constraintVertical_bias="0.007" />
+
+        />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/onboarding_Nextbutton"
+        android:id="@+id/btn_next"
+        android:text="@string/next_button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd= "30dp"
+        android:layout_marginBottom="30dp"
+        app:cornerRadius="10dp"
+        />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/liquidPager"
@@ -49,30 +54,26 @@
         android:layout_width="25dp"
         android:layout_height="wrap_content"
         android:src="@drawable/back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_alignParentStart="true"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         />
 
     <LinearLayout
         android:id="@+id/layoutOnboardingIndicators"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
         android:orientation="horizontal"
         android:gravity="center"
         android:padding="15dp"
-        app:layout_constraintVertical_bias="0.7"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
          />
 
 
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

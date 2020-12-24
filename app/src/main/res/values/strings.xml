@@ -84,12 +84,13 @@
     <string name="update">Update</string>
 
     <!--    OnBoarding Activity    -->
+    <string name="next_button">Next</string>
     <string name="proceed_button">Proceed to registration</string>
     <string name="ignore_register_button">Continue without registering</string>
 
 
     <!--    QrScanActivity-->
-    <string name="scan_button">Scan</string>
+    <string name="scan_button">Scan Now</string>
     <string name="close_button">Close</string>
     <string name="welcome_textView">Welcome</string>
     <!--    Rating Dialog-->
