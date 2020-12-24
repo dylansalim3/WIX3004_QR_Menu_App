@@ -27,7 +27,7 @@ public class OnboardingActivity extends AppCompatActivity {
     private LinearLayout layoutOnboardingIndicators;
     ImageView backBtn;
     Animation btnAnim;
-    Button proceedBtn, ignoreRegistrationBtn;
+    Button proceedBtn, ignoreRegistrationBtn, btnNext;
     OnboardingAdapter onboardingAdapter;
     int position = 0;
     List<ScreenItem> mList;
@@ -40,6 +40,7 @@ public class OnboardingActivity extends AppCompatActivity {
         proceedBtn = findViewById(R.id.proceedBtn);
         ignoreRegistrationBtn = findViewById(R.id.ignoreRegisterBtn);
         backBtn = findViewById(R.id.backImg);
+        btnNext = findViewById(R.id.btn_next);
         layoutOnboardingIndicators = findViewById(R.id.layoutOnboardingIndicators);
         btnAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.onboarding_button_animation);
 
@@ -67,6 +68,22 @@ public class OnboardingActivity extends AppCompatActivity {
             }
         });
 
+//      Next Button click
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                position = onboardingViewPager.getCurrentItem();
+                if(position < onboardingAdapter.getItemCount()){
+                    position++;
+                    onboardingViewPager.setCurrentItem(position);
+                    backBtn.startAnimation(btnAnim);
+                }
+                if(position == onboardingAdapter.getItemCount()-1){
+                    btnNext.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
 //      return to previous page when back button clicked
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +92,8 @@ public class OnboardingActivity extends AppCompatActivity {
                 if(position > 0){
                     position = position - 1;
                     onboardingViewPager.setCurrentItem(position);
+                    btnNext.startAnimation(btnAnim);
+                    btnNext.setVisibility(View.VISIBLE);
                 }
             }
         });
