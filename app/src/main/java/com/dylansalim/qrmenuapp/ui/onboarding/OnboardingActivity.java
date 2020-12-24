@@ -45,11 +45,11 @@ public class OnboardingActivity extends AppCompatActivity {
         btnAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.onboarding_button_animation);
 
 //      Check if the user used the app before, if yes, onboarding will not run again
-//        if(restorePrefData()){
-//            Intent loginActivity = new Intent(getApplicationContext(), QRScanActivity.class);
-//            startActivity(loginActivity);
-//            finish();
-//        }
+        if(restorePrefData()){
+            Intent loginActivity = new Intent(getApplicationContext(), QRScanActivity.class);
+            startActivity(loginActivity);
+            finish();
+        }
 
 //      Setup the onboarding items
         setupOnboardingItems();
