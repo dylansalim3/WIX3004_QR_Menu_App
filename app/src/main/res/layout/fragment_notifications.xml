@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/account_parent"
+    tools:context=".ui.main.notifications.NotificationsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_top_bar">
+
+        <TextView
+            android:id="@+id/notification_title"
+            android:text="Notifications"
+            style="@style/account_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            style="@style/account_small_logo"
+            android:src="@drawable/qrmenu_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notification_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

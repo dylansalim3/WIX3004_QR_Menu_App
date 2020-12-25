@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="3dp"
+        card_view:contentPadding="@dimen/nav_header_vertical_spacing"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Light"
+        android:layout_gravity="center_vertical"
+        >
+
+        <TextView
+            android:id="@+id/tv_header_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="start"
+            android:textSize="@dimen/list_header" />
+
+        <ImageButton
+            android:id="@+id/ibtn_header_delete"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:visibility="invisible"
+            android:background="@color/colorWhite"
+            android:contentDescription="@string/btn_delete"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_baseline_delete_24"
+            android:tint="@color/colorRed" />
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

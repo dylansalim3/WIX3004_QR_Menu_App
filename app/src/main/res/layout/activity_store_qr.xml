@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.store_qr.StoreQRActivity"
+    android:background="@color/colorBackground"
+    >
+
+    <ImageView
+        android:id="@+id/iv_store_qr_profile"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/curve_white_background"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sample_qr"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/constraint_layout_qr_view"
+        android:layout_marginBottom="-30dp"
+        android:translationZ="10dp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_qr_view"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_gravity="center"
+        android:background="@drawable/curve_light_gray_background"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        >
+
+        <TextView
+            android:id="@+id/tv_store_qr_store_title"
+            style="@style/ListItemTitleTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.12" />
+
+        <TextView
+            android:id="@+id/tv_store_qr_store_desc"
+            style="@style/ListItemDescTheme"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="3"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.229" />
+
+        <ImageView
+            android:id="@+id/iv_store_qr"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/curve_white_background"
+            android:contentDescription="TODO"
+            android:src="@drawable/sample_qr"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.833" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/store_qr_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?actionBarSize"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/colorWhite"
+        app:title="@string/title_activity_store_qr"
+        />
+
+
+</RelativeLayout>

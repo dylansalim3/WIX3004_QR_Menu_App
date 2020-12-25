@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    >
+
+
+    <item
+        android:id="@+id/action_leave_review"
+        android:orderInCategory="1"
+        android:title="@string/leave_review"
+        android:icon="@drawable/ic_baseline_rate_review_24"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/action_get_qr"
+        android:orderInCategory="2"
+        android:title="@string/get_qr"
+        android:icon="@drawable/ic_baseline_qr_code_2_24"
+        app:showAsAction="always"/>
+</menu>

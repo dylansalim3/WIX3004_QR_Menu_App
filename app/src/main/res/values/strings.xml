@@ -1,0 +1,136 @@
+<resources>
+    <string name="app_name">QRMenuApp</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+
+    <string name="registration">Registration</string>
+    <string name="register_here">Register here</string>
+    <string name="register">Register</string>
+    <string name="login_here">Login here</string>
+    <string name="store_registration">Store Registration</string>
+    <string name="name">Name</string>
+
+    <string name="repeat_password">Repeat Password</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="opening_hour">Opening Hour</string>
+    <string name="closing_hour">Closing Hour</string>
+    <string name="special_hour_note">Special notes</string>
+
+    <string name="store_name">Store Name</string>
+    <string name="address">Address</string>
+    <string name="poscode">Poscode</string>
+    <string name="city">City</string>
+    <string name="country">Country</string>
+    <string name="phoneNum">Phone Number</string>
+
+    <string name="title_activity_merchant_menu">MerchantMenuActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_share">Share</string>
+    <string name="action_info">Info</string>
+    <string name="action_edit">Edit</string>
+
+    <string name="btn_add_new_item">Add New Item</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="use_current_location">Use Current Location</string>
+
+
+    <string name="title_activity_merchant">MainActivity</string>
+
+    <!--    Bottom navbar string-->
+    <string name="title_home">Home</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_account">Account</string>
+    <string name="title_store">Store</string>
+
+    <!--    Sample string-->
+    <string name="title">Lorem</string>
+    <string name="desc">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Ciceros De Finibus Bonorum et Malorum for use in a type specimen book.</string>
+    <string name="pricing">RM 2.50</string>
+
+
+    <!--    Merchant Activity-->
+    <string name="btn_delete">Button Delete</string>
+    <string name="btn_more">Button More</string>
+
+
+    <!--    Add New Item-->
+    <string name="add_new_item">Add New Item</string>
+    <string name="edit_item">Edit Item</string>
+    <string name="item_name">Item Name</string>
+    <string name="item_desc">Description</string>
+    <string name="item_price">Price</string>
+    <string name="isPromo">Is the item having promotion?</string>
+    <string name="item_promo_price">Promo Price</string>
+    <string name="recommended">Recommended</string>
+    <string name="add">Add</string>
+    <string name="update">Update</string>
+
+    <!--    OnBoarding Activity    -->
+    <string name="proceed_button">Proceed to registration</string>
+    <string name="ignore_register_button">Continue without registering</string>
+
+
+    <!--    QrScanActivity-->
+    <string name="scan_button">Scan</string>
+    <string name="close_button">Close</string>
+    <string name="welcome_textView">Welcome</string>
+    <!--    Rating Dialog-->
+    <string name="write_your_thoughts">Write your thoughts here...</string>
+
+    <!--    Menu actions-->
+    <string name="get_qr">Get QR</string>
+    <string name="leave_review">Review</string>
+    <string name="title_activity_store_qr">QR Scan</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+
+    <!--    Store Edit-->
+    <string name="submit">Submit</string>
+    <string name="store_edit_title">Edit Merchant Info</string>
+    <string name="store_edit_desc">Update the following field and submit to make changes</string>
+
+    <!--    Empty recycler view-->
+    <string name="no_item_merchant">There is no item</string>
+
+    <!--    Profile-->
+    <string name="profile_change">Tap to change</string>
+    <string name="save_profile">Save Profile</string>
+
+    <!--    Report-->
+    <string name="report_merchant">Report Merchant</string>
+    <string name="reason_hint">Type in reason</string>
+    <string name="file_report">File Report</string>
+
+    <!--    Account-->
+    <string name="edit_profile">Edit Profile</string>
+    <string name="switch_role">Switch Role</string>
+    <string name="settings">Settings</string>
+    <string name="login_register">Login / Register</string>
+    <string name="feedback">Feedback</string>
+    <string name="log_out">Log out</string>
+
+    <!--    Setting-->
+    <string name="setting_notification">Get notifications</string>
+    <string name="setting_notification_sound">Notification sound</string>
+
+<!--    Error Message-->
+    <string name="error_occurred">Error Occurred. Please try again later.</string>
+
+</resources>

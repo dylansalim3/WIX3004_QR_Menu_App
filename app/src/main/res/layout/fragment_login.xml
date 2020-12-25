@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".ui.login_registration.login.LoginFragment">
+
+    <LinearLayout
+        android:id="@+id/topTextContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="@dimen/theme_margin_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/loginTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="Login"
+            android:textColor="@color/colorBeige"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_login_register_here"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Sign Up"
+            android:textAlignment="center"
+            android:textColor="@color/colorBeigeTransparent"
+            android:fontFamily="@font/open_sans_bold"
+            android:textSize="20sp"
+            android:layout_marginLeft="30dp"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/logoView"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginRight="@dimen/theme_margin_horizontal"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/topTextContainer"
+        android:src="@drawable/qrmenu_logo" />
+
+
+    <View
+        android:id="@+id/lineView"
+        android:layout_width="52dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="-10dp"
+        android:layout_below="@id/topTextContainer"
+        android:background="@color/colorBeige"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:layout_marginHorizontal="@dimen/theme_margin_horizontal"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/introTV1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/open_sans_light"
+            android:text="Hello,"
+            android:textColor="@color/colorBeige"
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/introTV2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="Ready to go paperless?"
+            android:textColor="@color/colorBeige"
+            android:textSize="25sp" />
+
+        <EditText
+            android:id="@+id/et_login_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="20dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/colorBeigeTransparent"
+            android:fontFamily="@font/open_sans"
+            android:hint="@string/prompt_email"
+            android:inputType="textEmailAddress"
+            android:selectAllOnFocus="true"
+            android:text="dylansalim3@gmail.com"
+            android:textColorHint="@color/colorBeigeTransparent"
+            android:textColor="@color/colorBeige" />
+
+        <EditText
+            android:id="@+id/et_login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="15dp"
+            android:backgroundTint="@color/colorBeigeTransparent"
+            android:fontFamily="@font/open_sans"
+            android:hint="@string/prompt_password"
+            android:imeActionLabel="@string/action_sign_in_short"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:selectAllOnFocus="true"
+            android:text="test123"
+            android:textColorHint="@color/colorBeigeTransparent"
+            android:textColor="@color/colorBeige"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_login_submit"
+        android:padding="27dp"
+        android:layout_width="90dp"
+        android:layout_height="65dp"
+        android:layout_alignTop="@id/bottomDeco"
+        android:layout_alignRight="@id/bottomDeco"
+        android:layout_marginTop="-32dp"
+        android:layout_marginRight="@dimen/theme_margin_horizontal"
+        android:drawableEnd="@drawable/next" />
+
+    <View
+        android:id="@+id/bottomDeco"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorBeige"/>
+
+
+</RelativeLayout>

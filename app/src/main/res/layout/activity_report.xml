@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/profile_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/report_top_bar"
+        style="@style/profile_top_bar"
+        android:paddingBottom="40dp">
+
+        <ImageButton
+            android:id="@+id/report_back_button"
+            style="@style/profile_back_btn"
+            android:src="@drawable/back"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            style="@style/profile_image"
+            android:background="@drawable/oval_layer"
+            android:elevation="10dp"
+            android:src="@drawable/qrmenu_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout style="@style/profile_content">
+
+        <TextView
+            android:id="@+id/report_title"
+            style="@style/profile_text"
+            android:paddingTop="40dp"
+            android:paddingBottom="40dp"
+            android:text="@string/report_merchant"
+            android:textSize="30sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/report_store_name_input"
+            style="@style/profile_input"
+            android:editable="false" />
+
+        <EditText
+            android:id="@+id/report_reason_input"
+            style="@style/profile_input"
+            android:layout_height="200dp"
+            android:layout_marginTop="20dp"
+            android:gravity="top"
+            android:hint="@string/reason_hint"
+            android:maxLength="700"
+            android:maxLines="20" />
+
+        <Button
+            android:id="@+id/report_submit_button"
+            style="@style/profile_button"
+            android:text="@string/file_report" />
+
+    </LinearLayout>
+</LinearLayout>

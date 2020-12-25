@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main Color Palette starts-->
+    <color name="colorPrimary">#E45E32</color>
+    <!-- beige color used for text and light background-->
+    <color name="colorBeige">#FFF7F4</color>
+    <color name="colorBeigeTransparent">#64FFF7F4</color>
+    <color name="colorBackground">#22262A</color>
+    <color name="colorGray">#24292B</color>
+    <color name="colorLightGray">#474F51</color>
+    <color name="colorLighterGray">#7E7F7F</color>
+
+
+    <!-- Main Color Palette ends-->
+
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="colorLink">#0000EE</color>
+
+    <color name="colorTextPrimary">#000000</color>
+
+    <color name="colorDarkSemiTransparent">#C6000000</color>
+
+    <color name="colorBackgroundFloating">#FFFFFF</color>
+    <color name="colorRed">#FF0000</color>
+
+    <color name="colorWhite">#ffffff</color>
+
+    <color name="colorLightYellow">#FFF200</color>
+
+    <!-- colors for button style -->
+
+    <color name="gradient_start_color">#4c84ff</color>
+    <color name="gradient_end_color">#18a3fe</color>
+</resources>

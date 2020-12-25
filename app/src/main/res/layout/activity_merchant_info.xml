@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.merchant_info.MerchantInfoActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/merchant_info_appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:fitsSystemWindows="true"
+        android:background="@null"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/merchant_info_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/sample"
+            android:gravity="top"
+            app:titleMarginTop="15dp"
+            app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingHorizontal="10dp">
+
+            <TextView
+                android:id="@+id/tv_merchant_info_store_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/ListItemTitleTheme"
+                android:gravity="center_vertical"
+                android:layout_alignParentStart="true"/>
+
+            <Button android:id="@+id/merchant_info_btn_report"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="REPORT"
+                android:layout_alignParentEnd="true"/>
+
+
+        </RelativeLayout>
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/merchant_info_item_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorWhite"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Light"
+            app:tabIndicatorHeight="6dp"
+            android:elevation="6dp"
+            app:tabMode="fixed" />
+
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/merchant_info_view_pager2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".ui.store_registration.StoreRegistrationActivity">
+
+    <Button
+        android:id="@+id/btn_store_registration_back"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        app:icon="@drawable/ic_baseline_arrow_back_ios_24"
+        app:iconTint="@color/colorPrimary"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"/>
+
+    <ScrollView
+        android:id="@+id/scroll_view_store_registration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_store_registration_back"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp">
+
+        <LinearLayout
+            android:id="@+id/ll_store_registration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/theme_margin_horizontal">
+
+            <TextView
+                android:id="@+id/tv_store_registration_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Hello Merchant,"
+                android:textColor="@color/colorBeige"
+                android:textSize="35sp" />
+
+
+            <TextView
+                android:id="@+id/tv_store_registration_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Complete the information below and start going paperless."
+                android:textColor="@color/colorBeige"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/iv_store_registration"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_gravity="center"
+                android:src="@drawable/sample"
+                android:contentDescription="TODO" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_store_registration_name"
+                style="@style/merchant_textinput_layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/merchant_textinput_layout_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/store_name"
+                    android:inputType="textShortMessage" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.dylansalim.qrmenuapp.ui.component.CustomPhoneInputLayout
+                android:id="@+id/phone_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_store_registration_address"
+                style="@style/merchant_textinput_layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/merchant_textinput_layout_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/address"
+                    android:inputType="textPostalAddress"
+                    android:lines="3"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_store_registration_postal_code"
+                    style="@style/merchant_textinput_layout_city"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/merchant_textinput_layout_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/poscode"
+                        android:inputType="number"
+                        android:enabled="false"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_store_registration_city"
+                    style="@style/merchant_textinput_layout_city"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/merchant_textinput_layout_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/city"
+                        android:inputType="textPostalAddress"
+                        android:enabled="false"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_store_registration_country"
+                style="@style/merchant_textinput_layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/merchant_textinput_layout_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/country"
+                    android:inputType="textPostalAddress"
+                    android:enabled="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_store_registration_choose_location"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_width="300dp"
+                android:layout_height="46dp"
+                android:background="@drawable/btn_gradient_style"
+                android:text="Choose Location"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+                android:textSize="14sp"
+                app:fontFamily="@font/proxima_nova_regular"
+                app:rippleColor="@color/colorAccent" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_store_registration_current_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:text="@string/use_current_location"
+                android:textColor="@color/colorBeige" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_store_registration_opening_hour"
+                    style="@style/merchant_textinput_layout"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tied_store_registration_opening_hour"
+                        style="@style/merchant_textinput_layout_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/opening_hour"
+                        android:inputType="time"
+                        android:clickable="true"
+                        android:focusable="false" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_store_registration_closing_hour"
+                    style="@style/merchant_textinput_layout"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tied_store_registration_closing_hour"
+                        style="@style/merchant_textinput_layout_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/closing_hour"
+                        android:inputType="time"
+                        android:clickable="true"
+                        android:focusable="false" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_store_registration_special_hour_note"
+                style="@style/merchant_textinput_layout"
+                android:layout_weight="1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/merchant_textinput_layout_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/special_hour_note"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_store_registration_submit"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_width="300dp"
+                android:layout_height="46dp"
+                android:background="@drawable/btn_gradient_style"
+                android:text="@string/register"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+                android:textSize="14sp"
+                app:fontFamily="@font/proxima_nova_regular"
+                app:rippleColor="@color/colorAccent" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>
