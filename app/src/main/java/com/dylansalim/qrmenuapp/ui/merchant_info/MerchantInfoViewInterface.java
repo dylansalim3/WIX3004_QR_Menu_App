@@ -21,5 +21,7 @@ public interface MerchantInfoViewInterface {
 
     void navigateToEditStoreActivity(StoreDao storeDetail);
 
+    void navigateToReportActivity(StoreDao storeDetail);
+
     void setProfileImg(String profileImg);
 }

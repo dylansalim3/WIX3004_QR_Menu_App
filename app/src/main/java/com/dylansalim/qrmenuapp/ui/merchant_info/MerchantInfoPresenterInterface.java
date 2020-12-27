@@ -18,6 +18,8 @@ public interface MerchantInfoPresenterInterface {
 
     void onEditBtnClick();
 
+    void onReportBtnClick();
+
     void onReviewSubmit(String text, float rating, Context context);
 
     void disposeObserver();

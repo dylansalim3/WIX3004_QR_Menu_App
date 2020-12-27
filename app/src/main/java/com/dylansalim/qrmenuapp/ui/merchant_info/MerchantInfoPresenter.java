@@ -69,6 +69,13 @@ public class MerchantInfoPresenter implements MerchantInfoPresenterInterface {
     }
 
     @Override
+    public void onReportBtnClick() {
+        if (null != storeDetail) {
+            mivi.navigateToReportActivity(storeDetail);
+        }
+    }
+
+    @Override
     public void onReviewSubmit(String text, float rating, Context context) {
         mivi.showProgressBar();
         UserDetailDao userDetailDao = SessionService.getUserDetails(context);
