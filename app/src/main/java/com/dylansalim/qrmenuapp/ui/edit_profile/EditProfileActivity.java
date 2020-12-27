@@ -3,6 +3,7 @@ package com.dylansalim.qrmenuapp.ui.edit_profile;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
 import com.dylansalim.qrmenuapp.services.FileIOService;
 import com.dylansalim.qrmenuapp.ui.component.ConfirmDialog;
+import com.dylansalim.qrmenuapp.ui.component.CustomPhoneInputLayout;
 import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 import com.squareup.picasso.Picasso;
 
@@ -37,8 +39,9 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     ImageView picture;
     EditText firstName;
     EditText lastName;
-    EditText phoneNumber;
+    CustomPhoneInputLayout phoneNumber;
     EditText address;
+    SwitchCompat location;
     Button saveButton;
     View progressBar;
 
@@ -51,8 +54,9 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         picture = findViewById(R.id.profile_picture);
         firstName = findViewById(R.id.profile_firstname);
         lastName = findViewById(R.id.profile_lastname);
-        phoneNumber = findViewById(R.id.profile_phonenumber);
+        phoneNumber = findViewById(R.id.profile_phone_number);
         address = findViewById(R.id.profile_address);
+        location = findViewById(R.id.profile_location);
         saveButton = findViewById(R.id.profile_save_button);
 
         UserDetailDao userDetailDao = SharedPrefUtil.getUserDetail(this);
@@ -65,19 +69,28 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
 
         firstName.setText(userDetailDao.getFirstName());
         lastName.setText(userDetailDao.getLastName());
-        phoneNumber.setText(userDetailDao.getPhoneNum());
+        address.setText(userDetailDao.getAddress());
 
+        phoneNumber.setHint(R.string.phone_number);
+        phoneNumber.setPhoneNumber(userDetailDao.getPhoneNum());
+        phoneNumber.getEditText().setText( // remove hyphens
+                phoneNumber.getEditText().getText().toString().replace("-", "")
+        );
         picture.setOnClickListener(view -> {
             if (FileIOService.requestReadIOPermission(this)) {
                 pickImage();
             }
         });
 
+        location.setOnCheckedChangeListener((view, isCheck) -> {
+            if (isCheck) presenter.getLocation(this);
+        });
+
         saveButton.setOnClickListener(view -> {
             presenter.saveProfile(
                     firstName.getText().toString(),
                     lastName.getText().toString(),
-                    phoneNumber.getText().toString(),
+                    phoneNumber.getPhoneNumber(),
                     address.getText().toString(),
                     SharedPrefUtil.getUserToken(this)
             );
@@ -109,6 +122,10 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
                 .placeholder(R.drawable.ic_account_circle_white_24dp)
                 .fit()
                 .into(picture);
+    }
+
+    public void setAddress(String address_text) {
+        address.setText(address_text);
     }
 
     @Override

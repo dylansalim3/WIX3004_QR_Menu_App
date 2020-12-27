@@ -14,6 +14,8 @@ public interface EditProfileViewInterface {
 
     void loadImage(String imageUrl);
 
+    void setAddress(String address_text);
+
     void showLoading();
 
     void hideLoading();
