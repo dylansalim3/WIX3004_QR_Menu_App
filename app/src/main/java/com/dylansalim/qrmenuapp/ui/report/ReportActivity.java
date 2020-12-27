@@ -74,7 +74,7 @@ public class ReportActivity extends AppCompatActivity implements ReportViewInter
     @Override
     public void showFinish() {
         ConfirmDialog dialog = new ConfirmDialog(this);
-        dialog.setDialogText("Your report has been filled successfully");
+        dialog.setDialogText(getString(R.string.dialog_report));
         dialog.setListener(v -> finish());
         dialog.show();
     }
@@ -82,7 +82,7 @@ public class ReportActivity extends AppCompatActivity implements ReportViewInter
     @Override
     public void showError(String error) {
         ConfirmDialog dialog = new ConfirmDialog(this);
-        dialog.setDialogText("Error occurred. Please try again");
+        dialog.setDialogText(getString(R.string.dialog_error));
         dialog.show();
     }
 

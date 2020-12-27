@@ -128,6 +128,19 @@
     <string name="feedback">Feedback</string>
     <string name="log_out">Log out</string>
 
+    <!--    Dialog-->
+    <string name="dialog_switch_merchant">Your role has been switched to merchant</string>
+    <string name="dialog_switch_customer">Your role has been switched to customer</string>
+    <string name="dialog_logout">You have been logged out</string>
+    <string name="dialog_error">Error occurred. Please try again</string>
+    <string name="dialog_empty_address">Address cannot be empty</string>
+    <string name="dialog_empty_first_name">First name cannot be empty</string>
+    <string name="dialog_empty_last_name">Last name cannot be empty</string>
+    <string name="dialog_empty_phone">Phone number cannot be empty</string>
+    <string name="dialog_invalid_phone">Phone number is not valid</string>
+    <string name="dialog_profile_updated">Your profile is updated</string>
+    <string name="dialog_report">Your report has been filled successfully</string>
+
     <!--    Setting-->
     <string name="setting_notification">Get notifications</string>
     <string name="setting_notification_sound">Notification sound</string>

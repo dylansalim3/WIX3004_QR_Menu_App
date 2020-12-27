@@ -157,7 +157,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     @Override
     public void showSuccess() {
         ConfirmDialog dialog = new ConfirmDialog(this);
-        dialog.setDialogText("Your profile is updated");
+        dialog.setDialogText(getString(R.string.dialog_profile_updated));
         dialog.setListener(v -> finish());
         dialog.show();
     }
@@ -168,22 +168,22 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         ConfirmDialog dialog = new ConfirmDialog(this);
         switch (type) {
             case EMPTY_FIRST_NAME:
-                dialog.setDialogText("First name cannot be empty");
+                dialog.setDialogText(getString(R.string.dialog_empty_first_name));
                 break;
             case EMPTY_LAST_NAME:
-                dialog.setDialogText("Last name cannot be empty");
+                dialog.setDialogText(getString(R.string.dialog_empty_last_name));
                 break;
             case EMPTY_PHONE_NUM:
-                dialog.setDialogText("Phone number cannot be empty");
+                dialog.setDialogText(getString(R.string.dialog_empty_phone));
                 break;
             case INVALID_PHONE_NUMBER:
-                dialog.setDialogText("Phone number is not valid");
+                dialog.setDialogText(getString(R.string.dialog_invalid_phone));
                 break;
             case EMPTY_ADDRESS:
-                dialog.setDialogText("Address cannot be empty");
+                dialog.setDialogText(getString(R.string.dialog_empty_address));
                 break;
             case REQUEST_FAILED:
-                dialog.setDialogText("Error occurred. Please try again");
+                dialog.setDialogText(getString(R.string.dialog_error));
                 break;
         }
         dialog.show();
