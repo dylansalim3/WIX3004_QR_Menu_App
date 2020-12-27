@@ -64,6 +64,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
         setContentView(R.layout.activity_merchant_info);
 
         toolbar = findViewById(R.id.merchant_info_toolbar);
+        toolbar.getBackground().setAlpha(50);
         setSupportActionBar(toolbar);
 
         setupMVP();

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".ui.merchant_info.MerchantInfoActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -34,6 +35,7 @@
                 android:layout_height="match_parent"
                 style="@style/ListItemTitleTheme"
                 android:gravity="center_vertical"
+                android:textColor="@color/colorBeige"
                 android:layout_alignParentStart="true"/>
 
             <Button android:id="@+id/merchant_info_btn_report"
@@ -51,8 +53,10 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="bottom"
-            android:background="@color/colorWhite"
+            android:background="@color/colorBackground"
             android:theme="@style/ThemeOverlay.MaterialComponents.Light"
+            app:tabTextColor="@color/colorBeige"
+            app:tabSelectedTextColor="@color/colorPrimary"
             app:tabIndicatorHeight="6dp"
             android:elevation="6dp"
             app:tabMode="fixed" />
