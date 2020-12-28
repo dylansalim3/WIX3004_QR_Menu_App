@@ -17,21 +17,19 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.dylan.phoneNumberInput.PhoneInputLayout;
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.RoleDao;
+import com.dylansalim.qrmenuapp.models.dto.Role;
 import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
 import com.dylansalim.qrmenuapp.ui.component.CustomPhoneInputLayout;
 import com.dylansalim.qrmenuapp.ui.login_registration.login.LoginFragment;
 import com.dylansalim.qrmenuapp.utils.TextValidator;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class RegistrationFragment extends Fragment implements RegistrationViewInterface {
     OnChangeFragmentListener mChangeFragmentCallback;
     OnSubmitRegistrationFormListener mOnSubmitRegistrationFormCallback;
-    ArrayList<RoleDao> roles;
+    ArrayList<Role> roles;
     EditText mEmail, mPassword, mRepeatPassword, mFirstName, mLastName, mAddress;
     Spinner mRoles;
     Button mSubmitBtn;
@@ -149,8 +147,8 @@ public class RegistrationFragment extends Fragment implements RegistrationViewIn
         mRoles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                RoleDao roleDao = (RoleDao) adapterView.getItemAtPosition(i);
-                registrationPresenter.setSelectedRole(roleDao);
+                Role role = (Role) adapterView.getItemAtPosition(i);
+                registrationPresenter.setSelectedRole(role);
             }
 
             @Override
@@ -159,7 +157,7 @@ public class RegistrationFragment extends Fragment implements RegistrationViewIn
             }
         });
 
-        ArrayAdapter<RoleDao> arrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.spinner_item, roles);
+        ArrayAdapter<Role> arrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.spinner_item, roles);
 
         mRoles.setAdapter(arrayAdapter);
 
@@ -215,6 +213,8 @@ public class RegistrationFragment extends Fragment implements RegistrationViewIn
             }
         });
     }
+
+
 
 
 }

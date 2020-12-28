@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -18,8 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.TokenDao;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.models.dto.Token;
+import com.dylansalim.qrmenuapp.models.dto.UserDetail;
 import com.dylansalim.qrmenuapp.services.FileIOService;
 import com.dylansalim.qrmenuapp.ui.component.ConfirmDialog;
 import com.dylansalim.qrmenuapp.ui.component.CustomPhoneInputLayout;
@@ -27,7 +26,6 @@ import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.FilePermission;
 
 
 public class EditProfileActivity extends AppCompatActivity implements EditProfileViewInterface {
@@ -59,20 +57,20 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         location = findViewById(R.id.profile_location);
         saveButton = findViewById(R.id.profile_save_button);
 
-        UserDetailDao userDetailDao = SharedPrefUtil.getUserDetail(this);
-        presenter.getProfileImage(userDetailDao.getId());
+        UserDetail userDetail = SharedPrefUtil.getUserDetail(this);
+        presenter.getProfileImage(userDetail.getId());
 
-        if (userDetailDao == null) {
+        if (userDetail == null) {
             Log.e(TAG, "user token missing");
             return;
         }
 
-        firstName.setText(userDetailDao.getFirstName());
-        lastName.setText(userDetailDao.getLastName());
-        address.setText(userDetailDao.getAddress());
+        firstName.setText(userDetail.getFirstName());
+        lastName.setText(userDetail.getLastName());
+        address.setText(userDetail.getAddress());
 
         phoneNumber.setHint(R.string.phone_number);
-        phoneNumber.setPhoneNumber(userDetailDao.getPhoneNum());
+        phoneNumber.setPhoneNumber(userDetail.getPhoneNum());
         phoneNumber.getEditText().setText( // remove hyphens
                 phoneNumber.getEditText().getText().toString().replace("-", "")
         );
@@ -150,8 +148,8 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     }
 
     @Override
-    public void saveToken(TokenDao tokenDao) {
-        SharedPrefUtil.setUserToken(this, tokenDao);
+    public void saveToken(Token token) {
+        SharedPrefUtil.setUserToken(this, token);
         Log.d(TAG, "new token saved");
     }
 

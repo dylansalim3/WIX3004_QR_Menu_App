@@ -1,9 +1,9 @@
 package com.dylansalim.qrmenuapp.ui.merchant_info.review;
 
 import com.dylansalim.qrmenuapp.models.RatingListItem;
-import com.dylansalim.qrmenuapp.models.dao.Rating;
-import com.dylansalim.qrmenuapp.models.dao.Result;
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.models.dto.Rating;
+import com.dylansalim.qrmenuapp.models.dto.Result;
+import com.dylansalim.qrmenuapp.models.dto.Store;
 import com.dylansalim.qrmenuapp.network.MerchantInfoNetworkInterface;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 
@@ -19,7 +19,7 @@ import io.reactivex.schedulers.Schedulers;
 public class MerchantReviewPresenter implements MerchantReviewPresenterInterface {
 
     private MerchantReviewViewInterface mrvi;
-    private StoreDao storeDetail;
+    private Store storeDetail;
     private List<DisposableObserver<?>> disposableObservers = new ArrayList<>();
 
 
@@ -28,7 +28,7 @@ public class MerchantReviewPresenter implements MerchantReviewPresenterInterface
     }
 
     @Override
-    public void setStoreDetail(StoreDao storeDetail) {
+    public void setStoreDetail(Store storeDetail) {
         this.storeDetail = storeDetail;
         if (null != storeDetail) {
             disposableObservers.add(getMerchantInfoNetworkInterface().getAllRating(storeDetail.getId())

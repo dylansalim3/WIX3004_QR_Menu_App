@@ -1,25 +1,24 @@
 package com.dylansalim.qrmenuapp.ui.merchant;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.dylansalim.qrmenuapp.BuildConfig;
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.EditListItem;
-import com.dylansalim.qrmenuapp.models.dao.AllItemDao;
-import com.dylansalim.qrmenuapp.models.dao.ItemCategoryDao;
-import com.dylansalim.qrmenuapp.models.dao.OverallRating;
-import com.dylansalim.qrmenuapp.models.dao.Result;
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.models.dto.AllItem;
+import com.dylansalim.qrmenuapp.models.dto.ItemCategory;
+import com.dylansalim.qrmenuapp.models.dto.OverallRating;
+import com.dylansalim.qrmenuapp.models.dto.Result;
+import com.dylansalim.qrmenuapp.models.dto.Store;
+import com.dylansalim.qrmenuapp.models.dto.UserDetail;
 import com.dylansalim.qrmenuapp.network.MerchantItemNetworkInterface;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
-import com.dylansalim.qrmenuapp.utils.JWTUtils;
-import com.google.gson.Gson;
+import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
@@ -31,12 +30,13 @@ import io.reactivex.schedulers.Schedulers;
 public class MerchantPresenter implements MerchantPresenterInterface {
     MerchantViewInterface mvi;
     public static boolean editMode = false;
+    public static boolean favorite = false;
 
     public MerchantPresenter(MerchantViewInterface mvi) {
         this.mvi = mvi;
     }
 
-    private UserDetailDao userDetailDao;
+    private UserDetail userDetail;
     private int storeId;
     private List<EditListItem> editListItems;
     private List<String> titles;
@@ -47,25 +47,75 @@ public class MerchantPresenter implements MerchantPresenterInterface {
     private String overallRating;
     private static final String TAG = "mvi";
 
-    private StoreDao storeResult;
+    private Store storeResult;
 
     @Override
     public void getAllItems(Context context, @Nullable Integer storeId) {
         mvi.showProgressBar();
-        if (storeId == null) {
-            getUserDetails(context);
+        userDetail = SharedPrefUtil.getUserDetail(context);
+        if (storeId == null || Objects.equals(userDetail.getStoreId(), storeId)) {
             isStoreAdmin = true;
-            DisposableObserver disposableObserver = getMerchantItemNetworkInterface().getStoreDetailByUserId(userDetailDao.getId())
+            DisposableObserver disposableObserver = getMerchantItemNetworkInterface().getStoreDetailByUserId(userDetail.getId())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(getStoreDetailObserver(true));
             disposableObservers.add(disposableObserver);
-
         } else {
             this.storeId = storeId;
             isStoreAdmin = false;
             retrieveStoreDetail(true);
+            checkIsFavorite(userDetail.getId(), storeId);
+            addToRecentlyViewed(userDetail.getId(), storeId);
         }
+    }
+
+    public void checkIsFavorite(int userId, int storeId) {
+        disposableObservers.add(getMerchantItemNetworkInterface().checkIsFavorite(userId, storeId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Result<Boolean>>() {
+
+                    @Override
+                    public void onNext(@io.reactivex.annotations.NonNull Result<Boolean> booleanResult) {
+                        if (booleanResult.getData() != null) {
+                            favorite = booleanResult.getData();
+                            updateFavIcon();
+                        }
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                }));
+    }
+
+    public void addToRecentlyViewed(int userId, int storeId) {
+        disposableObservers.add(getMerchantItemNetworkInterface().addToRecentlyViewed(userId, storeId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Result<String>>() {
+
+                    @Override
+                    public void onNext(@io.reactivex.annotations.NonNull Result<String> result) {
+
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                }));
     }
 
     @Override
@@ -92,7 +142,7 @@ public class MerchantPresenter implements MerchantPresenterInterface {
     }
 
     private void setupStoreDetail(@Nullable String initialName, String profileImgUrl) {
-        String storeName = initialName != null ? initialName : userDetailDao.getStoreName();
+        String storeName = initialName != null ? initialName : userDetail.getStoreName();
         if (storeName != null) {
 
             mvi.setupToolbarTitle(storeName);
@@ -145,6 +195,60 @@ public class MerchantPresenter implements MerchantPresenterInterface {
     }
 
     @Override
+    public void onFavActionButtonClick() {
+        favorite = !favorite;
+        if (favorite) {
+            disposableObservers.add(getMerchantItemNetworkInterface().addToFavorite(userDetail.getId(), storeId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableObserver<Result<String>>() {
+
+                        @Override
+                        public void onNext(@io.reactivex.annotations.NonNull Result<String> booleanResult) {
+                            mvi.displayError("Added to Favorite");
+                        }
+
+                        @Override
+                        public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    }));
+        } else {
+            disposableObservers.add(getMerchantItemNetworkInterface().removeFavorite(userDetail.getId(), storeId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableObserver<Result<String>>() {
+
+                        @Override
+                        public void onNext(@io.reactivex.annotations.NonNull Result<String> booleanResult) {
+                            mvi.displayError("Removed from Favorite");
+                        }
+
+                        @Override
+                        public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    }));
+        }
+        updateFavIcon();
+    }
+
+    public void updateFavIcon() {
+        mvi.updateFavActionIcon(favorite ? R.color.colorRed : R.color.colorWhite);
+    }
+
+
+    @Override
     public void onShareBtnClick() {
         mvi.navigateToStoreQRActivity(storeResult);
     }
@@ -161,10 +265,10 @@ public class MerchantPresenter implements MerchantPresenterInterface {
 
     @Override
     public void onAddNewCategory(String categoryName) {
-        if (userDetailDao != null && categoryName != null && storeId != -1 && categoryName.length() > 0) {
+        if (userDetail != null && categoryName != null && storeId != -1 && categoryName.length() > 0) {
             mvi.showProgressBar();
-            ItemCategoryDao itemCategoryDao = new ItemCategoryDao(categoryName, storeId);
-            disposableObservers.add(getMerchantItemNetworkInterface().createItemCategory(itemCategoryDao)
+            ItemCategory itemCategory = new ItemCategory(categoryName, storeId);
+            disposableObservers.add(getMerchantItemNetworkInterface().createItemCategory(itemCategory)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(addNewCategoryObserver()));
@@ -242,31 +346,14 @@ public class MerchantPresenter implements MerchantPresenterInterface {
         mvi.setupTabLayout(newTitles);
     }
 
-    private void getUserDetails(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString(context.getString(R.string.token), "");
-
-
-        if (!token.equals("")) {
-            String dataString = null;
-            try {
-                dataString = JWTUtils.getDataString(token);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            userDetailDao = new Gson().fromJson(dataString, UserDetailDao.class);
-
-        }
-    }
-
     private MerchantItemNetworkInterface getMerchantItemNetworkInterface() {
         return NetworkClient.getNetworkClient().create(MerchantItemNetworkInterface.class);
     }
 
-    public DisposableObserver<Result<StoreDao>> getStoreDetailObserver(@Nullable Boolean retrieveItem) {
-        return new DisposableObserver<Result<StoreDao>>() {
+    public DisposableObserver<Result<Store>> getStoreDetailObserver(@Nullable Boolean retrieveItem) {
+        return new DisposableObserver<Result<Store>>() {
             @Override
-            public void onNext(@NonNull Result<StoreDao> storeDaoResult) {
+            public void onNext(@NonNull Result<Store> storeDaoResult) {
                 if (storeDaoResult.getData() != null) {
                     String storeName = storeDaoResult.getData().getName();
                     String profileImgUrl = storeDaoResult.getData().getProfileImg();
@@ -293,10 +380,10 @@ public class MerchantPresenter implements MerchantPresenterInterface {
         };
     }
 
-    public DisposableObserver<Result<List<AllItemDao>>> getAllItemObserver() {
-        return new DisposableObserver<Result<List<AllItemDao>>>() {
+    public DisposableObserver<Result<List<AllItem>>> getAllItemObserver() {
+        return new DisposableObserver<Result<List<AllItem>>>() {
             @Override
-            public void onNext(@NonNull Result<List<AllItemDao>> allItemsDao) {
+            public void onNext(@NonNull Result<List<AllItem>> allItemsDao) {
                 if (allItemsDao.getData() != null) {
                     editListItems = mapAllItemsToListItems(allItemsDao.getData());
                     titles = getItemsTitle(allItemsDao.getData());
@@ -324,10 +411,10 @@ public class MerchantPresenter implements MerchantPresenterInterface {
         };
     }
 
-    public DisposableObserver<Result<ItemCategoryDao>> addNewCategoryObserver() {
-        return new DisposableObserver<Result<ItemCategoryDao>>() {
+    public DisposableObserver<Result<ItemCategory>> addNewCategoryObserver() {
+        return new DisposableObserver<Result<ItemCategory>>() {
             @Override
-            public void onNext(@NonNull Result<ItemCategoryDao> itemCategoryDaoResult) {
+            public void onNext(@NonNull Result<ItemCategory> itemCategoryDaoResult) {
                 retrieveItemDetail();
             }
 
@@ -367,11 +454,11 @@ public class MerchantPresenter implements MerchantPresenterInterface {
         };
     }
 
-    private List<String> getItemsTitle(List<AllItemDao> allItems) {
-        return allItems.stream().map(AllItemDao::getName).collect(Collectors.toList());
+    private List<String> getItemsTitle(List<AllItem> allItems) {
+        return allItems.stream().map(AllItem::getName).collect(Collectors.toList());
     }
 
-    private List<EditListItem> mapAllItemsToListItems(List<AllItemDao> allItems) {
+    private List<EditListItem> mapAllItemsToListItems(List<AllItem> allItems) {
         List<EditListItem> editListItems = new ArrayList<>();
         allItems.stream().forEach(category -> {
             editListItems.add(new EditListItem(category.getName(), category.getId()));

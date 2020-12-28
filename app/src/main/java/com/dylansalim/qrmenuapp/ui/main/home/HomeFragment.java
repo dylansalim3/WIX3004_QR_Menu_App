@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.QRResult;
-import com.dylansalim.qrmenuapp.models.dao.Shop;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.models.dto.Shop;
+import com.dylansalim.qrmenuapp.models.dto.UserDetail;
 import com.dylansalim.qrmenuapp.ui.merchant.MerchantActivity;
 import com.dylansalim.qrmenuapp.utils.JWTUtils;
 import com.google.gson.Gson;
@@ -75,7 +75,12 @@ public class HomeFragment extends Fragment implements IShopView {
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        adapter.setOnItemClickListener((view, position) -> Log.d(TAG, "click---" + position));
+        //navigate to Merchant Activity
+        adapter.setOnItemClickListener((storeId) -> {
+            Intent intent = new Intent(getActivity(), MerchantActivity.class);
+            intent.putExtra(getResources().getString(R.string.store_id),storeId);
+            startActivity(intent);
+        });
     }
 
     @Override
@@ -105,9 +110,9 @@ public class HomeFragment extends Fragment implements IShopView {
             String dataString;
             try {
                 dataString = JWTUtils.getDataString(token);
-                UserDetailDao userDetailDao = new Gson().fromJson(dataString, UserDetailDao.class);
-                Log.d(TAG, userDetailDao.toString());
-                return userDetailDao.getId() + "";
+                UserDetail userDetail = new Gson().fromJson(dataString, UserDetail.class);
+                Log.d(TAG, userDetail.toString());
+                return userDetail.getId() + "";
             } catch (Exception e) {
                 e.printStackTrace();
             }

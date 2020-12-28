@@ -41,6 +41,7 @@
     <string name="action_share">Share</string>
     <string name="action_info">Info</string>
     <string name="action_edit">Edit</string>
+    <string name="action_fav">Favorite</string>
 
     <string name="btn_add_new_item">Add New Item</string>
 

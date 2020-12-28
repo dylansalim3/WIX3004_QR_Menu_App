@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.models.dto.UserDetail;
 import com.dylansalim.qrmenuapp.ui.main.account.AccountFragment;
 import com.dylansalim.qrmenuapp.ui.main.favorite.FavoriteFragment;
 import com.dylansalim.qrmenuapp.ui.main.home.HomeFragment;
@@ -39,7 +39,7 @@ public class MainPresenter implements MainPresenterInterface {
 
     @Override
     public void populateView(Activity activity) {
-        UserDetailDao userDetail = getUserDetail(activity);
+        UserDetail userDetail = getUserDetail(activity);
         MERCHANT = activity.getString(R.string.merchant);
         CUSTOMER = activity.getString(R.string.customer);
         Log.d(TAG, "user role " + userRole);
@@ -90,7 +90,7 @@ public class MainPresenter implements MainPresenterInterface {
         }
     }
 
-    private UserDetailDao getUserDetail(Activity activity) {
+    private UserDetail getUserDetail(Activity activity) {
         SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.app_name), Context.MODE_PRIVATE);
         String token = sharedPreferences.getString(activity.getString(R.string.token), "");
 
@@ -102,9 +102,9 @@ public class MainPresenter implements MainPresenterInterface {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            UserDetailDao userDetailDao = new Gson().fromJson(dataString, UserDetailDao.class);
+            UserDetail userDetail = new Gson().fromJson(dataString, UserDetail.class);
 
-            return userDetailDao;
+            return userDetail;
         }
         return null;
     }

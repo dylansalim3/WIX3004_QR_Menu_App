@@ -6,18 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.location.Address;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
 import com.dylansalim.qrmenuapp.BuildConfig;
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.AddressDao;
-import com.dylansalim.qrmenuapp.models.dao.Result;
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
-import com.dylansalim.qrmenuapp.models.dao.TokenDao;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.models.dto.Address;
+import com.dylansalim.qrmenuapp.models.dto.Result;
+import com.dylansalim.qrmenuapp.models.dto.Store;
+import com.dylansalim.qrmenuapp.models.dto.Token;
+import com.dylansalim.qrmenuapp.models.dto.UserDetail;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.network.StoreRegistrationNetworkInterface;
 import com.dylansalim.qrmenuapp.services.GpsTracker;
@@ -58,7 +57,7 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
     }
 
     @Override
-    public void onRetrieveStoreDetail(StoreDao storeDetail) {
+    public void onRetrieveStoreDetail(Store storeDetail) {
         if (null != storeDetail && null != srvi.getCustomPhoneInputLayout().getTextInputLayout().getEditText()) {
             isEdit = true;
             editStoreId = storeDetail.getId();
@@ -100,22 +99,22 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
         srvi.showProgressBar();
 
         int userId = getUserId(activity);
-        StoreDao storeDao = validateStoreRegistrationForm(userId);
+        Store store = validateStoreRegistrationForm(userId);
 
-        if (storeDao != null) {
+        if (store != null) {
 
-            RequestBody nameBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getName());
-            RequestBody addressBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getAddress());
-            RequestBody poscodeRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(storeDao.getPostalCode()));
-            RequestBody cityRequestBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getCity());
-            RequestBody countryRequestBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getCountry());
-            RequestBody latitudeBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(storeDao.getLatitude()));
-            RequestBody longitudeBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(storeDao.getLongitude()));
-            RequestBody phoneNumRequestBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getPhoneNum());
-            RequestBody userIdRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(storeDao.getUserId()));
-            RequestBody openHourRequestBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getOpenHour());
-            RequestBody closingHourBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getClosingHour());
-            RequestBody specialOpeningNoteRequestBody = RequestBody.create(MediaType.parse("plain/text"), storeDao.getSpecialOpeningNote());
+            RequestBody nameBody = RequestBody.create(MediaType.parse("plain/text"), store.getName());
+            RequestBody addressBody = RequestBody.create(MediaType.parse("plain/text"), store.getAddress());
+            RequestBody poscodeRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(store.getPostalCode()));
+            RequestBody cityRequestBody = RequestBody.create(MediaType.parse("plain/text"), store.getCity());
+            RequestBody countryRequestBody = RequestBody.create(MediaType.parse("plain/text"), store.getCountry());
+            RequestBody latitudeBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(store.getLatitude()));
+            RequestBody longitudeBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(store.getLongitude()));
+            RequestBody phoneNumRequestBody = RequestBody.create(MediaType.parse("plain/text"), store.getPhoneNum());
+            RequestBody userIdRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(store.getUserId()));
+            RequestBody openHourRequestBody = RequestBody.create(MediaType.parse("plain/text"), store.getOpenHour());
+            RequestBody closingHourBody = RequestBody.create(MediaType.parse("plain/text"), store.getClosingHour());
+            RequestBody specialOpeningNoteRequestBody = RequestBody.create(MediaType.parse("plain/text"), store.getSpecialOpeningNote());
 
             MultipartBody.Part imgBody = null;
 
@@ -147,7 +146,7 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
         }
     }
 
-    private StoreDao validateStoreRegistrationForm(int userId) {
+    private Store validateStoreRegistrationForm(int userId) {
         String storeName = srvi.getStoreName();
         String address = srvi.getAddress();
         String postalCodeString = srvi.getPostalCode();
@@ -190,7 +189,7 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
         try {
             String phoneNumber = phoneInputLayout.getPhoneNumber();
             int postalCode = Integer.parseInt(postalCodeString);
-            return new StoreDao(storeName, address, postalCode, city, country, latitude, longitude, phoneNumber, userId, openingHour, closingHour, specialNote, profileImg);
+            return new Store(storeName, address, postalCode, city, country, latitude, longitude, phoneNumber, userId, openingHour, closingHour, specialNote, profileImg);
         } catch (Exception e) {
             e.printStackTrace();
             srvi.displayErrorMessage("Invalid fields");
@@ -204,9 +203,9 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
         String token = sharedPreferences.getString(activity.getString(R.string.token), "");
         try {
             String dataString = JWTUtils.getDataString(token);
-            UserDetailDao userDetailDao = new Gson().fromJson(dataString, UserDetailDao.class);
-            Log.d(TAG, userDetailDao.toString());
-            return userDetailDao.getId();
+            UserDetail userDetail = new Gson().fromJson(dataString, UserDetail.class);
+            Log.d(TAG, userDetail.toString());
+            return userDetail.getId();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -217,11 +216,11 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
         return NetworkClient.getNetworkClient().create(StoreRegistrationNetworkInterface.class);
     }
 
-    public DisposableObserver<Result<TokenDao>> getRegistrationFormObserver() {
-        return new DisposableObserver<Result<TokenDao>>() {
+    public DisposableObserver<Result<Token>> getRegistrationFormObserver() {
+        return new DisposableObserver<Result<Token>>() {
 
             @Override
-            public void onNext(Result<TokenDao> result) {
+            public void onNext(Result<Token> result) {
                 Log.d(TAG,result.getData().toString());
 
                 srvi.navigateToNextScreen(result.getData());
@@ -241,11 +240,11 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
         };
     }
 
-    public DisposableObserver<Result<StoreDao>> getUpdateFormObserver() {
-        return new DisposableObserver<Result<StoreDao>>() {
+    public DisposableObserver<Result<Store>> getUpdateFormObserver() {
+        return new DisposableObserver<Result<Store>>() {
 
             @Override
-            public void onNext(Result<StoreDao> result) {
+            public void onNext(Result<Store> result) {
                 srvi.onFormSubmitted(result.getData());
             }
 
@@ -271,12 +270,12 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
                 latitude = gpsTracker.getLatitude();
                 longitude = gpsTracker.getLongitude();
                 //retrieve road data
-                AddressDao addressDao = gpsTracker.getAddress(latitude, longitude);
-                if (addressDao != null) {
-                    srvi.setAddress(addressDao.getAddress());
-                    srvi.setPostalCode(addressDao.getPostalCode());
-                    srvi.setCity(addressDao.getCity());
-                    srvi.setCountry(addressDao.getCountry());
+                Address address = gpsTracker.getAddress(latitude, longitude);
+                if (address != null) {
+                    srvi.setAddress(address.getAddress());
+                    srvi.setPostalCode(address.getPostalCode());
+                    srvi.setCity(address.getCity());
+                    srvi.setCountry(address.getCountry());
                 }
             } else {
                 gpsTracker.showSettingsAlert();
@@ -290,7 +289,7 @@ public class StoreRegistrationPresenter implements StoreRegistrationPresenterInt
         assert addressData != null;
         Log.d("TAG", addressData.getAddressList().toString());
         if (null != addressData.getAddressList() && addressData.getAddressList().size() > 0) {
-            Address address = addressData.getAddressList().get(0);
+            android.location.Address address = addressData.getAddressList().get(0);
             String addressString = address.getAddressLine(0);
             String postalCode = address.getPostalCode();
             String city = address.getLocality();

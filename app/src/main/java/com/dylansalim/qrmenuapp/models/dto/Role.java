@@ -1,4 +1,4 @@
-package com.dylansalim.qrmenuapp.models.dao;
+package com.dylansalim.qrmenuapp.models.dto;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,19 +7,19 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class RoleDao implements Parcelable {
+public class Role implements Parcelable {
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public RoleDao createFromParcel(Parcel in) {
-            return new RoleDao(in);
+        public Role createFromParcel(Parcel in) {
+            return new Role(in);
         }
 
-        public RoleDao[] newArray(int size) {
-            return new RoleDao[size];
+        public Role[] newArray(int size) {
+            return new Role[size];
         }
     };
 
-    protected RoleDao(Parcel in){
+    protected Role(Parcel in){
         id = in.readInt();
         name = in.readString();
     }
@@ -32,7 +32,7 @@ public class RoleDao implements Parcelable {
     @SerializedName("name")
     private String name;
 
-    public RoleDao(int id, String name) {
+    public Role(int id, String name) {
         this.id = id;
         this.name = name;
     }

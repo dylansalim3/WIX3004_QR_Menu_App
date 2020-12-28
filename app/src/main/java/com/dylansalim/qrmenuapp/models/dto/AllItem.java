@@ -1,8 +1,10 @@
-package com.dylansalim.qrmenuapp.models.dao;
+package com.dylansalim.qrmenuapp.models.dto;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ItemCategoryDao {
+import java.util.List;
+
+public class AllItem {
     private int id;
     private String name;
 
@@ -11,16 +13,7 @@ public class ItemCategoryDao {
 
     private int position;
 
-    public ItemCategoryDao(String name, int storeId) {
-        this.name = name;
-        this.storeId = storeId;
-    }
-
-    public ItemCategoryDao(int id, String name, int storeId, int position) {
-        this.name = name;
-        this.storeId = storeId;
-        this.position = position;
-    }
+    private List<Item> items;
 
     public int getId() {
         return id;
@@ -52,5 +45,13 @@ public class ItemCategoryDao {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }

@@ -17,6 +17,8 @@ public interface MerchantPresenterInterface {
 
     void onEditActionButtonClick();
 
+    void onFavActionButtonClick();
+
     void onShareBtnClick();
 
     void onAddNewCategory(String categoryName);

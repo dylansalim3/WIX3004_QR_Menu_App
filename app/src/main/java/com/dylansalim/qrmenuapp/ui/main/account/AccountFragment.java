@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.TokenDao;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.models.dto.Token;
+import com.dylansalim.qrmenuapp.models.dto.UserDetail;
 import com.dylansalim.qrmenuapp.ui.component.ConfirmDialog;
 import com.dylansalim.qrmenuapp.ui.edit_profile.EditProfileActivity;
 import com.dylansalim.qrmenuapp.ui.login_registration.LoginRegistrationActivity;
@@ -83,7 +83,7 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
         logout.setOnClickListener(view -> logout());
 
         switchRole.setOnClickListener(view -> {
-            UserDetailDao userDetail = SharedPrefUtil.getUserDetail(requireContext());
+            UserDetail userDetail = SharedPrefUtil.getUserDetail(requireContext());
             String currentRole = userDetail.getRole();
             String merchant = getString(R.string.merchant);
             String customer = getString(R.string.customer);
@@ -135,8 +135,8 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
     }
 
     @Override
-    public void saveUserToken(TokenDao tokenDao) {
-        SharedPrefUtil.setUserToken(getContext(), tokenDao);
+    public void saveUserToken(Token token) {
+        SharedPrefUtil.setUserToken(getContext(), token);
     }
 
     @Override

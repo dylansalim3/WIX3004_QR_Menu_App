@@ -1,7 +1,7 @@
 package com.dylansalim.qrmenuapp.ui.merchant;
 
 import com.dylansalim.qrmenuapp.models.EditListItem;
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.models.dto.Store;
 
 import java.util.List;
 
@@ -26,11 +26,13 @@ public interface MerchantViewInterface {
 
     void updateEditActionIcon(int drawableId);
 
+    void updateFavActionIcon(int drawableId);
+
     void showAddNewCategoryDialog();
 
-    void navigateToMerchantInfoActivity(StoreDao storeResult,boolean isStoreAdmin);
+    void navigateToMerchantInfoActivity(Store storeResult, boolean isStoreAdmin);
 
-    void navigateToStoreQRActivity(StoreDao storeResult);
+    void navigateToStoreQRActivity(Store storeResult);
 
     void setProfileImg(String profileImg);
 }

@@ -1,6 +1,6 @@
 package com.dylansalim.qrmenuapp.ui.merchant_info;
 
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.models.dto.Store;
 
 import java.util.List;
 
@@ -15,13 +15,13 @@ public interface MerchantInfoViewInterface {
 
     void setupToolbar(String title);
 
-    void populateView(List<Fragment> fragments, StoreDao sotreDetail);
+    void populateView(List<Fragment> fragments, Store sotreDetail);
 
-    void navigateToStoreQRActivity(StoreDao storeDetail);
+    void navigateToStoreQRActivity(Store storeDetail);
 
-    void navigateToEditStoreActivity(StoreDao storeDetail);
+    void navigateToEditStoreActivity(Store storeDetail);
 
-    void navigateToReportActivity(StoreDao storeDetail);
+    void navigateToReportActivity(Store storeDetail);
 
     void setProfileImg(String profileImg);
 }

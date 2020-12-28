@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.AboutListItem;
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.models.dto.Store;
 import com.dylansalim.qrmenuapp.services.GpsTracker;
 import com.dylansalim.qrmenuapp.utils.DateStringUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -19,7 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class AboutFragmentPresenter implements AboutFragmentPresenterInterface {
 
     private AboutFragmentViewInterface afvi;
-    private StoreDao storeDetail;
+    private Store storeDetail;
     private GoogleMap googleMap;
     private static final String TAG = "afp";
 
@@ -29,7 +29,7 @@ public class AboutFragmentPresenter implements AboutFragmentPresenterInterface {
     }
 
     @Override
-    public void setStoreDetail(StoreDao storeDetail) {
+    public void setStoreDetail(Store storeDetail) {
         this.storeDetail = storeDetail;
     }
 

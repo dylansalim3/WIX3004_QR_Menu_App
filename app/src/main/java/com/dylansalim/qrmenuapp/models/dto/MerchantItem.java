@@ -1,4 +1,4 @@
-package com.dylansalim.qrmenuapp.models.dao;
+package com.dylansalim.qrmenuapp.models.dto;
 
 public class MerchantItem {
 //    private

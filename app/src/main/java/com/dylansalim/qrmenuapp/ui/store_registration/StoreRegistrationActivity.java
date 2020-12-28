@@ -17,8 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
-import com.dylansalim.qrmenuapp.models.dao.TokenDao;
+import com.dylansalim.qrmenuapp.models.dto.Store;
+import com.dylansalim.qrmenuapp.models.dto.Token;
 import com.dylansalim.qrmenuapp.services.FileIOService;
 import com.dylansalim.qrmenuapp.services.GpsTracker;
 import com.dylansalim.qrmenuapp.ui.component.CustomPhoneInputLayout;
@@ -83,7 +83,7 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
 
         Bundle bundle = getIntent().getExtras();
         if (null != bundle && bundle.getBoolean(getResources().getString(R.string.edit_store))) {
-            StoreDao storeResult = bundle.getParcelable(getResources().getString(R.string.store_result));
+            Store storeResult = bundle.getParcelable(getResources().getString(R.string.store_result));
             storeRegistrationPresenter.onRetrieveStoreDetail(storeResult);
             ((TextView) findViewById(R.id.tv_store_registration_title)).setText(getResources().getString(R.string.store_edit_title));
             ((TextView) findViewById(R.id.tv_store_registration_desc)).setText(getResources().getString(R.string.store_edit_desc));
@@ -309,15 +309,15 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
         isProgressShowing = false;
     }
 
-    private void storeToken(TokenDao tokenDao) {
+    private void storeToken(Token token) {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(getString(R.string.token), tokenDao.getToken());
+        editor.putString(getString(R.string.token), token.getToken());
         editor.apply();
     }
 
     @Override
-    public void navigateToNextScreen(TokenDao token) {
+    public void navigateToNextScreen(Token token) {
         if (token != null) {
             storeToken(token);
         }
@@ -327,7 +327,7 @@ public class StoreRegistrationActivity extends AppCompatActivity implements Stor
     }
 
     @Override
-    public void onFormSubmitted(StoreDao storeDetail) {
+    public void onFormSubmitted(Store storeDetail) {
         Intent intent = new Intent();
         intent.putExtra(getResources().getString(R.string.message), "Store Detail successfully updated");
         intent.putExtra(getResources().getString(R.string.store_result), storeDetail);

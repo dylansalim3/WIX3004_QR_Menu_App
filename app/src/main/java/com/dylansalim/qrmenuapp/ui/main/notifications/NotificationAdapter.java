@@ -3,24 +3,23 @@ package com.dylansalim.qrmenuapp.ui.main.notifications;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.NotificationDao;
+import com.dylansalim.qrmenuapp.models.dto.Notification;
 
 import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
 
     private final NotificationClickListener clickListener;
-    private final List<NotificationDao> notificationDaos;
+    private final List<Notification> notifications;
 
-    public NotificationAdapter(List<NotificationDao> daos, NotificationClickListener clickListener) {
-        this.notificationDaos = daos;
+    public NotificationAdapter(List<Notification> daos, NotificationClickListener clickListener) {
+        this.notifications = daos;
         this.clickListener = clickListener;
     }
 
@@ -34,7 +33,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        NotificationDao dao = notificationDaos.get(position);
+        Notification dao = notifications.get(position);
 
         holder.getTitle().setText(dao.getTitle());
         holder.getBody().setText(dao.getBody());
@@ -45,7 +44,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public int getItemCount() {
-        return notificationDaos.size();
+        return notifications.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

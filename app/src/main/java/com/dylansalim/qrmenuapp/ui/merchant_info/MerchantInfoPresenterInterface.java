@@ -2,7 +2,7 @@ package com.dylansalim.qrmenuapp.ui.merchant_info;
 
 import android.content.Context;
 
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.models.dto.Store;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 
 public interface MerchantInfoPresenterInterface {
 
-    void setStoreInfo(StoreDao storeDetail, boolean isStoreAdmin);
+    void setStoreInfo(Store storeDetail, boolean isStoreAdmin);
 
     void setupFragments(List<Fragment> fragments);
 

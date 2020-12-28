@@ -1,8 +1,8 @@
 package com.dylansalim.qrmenuapp.network;
 
-import com.dylansalim.qrmenuapp.models.dao.Result;
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
-import com.dylansalim.qrmenuapp.models.dao.TokenDao;
+import com.dylansalim.qrmenuapp.models.dto.Result;
+import com.dylansalim.qrmenuapp.models.dto.Store;
+import com.dylansalim.qrmenuapp.models.dto.Token;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -15,7 +15,7 @@ public interface StoreRegistrationNetworkInterface {
 
     @Multipart
     @POST("/stores/create-store")
-    Observable<Result<TokenDao>> createStore(
+    Observable<Result<Token>> createStore(
             @Part MultipartBody.Part image, @Part("name") RequestBody name, @Part("address") RequestBody address,
             @Part("postal_code") RequestBody postalCode, @Part("city") RequestBody city, @Part("country") RequestBody country,
             @Part("latitude") RequestBody latitude, @Part("longitude") RequestBody longitude, @Part("phone_num") RequestBody phoneNum,
@@ -25,7 +25,7 @@ public interface StoreRegistrationNetworkInterface {
 
     @Multipart
     @POST("/stores/update-store")
-    Observable<Result<StoreDao>> updateStore(
+    Observable<Result<Store>> updateStore(
             @Part MultipartBody.Part image, @Part("id") RequestBody id, @Part("name") RequestBody name, @Part("address") RequestBody address,
             @Part("postal_code") RequestBody postalCode, @Part("city") RequestBody city, @Part("country") RequestBody country,
             @Part("latitude") RequestBody latitude, @Part("longitude") RequestBody longitude, @Part("phone_num") RequestBody phoneNum,

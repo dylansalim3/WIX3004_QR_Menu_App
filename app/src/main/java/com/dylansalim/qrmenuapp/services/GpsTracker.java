@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -20,7 +19,7 @@ import android.util.Log;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
-import com.dylansalim.qrmenuapp.models.dao.AddressDao;
+import com.dylansalim.qrmenuapp.models.dto.Address;
 
 import java.io.IOException;
 import java.util.List;
@@ -211,18 +210,18 @@ public class GpsTracker extends Service implements LocationListener {
         alertDialog.show();
     }
 
-    public AddressDao getAddress(double latitude, double longitude) {
+    public Address getAddress(double latitude, double longitude) {
         Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
         try {
-            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            List<android.location.Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
             if (addresses != null && addresses.size() > 0) {
-                Address address = addresses.get(0);
+                android.location.Address address = addresses.get(0);
                 String addr = address.getAddressLine(0);
                 String postalCode = address.getPostalCode();
                 String city = address.getLocality();
                 String country = address.getCountryName();
 
-                return new AddressDao(addr, postalCode, city, country);
+                return new Address(addr, postalCode, city, country);
             }
         } catch (IOException e) {
             e.printStackTrace();

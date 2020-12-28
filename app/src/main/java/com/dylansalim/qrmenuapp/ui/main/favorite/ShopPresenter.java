@@ -2,8 +2,8 @@ package com.dylansalim.qrmenuapp.ui.main.favorite;
 
 import android.util.Log;
 
-import com.dylansalim.qrmenuapp.models.dao.Result;
-import com.dylansalim.qrmenuapp.models.dao.Shop;
+import com.dylansalim.qrmenuapp.models.dto.Result;
+import com.dylansalim.qrmenuapp.models.dto.Shop;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.network.ShopInterface;
 
@@ -17,6 +17,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ShopPresenter {
 
     private IShopView iShopView;
+    private List<Shop> favoriteList;
 
     public static final String TAG = "ShopPresenter";
 
@@ -28,8 +29,12 @@ public class ShopPresenter {
         return NetworkClient.getNetworkClient().create(ShopInterface.class);
     }
 
-    public void onDestory() {
+    public void onDestroy() {
         iShopView = null;
+    }
+
+    public List<Shop> getFavoriteList(){
+        return favoriteList;
     }
 
     /**
@@ -53,8 +58,9 @@ public class ShopPresenter {
                         if (result == null) {
                             return;
                         }
-                        if (iShopView != null) {
-                            iShopView.onGetShopList(result.getData());
+                        if (iShopView != null && result.getData()!=null) {
+                            favoriteList = result.getData();
+                            iShopView.onGetShopList(favoriteList);
                         }
                     }
 

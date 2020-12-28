@@ -3,7 +3,7 @@ package com.dylansalim.qrmenuapp.ui.login_registration.registration;
 import android.util.Patterns;
 import android.widget.TextView;
 
-import com.dylansalim.qrmenuapp.models.dao.RoleDao;
+import com.dylansalim.qrmenuapp.models.dto.Role;
 import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
 import com.dylansalim.qrmenuapp.utils.ValidationUtils;
 
@@ -73,8 +73,8 @@ public class RegistrationPresenter implements RegistrationPresenterInterface {
     }
 
     @Override
-    public void setSelectedRole(RoleDao roleDao) {
-        roleId = roleDao.getId();
+    public void setSelectedRole(Role role) {
+        roleId = role.getId();
     }
 
     @Override

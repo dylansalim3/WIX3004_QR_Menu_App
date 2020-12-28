@@ -3,10 +3,6 @@ package com.dylansalim.qrmenuapp.utils;
 import android.util.Base64;
 import android.util.Log;
 
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 

@@ -6,12 +6,11 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.Result;
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.models.dto.Result;
+import com.dylansalim.qrmenuapp.models.dto.Store;
+import com.dylansalim.qrmenuapp.models.dto.UserDetail;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.network.QRScanNetworkInterface;
-import com.dylansalim.qrmenuapp.ui.main.MainActivity;
 import com.dylansalim.qrmenuapp.utils.JWTUtils;
 import com.google.gson.Gson;
 
@@ -48,11 +47,11 @@ public class QRScanPresenter implements QRScanPresenterInterface {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            UserDetailDao userDetailDao = new Gson().fromJson(dataString, UserDetailDao.class);
-            Log.d(TAG, userDetailDao.toString());
-            int userId = userDetailDao.getId();
-            roleName = userDetailDao.getRole();
-            userName = userDetailDao.getFirstName() + " " + userDetailDao.getLastName();
+            UserDetail userDetail = new Gson().fromJson(dataString, UserDetail.class);
+            Log.d(TAG, userDetail.toString());
+            int userId = userDetail.getId();
+            roleName = userDetail.getRole();
+            userName = userDetail.getFirstName() + " " + userDetail.getLastName();
 
             getQRScanNetworkClient().getStoreByUserId(userId)
                     .subscribeOn(Schedulers.io())
@@ -76,11 +75,11 @@ public class QRScanPresenter implements QRScanPresenterInterface {
         return NetworkClient.getNetworkClient().create(QRScanNetworkInterface.class);
     }
 
-    public DisposableObserver<Result<StoreDao>> getStoreObserver() {
-        return new DisposableObserver<Result<StoreDao>>() {
+    public DisposableObserver<Result<Store>> getStoreObserver() {
+        return new DisposableObserver<Result<Store>>() {
 
             @Override
-            public void onNext(Result<StoreDao> storeResult) {
+            public void onNext(Result<Store> storeResult) {
                 if (roleName.equalsIgnoreCase("MERCHANT") && storeResult.getData() == null) {
                     qsvi.showStoreNotFoundAlert();
                 }else if(roleName.equalsIgnoreCase("MERCHANT")){

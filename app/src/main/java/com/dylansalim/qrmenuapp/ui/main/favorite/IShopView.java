@@ -1,6 +1,6 @@
 package com.dylansalim.qrmenuapp.ui.main.favorite;
 
-import com.dylansalim.qrmenuapp.models.dao.Shop;
+import com.dylansalim.qrmenuapp.models.dto.Shop;
 
 import java.util.List;
 

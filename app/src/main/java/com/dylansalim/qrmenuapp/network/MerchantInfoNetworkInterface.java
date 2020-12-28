@@ -1,7 +1,7 @@
 package com.dylansalim.qrmenuapp.network;
 
-import com.dylansalim.qrmenuapp.models.dao.Rating;
-import com.dylansalim.qrmenuapp.models.dao.Result;
+import com.dylansalim.qrmenuapp.models.dto.Rating;
+import com.dylansalim.qrmenuapp.models.dto.Result;
 
 import java.util.List;
 

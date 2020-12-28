@@ -1,9 +1,9 @@
 package com.dylansalim.qrmenuapp.network;
 
 
-import com.dylansalim.qrmenuapp.models.dao.Result;
-import com.dylansalim.qrmenuapp.models.dao.TokenDao;
-import com.dylansalim.qrmenuapp.models.dao.RoleDao;
+import com.dylansalim.qrmenuapp.models.dto.Result;
+import com.dylansalim.qrmenuapp.models.dto.Token;
+import com.dylansalim.qrmenuapp.models.dto.Role;
 import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
 
 import java.util.List;
@@ -20,12 +20,12 @@ public interface LoginRegistrationNetworkInterface {
 
     @FormUrlEncoded
     @POST("/users/login")
-    Observable<Result<TokenDao>> submitLoginRequest(@Field(encoded = false, value = "email") String email, @Field("password") String password);
+    Observable<Result<Token>> submitLoginRequest(@Field(encoded = false, value = "email") String email, @Field("password") String password);
 
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("/users/register-user")
-    Observable<Result<TokenDao>> submitRegistrationRequest(@Body RegistrationDto registrationDto);
+    Observable<Result<Token>> submitRegistrationRequest(@Body RegistrationDto registrationDto);
 
     @GET("/roles/get-all-roles")
-    Observable<List<RoleDao>> getRoles();
+    Observable<List<Role>> getRoles();
 }

@@ -4,10 +4,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.dylansalim.qrmenuapp.BuildConfig;
-import com.dylansalim.qrmenuapp.models.dao.Rating;
-import com.dylansalim.qrmenuapp.models.dao.Result;
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.models.dto.Rating;
+import com.dylansalim.qrmenuapp.models.dto.Result;
+import com.dylansalim.qrmenuapp.models.dto.Store;
+import com.dylansalim.qrmenuapp.models.dto.UserDetail;
 import com.dylansalim.qrmenuapp.network.MerchantInfoNetworkInterface;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.services.SessionService;
@@ -24,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 public class MerchantInfoPresenter implements MerchantInfoPresenterInterface {
 
     private MerchantInfoViewInterface mivi;
-    private StoreDao storeDetail;
+    private Store storeDetail;
     private boolean isStoreAdmin;
     private static final String TAG = "mipi";
     private List<DisposableObserver<?>> disposableObservers = new ArrayList<>();
@@ -36,7 +36,7 @@ public class MerchantInfoPresenter implements MerchantInfoPresenterInterface {
 
 
     @Override
-    public void setStoreInfo(StoreDao storeDetail, boolean isStoreAdmin) {
+    public void setStoreInfo(Store storeDetail, boolean isStoreAdmin) {
         Log.d(TAG, storeDetail.toString());
         this.storeDetail = storeDetail;
         mivi.setupToolbar(storeDetail.getName());
@@ -78,10 +78,10 @@ public class MerchantInfoPresenter implements MerchantInfoPresenterInterface {
     @Override
     public void onReviewSubmit(String text, float rating, Context context) {
         mivi.showProgressBar();
-        UserDetailDao userDetailDao = SessionService.getUserDetails(context);
+        UserDetail userDetail = SessionService.getUserDetails(context);
         if (null != storeDetail && null != SessionService.getUserDetails(context)) {
             int storeId = storeDetail.getId();
-            int userId = userDetailDao.getId();
+            int userId = userDetail.getId();
             Rating ratingModel = new Rating(storeId, userId, rating, text);
             disposableObservers.add(getMerchantInfoNetworkInterface().createRating(ratingModel)
                     .subscribeOn(Schedulers.io())

@@ -4,16 +4,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.TokenDao;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.models.dto.Token;
+import com.dylansalim.qrmenuapp.models.dto.UserDetail;
 import com.google.gson.Gson;
 
 public class SharedPrefUtil {
 
-    public static UserDetailDao getUserDetail(Context context) {
+    public static UserDetail getUserDetail(Context context) {
         SharedPreferences pref = getSharedPreferences(context);
         String token = pref.getString(context.getString(R.string.token), "");
-        UserDetailDao userDetailDao = null;
+        UserDetail userDetail = null;
 
         assert token != null;
         if (!token.equals("")) {
@@ -23,9 +23,9 @@ public class SharedPrefUtil {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            userDetailDao = new Gson().fromJson(dataString, UserDetailDao.class);
+            userDetail = new Gson().fromJson(dataString, UserDetail.class);
         }
-        return userDetailDao;
+        return userDetail;
     }
 
     public static String getUserToken(Context context) {
@@ -33,10 +33,10 @@ public class SharedPrefUtil {
         return pref.getString(context.getString(R.string.token), "");
     }
 
-    public static void setUserToken(Context context, TokenDao tokenDao) {
+    public static void setUserToken(Context context, Token token) {
         getSharedPreferences(context)
                 .edit()
-                .putString(context.getString(R.string.token), tokenDao.getToken())
+                .putString(context.getString(R.string.token), token.getToken())
                 .apply();
     }
 

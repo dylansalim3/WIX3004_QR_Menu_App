@@ -7,8 +7,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.dylansalim.qrmenuapp.BuildConfig;
-import com.dylansalim.qrmenuapp.models.dao.ItemDao;
-import com.dylansalim.qrmenuapp.models.dao.Result;
+import com.dylansalim.qrmenuapp.models.dto.Item;
+import com.dylansalim.qrmenuapp.models.dto.Result;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.network.NewItemFormNetworkInterface;
 import com.dylansalim.qrmenuapp.utils.ValidationUtils;
@@ -161,18 +161,18 @@ public class NewItemFormPresenter implements NewItemFormPresenterInterface {
         double price = Double.parseDouble(nifvi.getPrice());
 
 
-        ItemDao itemDao = new ItemDao();
-        itemDao.setItemCategoryId(categoryId);
-        itemDao.setName(itemName);
-        itemDao.setDesc(desc);
-        itemDao.setPrice(price);
-        itemDao.setCurrency(priceCurrency);
-        itemDao.setRecommended(recommended);
+        Item item = new Item();
+        item.setItemCategoryId(categoryId);
+        item.setName(itemName);
+        item.setDesc(desc);
+        item.setPrice(price);
+        item.setCurrency(priceCurrency);
+        item.setRecommended(recommended);
 
-        RequestBody priceCurrencyBody = RequestBody.create(MediaType.parse("plain/text"), itemDao.getCurrency());
-        RequestBody nameBody = RequestBody.create(MediaType.parse("plain/text"), itemDao.getName());
-        RequestBody descBody = RequestBody.create(MediaType.parse("plain/text"), itemDao.getDesc());
-        RequestBody priceRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(itemDao.getPrice()));
+        RequestBody priceCurrencyBody = RequestBody.create(MediaType.parse("plain/text"), item.getCurrency());
+        RequestBody nameBody = RequestBody.create(MediaType.parse("plain/text"), item.getName());
+        RequestBody descBody = RequestBody.create(MediaType.parse("plain/text"), item.getDesc());
+        RequestBody priceRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(item.getPrice()));
         RequestBody promoPriceRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(0));
         ;
         RequestBody hiddenRequestBody = RequestBody.create(MediaType.parse("plain/text"), Boolean.toString(false));
@@ -180,8 +180,8 @@ public class NewItemFormPresenter implements NewItemFormPresenterInterface {
 
         if (nifvi.getPromoPrice() != null && nifvi.getPromoPrice().length() > 0) {
             double promoPrice = Double.parseDouble(nifvi.getPromoPrice());
-            itemDao.setPromoPrice(promoPrice);
-            promoPriceRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(itemDao.getPromoPrice()));
+            item.setPromoPrice(promoPrice);
+            promoPriceRequestBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(item.getPromoPrice()));
         }
         MultipartBody.Part imgBody = null;
 
@@ -195,7 +195,7 @@ public class NewItemFormPresenter implements NewItemFormPresenterInterface {
 
         if (CREATE_ITEM.equals(submitType)) {
 
-            RequestBody itemDescriptionIdBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(itemDao.getItemCategoryId()));
+            RequestBody itemDescriptionIdBody = RequestBody.create(MediaType.parse("plain/text"), String.valueOf(item.getItemCategoryId()));
             disposableObservers.add(getNewItemFormNetworkInterface().createItem(imgBody, itemDescriptionIdBody, nameBody, descBody, priceRequestBody, promoPriceRequestBody, hiddenRequestBody, recommendedRequestBody, priceCurrencyBody)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -211,10 +211,10 @@ public class NewItemFormPresenter implements NewItemFormPresenterInterface {
 
     }
 
-    public DisposableObserver<Result<ItemDao>> getSubmitFormObserver(String type) {
-        return new DisposableObserver<Result<ItemDao>>() {
+    public DisposableObserver<Result<Item>> getSubmitFormObserver(String type) {
+        return new DisposableObserver<Result<Item>>() {
             @Override
-            public void onNext(@NonNull Result<ItemDao> itemDaoResult) {
+            public void onNext(@NonNull Result<Item> itemDaoResult) {
                 Log.d(TAG, "OnNext " + itemDaoResult);
             }
 
@@ -243,10 +243,10 @@ public class NewItemFormPresenter implements NewItemFormPresenterInterface {
         return NetworkClient.getNetworkClient().create(NewItemFormNetworkInterface.class);
     }
 
-    public DisposableObserver<Result<ItemDao>> getItemDetailObserver() {
-        return new DisposableObserver<Result<ItemDao>>() {
+    public DisposableObserver<Result<Item>> getItemDetailObserver() {
+        return new DisposableObserver<Result<Item>>() {
             @Override
-            public void onNext(@NonNull Result<ItemDao> itemDaoResult) {
+            public void onNext(@NonNull Result<Item> itemDaoResult) {
                 if (itemDaoResult.getData() != null) {
                     setItemDataToView(itemDaoResult.getData());
                 }
@@ -268,24 +268,24 @@ public class NewItemFormPresenter implements NewItemFormPresenterInterface {
         };
     }
 
-    private void setItemDataToView(ItemDao itemDao) {
+    private void setItemDataToView(Item item) {
         try {
 
-            nifvi.setItemName(itemDao.getName());
-            nifvi.setDesc(itemDao.getDesc());
-            nifvi.setPrice(Double.toString(itemDao.getPrice()));
-            nifvi.setPriceCurrency(itemDao.getCurrency());
-            if (itemDao.getPromoPrice() > 0) {
+            nifvi.setItemName(item.getName());
+            nifvi.setDesc(item.getDesc());
+            nifvi.setPrice(Double.toString(item.getPrice()));
+            nifvi.setPriceCurrency(item.getCurrency());
+            if (item.getPromoPrice() > 0) {
                 setIsPromo(true);
-                nifvi.setPromoPrice(Double.toString(itemDao.getPromoPrice()));
+                nifvi.setPromoPrice(Double.toString(item.getPromoPrice()));
             }
-            recommended = itemDao.isRecommmended();
-            nifvi.setRecommended(itemDao.isRecommmended());
+            recommended = item.isRecommmended();
+            nifvi.setRecommended(item.isRecommmended());
         } catch (Exception err) {
             Log.e(TAG, err.toString());
         }
-        if (itemDao.getItemImg() != null && itemDao.getItemImg().length() > 0) {
-            nifvi.setItemImage(BuildConfig.SERVER_API_URL + "/" + itemDao.getItemImg());
+        if (item.getItemImg() != null && item.getItemImg().length() > 0) {
+            nifvi.setItemImage(BuildConfig.SERVER_API_URL + "/" + item.getItemImg());
         }
     }
 }

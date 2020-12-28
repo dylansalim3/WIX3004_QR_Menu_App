@@ -2,7 +2,7 @@ package com.dylansalim.qrmenuapp.ui.edit_profile;
 
 import android.content.ContentResolver;
 
-import com.dylansalim.qrmenuapp.models.dao.TokenDao;
+import com.dylansalim.qrmenuapp.models.dto.Token;
 
 import java.io.File;
 
@@ -33,5 +33,5 @@ public interface EditProfileViewInterface {
 
     void showSuccess();
 
-    void saveToken(TokenDao tokenDao);
+    void saveToken(Token token);
 }

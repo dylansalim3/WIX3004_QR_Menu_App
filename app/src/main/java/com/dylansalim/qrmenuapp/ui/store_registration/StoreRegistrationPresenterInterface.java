@@ -6,12 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.models.dto.Store;
 
 import androidx.annotation.Nullable;
 
 public interface StoreRegistrationPresenterInterface {
-    void onRetrieveStoreDetail(StoreDao storeDetail);
+    void onRetrieveStoreDetail(Store storeDetail);
 
     void onItemImageResult(Uri uri, ContentResolver contentResolver);
 

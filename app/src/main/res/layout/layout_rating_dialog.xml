@@ -13,6 +13,7 @@
         style="?android:attr/ratingBarStyle"
         android:numStars="5"
         android:stepSize="0.1"
+
         />
 
     <EditText
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rating_bar_rating_dialog"
         android:maxLines="2"
-        android:hint="@string/write_your_thoughts"/>
+        android:hint="@string/write_your_thoughts"
+        style="@style/profile_input"/>
 
 </RelativeLayout>

@@ -1,8 +1,8 @@
 package com.dylansalim.qrmenuapp.network;
 
-import com.dylansalim.qrmenuapp.models.dao.ImageUrlDao;
-import com.dylansalim.qrmenuapp.models.dao.Result;
-import com.dylansalim.qrmenuapp.models.dao.TokenDao;
+import com.dylansalim.qrmenuapp.models.dto.ImageUrl;
+import com.dylansalim.qrmenuapp.models.dto.Result;
+import com.dylansalim.qrmenuapp.models.dto.Token;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -16,11 +16,11 @@ public interface AccountNetworkInterface {
 
     @FormUrlEncoded
     @POST("/users/update-role")
-    Observable<TokenDao> updateRole(@Field("role") String role);
+    Observable<Token> updateRole(@Field("role") String role);
 
     @FormUrlEncoded
     @POST("/users/update-profile")
-    Observable<TokenDao> updateProfile(
+    Observable<Token> updateProfile(
             @Field("first_name") String firstName,
             @Field("last_name") String lastName,
             @Field("phonenum") String phoneNum,
@@ -33,5 +33,5 @@ public interface AccountNetworkInterface {
 
     @FormUrlEncoded
     @POST("/users/get-picture")
-    Observable<ImageUrlDao> getImageUrl(@Field("user_id") int userId);
+    Observable<ImageUrl> getImageUrl(@Field("user_id") int userId);
 }

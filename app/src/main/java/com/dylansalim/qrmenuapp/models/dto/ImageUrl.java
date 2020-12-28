@@ -1,6 +1,6 @@
-package com.dylansalim.qrmenuapp.models.dao;
+package com.dylansalim.qrmenuapp.models.dto;
 
-public class ImageUrlDao {
+public class ImageUrl {
 
     private String url;
 

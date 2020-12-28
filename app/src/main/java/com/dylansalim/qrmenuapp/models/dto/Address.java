@@ -1,9 +1,9 @@
-package com.dylansalim.qrmenuapp.models.dao;
+package com.dylansalim.qrmenuapp.models.dto;
 
-public class AddressDao {
+public class Address {
     private String address, postalCode, city, country;
 
-    public AddressDao(String address, String postalCode, String city, String country) {
+    public Address(String address, String postalCode, String city, String country) {
         this.address = address;
         this.postalCode = postalCode;
         this.city = city;

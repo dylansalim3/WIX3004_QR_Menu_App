@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.Shop;
+import com.dylansalim.qrmenuapp.models.dto.Shop;
 
 import java.util.List;
 
@@ -53,10 +53,10 @@ public class RecShopListAdapter extends RecyclerView.Adapter<RecShopListAdapter.
     @Override
 
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        if (listener != null) {
-            holder.itemView.setOnClickListener(v -> listener.onItemClick(v, position));
-        }
         Shop shop = mDatas.get(position);
+        if (listener != null) {
+            holder.itemView.setOnClickListener(v -> listener.onItemClick(shop.getId()));
+        }
         holder.tvName.setText(shop.getName());
         String address = shop.getCountry() + "·" + shop.getCity() + "·" + shop.getAddress();
         holder.tvDetail.setText(address);
@@ -78,7 +78,7 @@ public class RecShopListAdapter extends RecyclerView.Adapter<RecShopListAdapter.
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(int storeId);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

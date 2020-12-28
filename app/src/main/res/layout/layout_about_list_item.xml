@@ -13,7 +13,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginEnd="6dip"
         android:scaleType="fitXY"
-        android:contentDescription="TODO"
         android:src="@drawable/common_full_open_on_phone"
         app:tint="@color/colorPrimary" />
 
@@ -27,7 +26,6 @@
         android:layout_marginEnd="6dp"
         android:textColor="@color/colorBeige"
         android:layout_toEndOf="@id/about_list_item_icon"
-        android:text="Example application"
         style="@style/ListItemTitleTheme"/>
 
     <TextView
@@ -40,6 +38,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="7dp"
         android:layout_toEndOf="@id/about_list_item_icon"
+        android:textColor="@color/white"
         android:textSize="12sp"
         android:visibility="gone" />
 

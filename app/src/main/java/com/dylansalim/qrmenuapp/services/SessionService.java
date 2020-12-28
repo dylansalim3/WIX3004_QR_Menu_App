@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.models.dto.UserDetail;
 import com.dylansalim.qrmenuapp.utils.JWTUtils;
 import com.google.gson.Gson;
 
 public class SessionService {
-    public static UserDetailDao getUserDetails(Context context) {
+    public static UserDetail getUserDetails(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE);
         String token = sharedPreferences.getString(context.getString(R.string.token), "");
 
@@ -21,7 +21,7 @@ public class SessionService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return new Gson().fromJson(dataString, UserDetailDao.class);
+            return new Gson().fromJson(dataString, UserDetail.class);
         }
         return null;
     }

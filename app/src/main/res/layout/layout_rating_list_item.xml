@@ -11,7 +11,8 @@
         android:id="@+id/constraint_layout_rating_list_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:background="@color/colorGray">
 
         <TextView
             android:id="@+id/tv_rating_item_list_title"

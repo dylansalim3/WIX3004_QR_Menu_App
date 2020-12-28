@@ -1,7 +1,7 @@
 package com.dylansalim.qrmenuapp.ui.login_registration;
 
-import com.dylansalim.qrmenuapp.models.dao.RoleDao;
-import com.dylansalim.qrmenuapp.models.dao.TokenDao;
+import com.dylansalim.qrmenuapp.models.dto.Role;
+import com.dylansalim.qrmenuapp.models.dto.Token;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface LoginRegistrationViewInterface {
 
     void displayError(String error);
 
-    void navigateToRegistrationFragment(List<RoleDao> roleDaoList);
+    void navigateToRegistrationFragment(List<Role> roleList);
 
-    void navigateToNextActivity(TokenDao tokenDao);
+    void navigateToNextActivity(Token token);
 }

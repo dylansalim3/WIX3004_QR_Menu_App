@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.models.dto.UserDetail;
 import com.dylansalim.qrmenuapp.models.dto.FcmDto;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.network.NotificationNetworkInterface;
@@ -70,8 +70,8 @@ public class NotificationService extends FirebaseMessagingService {
             Log.d(TAG, "Jwt decode failed");
             e.printStackTrace();
         }
-        UserDetailDao userDetailDao = new Gson().fromJson(dataString, UserDetailDao.class);
-        FcmDto fcmDto = new FcmDto(userDetailDao.getId(), fcm_token);
+        UserDetail userDetail = new Gson().fromJson(dataString, UserDetail.class);
+        FcmDto fcmDto = new FcmDto(userDetail.getId(), fcm_token);
 
         NetworkClient.getNetworkClient().create(NotificationNetworkInterface.class)
                 .updateFCMToken(fcmDto)

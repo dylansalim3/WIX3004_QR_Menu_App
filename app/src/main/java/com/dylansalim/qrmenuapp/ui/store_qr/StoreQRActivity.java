@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.models.dto.Store;
 import com.squareup.picasso.Picasso;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,7 +49,7 @@ public class StoreQRActivity extends AppCompatActivity implements StoreQRViewInt
         Bundle bundle = getIntent().getExtras();
 
         if (null != bundle.getParcelable(getResources().getString(R.string.store_result))) {
-            StoreDao store = bundle.getParcelable(getResources().getString(R.string.store_result));
+            Store store = bundle.getParcelable(getResources().getString(R.string.store_result));
             storeQRPresenterInterface.setStoreDetail(store);
         }
 

@@ -1,10 +1,10 @@
-package com.dylansalim.qrmenuapp.models.dao;
+package com.dylansalim.qrmenuapp.models.dto;
 
 import com.google.gson.annotations.SerializedName;
 
 import androidx.annotation.Nullable;
 
-public class UserDetailDao {
+public class UserDetail {
     private int id;
 
     @SerializedName("first_name")
@@ -42,7 +42,7 @@ public class UserDetailDao {
 
     private String address;
 
-    public UserDetailDao(int id, String firstName, String lastName, String email, String password, String created, boolean active, String profileImg, String phoneNum, int roleId, String role, int storeId,String storeName) {
+    public UserDetail(int id, String firstName, String lastName, String email, String password, String created, boolean active, String profileImg, String phoneNum, int roleId, String role, int storeId, String storeName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

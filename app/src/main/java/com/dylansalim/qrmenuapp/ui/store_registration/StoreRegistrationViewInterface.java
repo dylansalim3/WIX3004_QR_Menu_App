@@ -1,7 +1,7 @@
 package com.dylansalim.qrmenuapp.ui.store_registration;
 
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
-import com.dylansalim.qrmenuapp.models.dao.TokenDao;
+import com.dylansalim.qrmenuapp.models.dto.Store;
+import com.dylansalim.qrmenuapp.models.dto.Token;
 import com.dylansalim.qrmenuapp.ui.component.CustomPhoneInputLayout;
 
 public interface StoreRegistrationViewInterface {
@@ -47,8 +47,8 @@ public interface StoreRegistrationViewInterface {
 
     void hideProgressBar();
 
-    void navigateToNextScreen(TokenDao token);
+    void navigateToNextScreen(Token token);
 
-    void onFormSubmitted(StoreDao storeDetail);
+    void onFormSubmitted(Store storeDetail);
 
 }

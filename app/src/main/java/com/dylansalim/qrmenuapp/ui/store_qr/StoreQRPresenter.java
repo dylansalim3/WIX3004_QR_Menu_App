@@ -4,8 +4,8 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.dylansalim.qrmenuapp.BuildConfig;
-import com.dylansalim.qrmenuapp.models.dao.Result;
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.models.dto.Result;
+import com.dylansalim.qrmenuapp.models.dto.Store;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.dylansalim.qrmenuapp.network.StoreQRNetworkInterface;
 import com.dylansalim.qrmenuapp.utils.BitmapUtils;
@@ -24,14 +24,14 @@ public class StoreQRPresenter implements StoreQRPresenterInterface {
     private String qrBase64Result;
 
 
-    private StoreDao storeDetail;
+    private Store storeDetail;
 
     public StoreQRPresenter(StoreQRViewInterface sqvi) {
         this.sqvi = sqvi;
     }
 
     @Override
-    public void setStoreDetail(StoreDao storeDetail) {
+    public void setStoreDetail(Store storeDetail) {
         if (null != storeDetail) {
             Log.d("sqrp", "qr result ");
             this.storeDetail = storeDetail;

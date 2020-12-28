@@ -1,10 +1,10 @@
 package com.dylansalim.qrmenuapp.network;
 
-import com.dylansalim.qrmenuapp.models.dao.AllItemDao;
-import com.dylansalim.qrmenuapp.models.dao.ItemCategoryDao;
-import com.dylansalim.qrmenuapp.models.dao.OverallRating;
-import com.dylansalim.qrmenuapp.models.dao.Result;
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.models.dto.AllItem;
+import com.dylansalim.qrmenuapp.models.dto.ItemCategory;
+import com.dylansalim.qrmenuapp.models.dto.OverallRating;
+import com.dylansalim.qrmenuapp.models.dto.Result;
+import com.dylansalim.qrmenuapp.models.dto.Store;
 
 import java.util.List;
 
@@ -19,19 +19,19 @@ public interface MerchantItemNetworkInterface {
 
     @FormUrlEncoded
     @POST("/items/get-all-items-by-store-id")
-    Observable<Result<List<AllItemDao>>> getAllItems(@Field("storeId") int storeId);
+    Observable<Result<List<AllItem>>> getAllItems(@Field("storeId") int storeId);
 
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("/item-categories/create-item-category")
-    Observable<Result<ItemCategoryDao>> createItemCategory(@Body ItemCategoryDao itemCategoryDao);
+    Observable<Result<ItemCategory>> createItemCategory(@Body ItemCategory itemCategory);
 
     @FormUrlEncoded
     @POST("/stores/get-store-by-store-id")
-    Observable<Result<StoreDao>> getStoreDetail(@Field("storeId") int storeId);
+    Observable<Result<Store>> getStoreDetail(@Field("storeId") int storeId);
 
     @FormUrlEncoded
     @POST("/stores/get-store-by-user-id")
-    Observable<Result<StoreDao>> getStoreDetailByUserId(@Field("userId") int userId);
+    Observable<Result<Store>> getStoreDetailByUserId(@Field("userId") int userId);
 
     @FormUrlEncoded
     @POST("/items/delete-item")
@@ -45,4 +45,19 @@ public interface MerchantItemNetworkInterface {
     @POST("/rating/get-average-rating-by-store-id")
     Observable<Result<OverallRating>> getRatingByStoreId(@Field("store_id") int storeId);
 
+    @FormUrlEncoded
+    @POST("/favorite/add-to-favorite")
+    Observable<Result<String>> addToFavorite(@Field("userId") int userId,@Field("storeId") int storeId);
+
+    @FormUrlEncoded
+    @POST("/favorite/remove-favorite")
+    Observable<Result<String>> removeFavorite(@Field("userId") int userId,@Field("storeId") int storeId);
+
+    @FormUrlEncoded
+    @POST("/favorite/add-to-recently-viewed")
+    Observable<Result<String>> addToRecentlyViewed(@Field("userId") int userId,@Field("storeId") int storeId);
+
+    @FormUrlEncoded
+    @POST("/favorite/check-is-favorite")
+    Observable<Result<Boolean>> checkIsFavorite(@Field("userId") int userId,@Field("storeId") int storeId);
 }

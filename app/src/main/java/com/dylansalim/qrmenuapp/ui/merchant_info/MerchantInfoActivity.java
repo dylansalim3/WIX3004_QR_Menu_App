@@ -15,8 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.models.dto.Store;
+import com.dylansalim.qrmenuapp.models.dto.UserDetail;
 import com.dylansalim.qrmenuapp.services.SessionService;
 import com.dylansalim.qrmenuapp.ui.component.RatingDialog;
 import com.dylansalim.qrmenuapp.ui.main.FragmentSlidePagerAdapter;
@@ -72,7 +72,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             boolean isStoreAdmin = bundle.getBoolean(getResources().getString(R.string.is_store_admin));
-            StoreDao storeResult = bundle.getParcelable(getResources().getString(R.string.store_result));
+            Store storeResult = bundle.getParcelable(getResources().getString(R.string.store_result));
             if (storeResult != null) {
                 merchantInfoPresenter.setStoreInfo(storeResult, isStoreAdmin);
             }
@@ -166,7 +166,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
     }
 
     @Override
-    public void populateView(List<Fragment> fragments, StoreDao storeDetail) {
+    public void populateView(List<Fragment> fragments, Store storeDetail) {
         mViewPager2 = (ViewPager2) findViewById(R.id.merchant_info_view_pager2);
         FragmentSlidePagerAdapter pagerAdapter = new FragmentSlidePagerAdapter(this, fragments);
         Log.d(TAG, storeDetail.toString());
@@ -177,7 +177,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
     }
 
     @Override
-    public void navigateToStoreQRActivity(StoreDao storeDetail) {
+    public void navigateToStoreQRActivity(Store storeDetail) {
         Intent intent = new Intent(this, StoreQRActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(getResources().getString(R.string.store_result), storeDetail);
@@ -186,7 +186,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
     }
 
     @Override
-    public void navigateToEditStoreActivity(StoreDao storeDetail) {
+    public void navigateToEditStoreActivity(Store storeDetail) {
         Intent intent = new Intent(this, StoreRegistrationActivity.class);
         Bundle bundle = new Bundle();
         bundle.putBoolean(getResources().getString(R.string.edit_store), true);
@@ -196,7 +196,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
     }
 
     @Override
-    public void navigateToReportActivity(StoreDao storeDetail) {
+    public void navigateToReportActivity(Store storeDetail) {
         Intent intent = new Intent(this, ReportActivity.class);
         intent.putExtra(getResources().getString(R.string.store_name), storeDetail.getName());
         intent.putExtra(getResources().getString(R.string.store_id), storeDetail.getId());
@@ -209,7 +209,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
         if (requestCode == UPDATE_FORM_REQUEST_CODE && null != data) {
             String message = data.getStringExtra(getResources().getString(R.string.message));
             displayToast(message);
-            StoreDao storeResult = data.getParcelableExtra(getResources().getString(R.string.store_result));
+            Store storeResult = data.getParcelableExtra(getResources().getString(R.string.store_result));
             merchantInfoPresenter.setStoreInfo(storeResult, true);
         }
     }
@@ -217,7 +217,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Bundle bundle = getIntent().getExtras();
-        UserDetailDao userDetail = SessionService.getUserDetails(this);
+        UserDetail userDetail = SessionService.getUserDetails(this);
         if (bundle != null && bundle.getBoolean(getResources().getString(R.string.is_store_admin))) {
             getMenuInflater().inflate(R.menu.merchant_info_admin_action_menu, menu);
         } else if (userDetail != null) {

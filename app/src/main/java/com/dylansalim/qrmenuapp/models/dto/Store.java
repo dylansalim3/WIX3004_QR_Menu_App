@@ -1,4 +1,4 @@
-package com.dylansalim.qrmenuapp.models.dao;
+package com.dylansalim.qrmenuapp.models.dto;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,10 +8,7 @@ import androidx.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-import java.sql.Time;
-
-public class StoreDao implements Parcelable {
+public class Store implements Parcelable {
     private int id;
 
     private String name;
@@ -50,16 +47,16 @@ public class StoreDao implements Parcelable {
     private String profileImg;
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public StoreDao createFromParcel(Parcel in) {
-            return new StoreDao(in);
+        public Store createFromParcel(Parcel in) {
+            return new Store(in);
         }
 
-        public StoreDao[] newArray(int size) {
-            return new StoreDao[size];
+        public Store[] newArray(int size) {
+            return new Store[size];
         }
     };
 
-    protected StoreDao(Parcel in){
+    protected Store(Parcel in){
         id = in.readInt();
         name = in.readString();
         address = in.readString();
@@ -76,7 +73,7 @@ public class StoreDao implements Parcelable {
         profileImg = in.readString();
     }
 
-    public StoreDao(int id, String name, String address, int postalCode, String city, String country, @Nullable Double latitude, @Nullable Double longitude, String phoneNum, int userId, String openHour, String closingHour, String specialOpeningNote,String profileImg) {
+    public Store(int id, String name, String address, int postalCode, String city, String country, @Nullable Double latitude, @Nullable Double longitude, String phoneNum, int userId, String openHour, String closingHour, String specialOpeningNote, String profileImg) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -94,7 +91,7 @@ public class StoreDao implements Parcelable {
 
     }
 
-    public StoreDao(String name, String address, int postalCode, String city, String country, @Nullable Double latitude, @Nullable Double longitude, String phoneNum, int userId, String openHour, String closingHour, String specialOpeningNote,String profileImg) {
+    public Store(String name, String address, int postalCode, String city, String country, @Nullable Double latitude, @Nullable Double longitude, String phoneNum, int userId, String openHour, String closingHour, String specialOpeningNote, String profileImg) {
         this.name = name;
         this.address = address;
         this.postalCode = postalCode;

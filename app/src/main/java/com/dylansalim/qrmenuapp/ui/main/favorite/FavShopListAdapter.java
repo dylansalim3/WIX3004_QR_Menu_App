@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.Shop;
+import com.dylansalim.qrmenuapp.models.dto.Shop;
 
 import java.util.List;
 
@@ -53,12 +53,13 @@ public class FavShopListAdapter extends RecyclerView.Adapter<FavShopListAdapter.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        if (listener != null) {
-            holder.itemView.setOnClickListener(v -> listener.onItemClick(v, position));
-        }
         Shop shop = mDatas.get(position);
+
+        if (listener != null) {
+            holder.itemView.setOnClickListener(v -> listener.onItemClick(shop.getId()));
+        }
         holder.tvName.setText(shop.getName());
-        String address = shop.getCountry() + "·" + shop.getCity() + "·" + shop.getAddress();
+        String address = shop.getAddress();
         holder.tvDetail.setText(address);
         holder.tvRating.setText(String.valueOf(shop.getAverage_rating()));
 
@@ -78,7 +79,7 @@ public class FavShopListAdapter extends RecyclerView.Adapter<FavShopListAdapter.
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(int storeId);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

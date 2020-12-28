@@ -8,7 +8,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.UserDetailDao;
+import com.dylansalim.qrmenuapp.models.dto.UserDetail;
 import com.dylansalim.qrmenuapp.ui.component.ConfirmDialog;
 import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
@@ -33,7 +33,7 @@ public class ReportActivity extends AppCompatActivity implements ReportViewInter
         setContentView(R.layout.activity_report);
         setupMVP();
 
-        UserDetailDao userDetail = SharedPrefUtil.getUserDetail(this);
+        UserDetail userDetail = SharedPrefUtil.getUserDetail(this);
         storeId = getIntent().getIntExtra(getString(R.string.store_id), 0);
         storeName = getIntent().getStringExtra(getString(R.string.store_name));
 

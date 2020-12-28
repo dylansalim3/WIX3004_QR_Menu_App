@@ -2,12 +2,12 @@ package com.dylansalim.qrmenuapp.ui.login_registration.registration;
 
 import android.widget.TextView;
 
-import com.dylansalim.qrmenuapp.models.dao.RoleDao;
+import com.dylansalim.qrmenuapp.models.dto.Role;
 
 public interface RegistrationPresenterInterface {
     void onRegistrationButtonClicked();
 
-    void setSelectedRole(RoleDao roleDao);
+    void setSelectedRole(Role role);
 
     void validateEmail(TextView textView, String text);
 

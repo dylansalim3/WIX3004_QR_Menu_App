@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.RoleDao;
-import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
+import com.dylansalim.qrmenuapp.models.dto.Role;
+import com.dylansalim.qrmenuapp.models.dto.Token;
 import com.dylansalim.qrmenuapp.ui.login_registration.login.LoginFragment;
 import com.dylansalim.qrmenuapp.ui.login_registration.registration.RegistrationFragment;
 import com.dylansalim.qrmenuapp.ui.qr_scan.QRScanActivity;
@@ -19,10 +19,11 @@ import com.dylansalim.qrmenuapp.ui.qr_scan.QRScanActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-public class  LoginRegistrationActivity extends AppCompatActivity
+public class LoginRegistrationActivity extends AppCompatActivity
         implements LoginFragment.OnChangeFragmentListener,
         RegistrationFragment.OnChangeFragmentListener,
         LoginFragment.OnSubmitLoginFormListener,
@@ -30,6 +31,7 @@ public class  LoginRegistrationActivity extends AppCompatActivity
         LoginRegistrationViewInterface {
 
     LoginRegistrationPresenter loginRegistrationPresenter;
+    private List<Role> roles;
 
     ViewGroup progressView;
     protected boolean isProgressShowing = false;
@@ -51,7 +53,7 @@ public class  LoginRegistrationActivity extends AppCompatActivity
             // then we don't need to do anything and should return or else
             // we could end up with overlapping fragments.
             if (savedInstanceState != null) {
-                return;
+                roles = savedInstanceState.getParcelableArrayList("roles");
             }
 
             LoginFragment loginFragment = new LoginFragment();
@@ -90,7 +92,7 @@ public class  LoginRegistrationActivity extends AppCompatActivity
 
 
     private void getRoles() {
-        loginRegistrationPresenter.getRoles();
+        loginRegistrationPresenter.retrieveRolesAvailable(roles);
     }
 
     @Override
@@ -126,10 +128,10 @@ public class  LoginRegistrationActivity extends AppCompatActivity
     }
 
     @Override
-    public void navigateToRegistrationFragment(List<RoleDao> roleDaoList) {
+    public void navigateToRegistrationFragment(List<Role> roleList) {
         Fragment newFragment = new RegistrationFragment();
         Bundle mBundle = new Bundle();
-        ArrayList<RoleDao> mArrayList = new ArrayList<>(roleDaoList);
+        ArrayList<Role> mArrayList = new ArrayList<>(roleList);
         mBundle.putParcelableArrayList("Roles", mArrayList);
         newFragment.setArguments(mBundle);
         getSupportFragmentManager().beginTransaction()
@@ -139,10 +141,10 @@ public class  LoginRegistrationActivity extends AppCompatActivity
     }
 
     @Override
-    public void navigateToNextActivity(TokenDao tokenDao) {
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.app_name),Context.MODE_PRIVATE);
+    public void navigateToNextActivity(Token token) {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(getString(R.string.token), tokenDao.getToken());
+        editor.putString(getString(R.string.token), token.getToken());
         editor.apply();
 
         Intent intent = new Intent(this, QRScanActivity.class);
@@ -154,5 +156,15 @@ public class  LoginRegistrationActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         loginRegistrationPresenter.disposeObserver();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        List<Role> roles = loginRegistrationPresenter.getRoles();
+
+        if (roles != null && roles.size() > 0) {
+            outState.putParcelableArrayList("roles", new ArrayList<>(roles));
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.dylansalim.qrmenuapp.network;
 
-import com.dylansalim.qrmenuapp.models.dao.NotificationDao;
-import com.dylansalim.qrmenuapp.models.dao.Result;
+import com.dylansalim.qrmenuapp.models.dto.Notification;
+import com.dylansalim.qrmenuapp.models.dto.Result;
 import com.dylansalim.qrmenuapp.models.dto.FcmDto;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public interface NotificationNetworkInterface {
     Observable<Result<String>> updateFCMToken(@Body FcmDto fcmDto);
 
     @POST("/notification/get-all-notifications")
-    Observable<List<NotificationDao>> getNotifications();
+    Observable<List<Notification>> getNotifications();
 
     @FormUrlEncoded
     @POST("/notification/read-notification")

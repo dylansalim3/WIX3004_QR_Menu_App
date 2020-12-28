@@ -1,4 +1,4 @@
-package com.dylansalim.qrmenuapp.models.dao;
+package com.dylansalim.qrmenuapp.models.dto;
 
 import com.google.gson.annotations.SerializedName;
 

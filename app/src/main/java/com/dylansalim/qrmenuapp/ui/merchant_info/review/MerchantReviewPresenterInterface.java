@@ -1,7 +1,7 @@
 package com.dylansalim.qrmenuapp.ui.merchant_info.review;
 
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.models.dto.Store;
 
 public interface MerchantReviewPresenterInterface {
-    void setStoreDetail(StoreDao storeDetail);
+    void setStoreDetail(Store storeDetail);
 }

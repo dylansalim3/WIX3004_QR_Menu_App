@@ -2,7 +2,6 @@ package com.dylansalim.qrmenuapp.ui.main.notifications;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dylansalim.qrmenuapp.R;
-import com.dylansalim.qrmenuapp.models.dao.NotificationDao;
+import com.dylansalim.qrmenuapp.models.dto.Notification;
 import com.dylansalim.qrmenuapp.ui.merchant.MerchantActivity;
 import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
@@ -48,9 +47,9 @@ public class NotificationsFragment extends Fragment implements NotificationViewI
     }
 
     @Override
-    public void populateNotifications(List<NotificationDao> notificationDaos) {
-        adapter = new NotificationAdapter(notificationDaos, (view, position) -> { //click listener
-            NotificationDao dao = notificationDaos.get(position);
+    public void populateNotifications(List<Notification> notifications) {
+        adapter = new NotificationAdapter(notifications, (view, position) -> { //click listener
+            Notification dao = notifications.get(position);
             notificationPresenter.readNotification(dao.getId(), SharedPrefUtil.getUserToken(getContext()));
             view.setBackgroundResource(R.drawable.dark_grey_rounded);
 

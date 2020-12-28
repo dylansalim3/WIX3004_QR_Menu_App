@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.EditListItem;
-import com.dylansalim.qrmenuapp.models.dao.StoreDao;
+import com.dylansalim.qrmenuapp.models.dto.Store;
 import com.dylansalim.qrmenuapp.ui.component.SingleEditTextDialog;
 import com.dylansalim.qrmenuapp.ui.merchant_info.MerchantInfoActivity;
 import com.dylansalim.qrmenuapp.ui.new_item_form.NewItemFormActivity;
@@ -153,6 +153,10 @@ public class MerchantActivity extends AppCompatActivity
             merchantPresenter.onEditActionButtonClick();
         }
 
+        if(id == R.id.action_fav){
+            merchantPresenter.onFavActionButtonClick();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -256,13 +260,23 @@ public class MerchantActivity extends AppCompatActivity
     }
 
     @Override
+    public void updateFavActionIcon(int color) {
+        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_baseline_favorite_24);
+        drawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(drawable, getResources().getColor(color));
+        if (menu != null) {
+            menu.getItem(0).setIcon(drawable);
+        }
+    }
+
+    @Override
     public void showAddNewCategoryDialog() {
         SingleEditTextDialog singleEditTextDialog = new SingleEditTextDialog("Add New Category", "Category Name", "Cancel", "Submit");
         singleEditTextDialog.show(getSupportFragmentManager(), "Category");
     }
 
     @Override
-    public void navigateToMerchantInfoActivity(StoreDao storeResult, boolean isStoreAdmin) {
+    public void navigateToMerchantInfoActivity(Store storeResult, boolean isStoreAdmin) {
         Intent intent = new Intent(MerchantActivity.this, MerchantInfoActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(getResources().getString(R.string.store_result), storeResult);
@@ -272,7 +286,7 @@ public class MerchantActivity extends AppCompatActivity
     }
 
     @Override
-    public void navigateToStoreQRActivity(StoreDao storeResult) {
+    public void navigateToStoreQRActivity(Store storeResult) {
         Intent intent = new Intent(MerchantActivity.this, StoreQRActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(getResources().getString(R.string.store_result), storeResult);

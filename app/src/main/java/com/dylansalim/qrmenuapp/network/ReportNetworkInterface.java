@@ -1,6 +1,6 @@
 package com.dylansalim.qrmenuapp.network;
 
-import com.dylansalim.qrmenuapp.models.dao.Result;
+import com.dylansalim.qrmenuapp.models.dto.Result;
 import com.dylansalim.qrmenuapp.models.dto.ReportDto;
 
 import io.reactivex.Observable;

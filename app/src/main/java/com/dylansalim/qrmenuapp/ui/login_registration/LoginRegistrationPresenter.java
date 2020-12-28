@@ -2,10 +2,10 @@ package com.dylansalim.qrmenuapp.ui.login_registration;
 
 import android.util.Log;
 
-import com.dylansalim.qrmenuapp.models.dao.Result;
-import com.dylansalim.qrmenuapp.models.dao.RoleDao;
-import com.dylansalim.qrmenuapp.models.dao.TokenDao;
 import com.dylansalim.qrmenuapp.models.dto.RegistrationDto;
+import com.dylansalim.qrmenuapp.models.dto.Result;
+import com.dylansalim.qrmenuapp.models.dto.Role;
+import com.dylansalim.qrmenuapp.models.dto.Token;
 import com.dylansalim.qrmenuapp.network.LoginRegistrationNetworkInterface;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -22,7 +23,7 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
 
     LoginRegistrationViewInterface lrvi;
     private final String TAG = "LRPresenter";
-    private List<RoleDao> roleDaos;
+    private List<Role> roles;
     private List<DisposableObserver<?>> disposableObservers = new ArrayList<>();
 
     public LoginRegistrationPresenter(LoginRegistrationViewInterface lrvi) {
@@ -39,12 +40,26 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
     }
 
     @Override
-    public void getRoles() {
-        lrvi.showProgressBar();
-        disposableObservers.add(getLoginRegistrationNetworkClient().getRoles()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(getRoleObserver()));
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+
+    @Override
+    public void retrieveRolesAvailable(@Nullable List<Role> roles) {
+        if (roles != null) {
+            Log.d(TAG, roles.toString());
+            this.roles = roles;
+            lrvi.navigateToRegistrationFragment(roles);
+        } else if (this.roles != null) {
+            lrvi.navigateToRegistrationFragment(this.roles);
+        } else {
+            lrvi.showProgressBar();
+            disposableObservers.add(getLoginRegistrationNetworkClient().getRoles()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(getRoleObserver()));
+        }
     }
 
     @Override
@@ -67,13 +82,13 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
         return NetworkClient.getNetworkClient().create(LoginRegistrationNetworkInterface.class);
     }
 
-    public DisposableObserver<List<RoleDao>> getRoleObserver() {
-        return new DisposableObserver<List<RoleDao>>() {
+    public DisposableObserver<List<Role>> getRoleObserver() {
+        return new DisposableObserver<List<Role>>() {
 
             @Override
-            public void onNext(List<RoleDao> roleDaoList) {
-                roleDaos = roleDaoList;
-                lrvi.navigateToRegistrationFragment(roleDaoList);
+            public void onNext(List<Role> roleList) {
+                roles = roleList;
+                lrvi.navigateToRegistrationFragment(roleList);
             }
 
             @Override
@@ -90,10 +105,10 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
         };
     }
 
-    public DisposableObserver<Result<TokenDao>> getLoginFormObserver() {
-        return new DisposableObserver<Result<TokenDao>>() {
+    public DisposableObserver<Result<Token>> getLoginFormObserver() {
+        return new DisposableObserver<Result<Token>>() {
             @Override
-            public void onNext(@NonNull Result<TokenDao> tokenDao) {
+            public void onNext(@NonNull Result<Token> tokenDao) {
                 Log.d(TAG, "OnNext " + tokenDao);
                 if (tokenDao.getData() != null) {
                     setupFCM();
@@ -117,10 +132,10 @@ public class LoginRegistrationPresenter implements LoginRegistrationPresenterInt
         };
     }
 
-    public DisposableObserver<Result<TokenDao>> getRegistrationFormObserver() {
-        return new DisposableObserver<Result<TokenDao>>() {
+    public DisposableObserver<Result<Token>> getRegistrationFormObserver() {
+        return new DisposableObserver<Result<Token>>() {
             @Override
-            public void onNext(@NonNull Result<TokenDao> tokenDao) {
+            public void onNext(@NonNull Result<Token> tokenDao) {
                 Log.d(TAG, "getRegistrationFormObserver" + tokenDao);
                 setupFCM();
                 lrvi.navigateToNextActivity(tokenDao.getData());

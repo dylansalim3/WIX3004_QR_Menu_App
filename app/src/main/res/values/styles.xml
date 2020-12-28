@@ -77,19 +77,19 @@
 
 
     <style name="ListItemTitleTheme">
-        <item name="android:textColor">@android:color/background_dark</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">@font/proxima_nova_black</item>
     </style>
 
     <style name="ListItemDescTheme">
-        <item name="android:textColor">@android:color/background_dark</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/proxima_nova_black</item>
     </style>
 
     <style name="ListItemSubtitleTheme">
-        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/proxima_nova_black</item>
     </style>

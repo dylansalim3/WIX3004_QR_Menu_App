@@ -1,10 +1,10 @@
-package com.dylansalim.qrmenuapp.models.dao;
+package com.dylansalim.qrmenuapp.models.dto;
 
-public class TokenDao {
+public class Token {
 
     public String token;
 
-    public TokenDao(String token) {
+    public Token(String token) {
         this.token = token;
     }
 

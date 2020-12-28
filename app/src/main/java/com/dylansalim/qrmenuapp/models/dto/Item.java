@@ -1,4 +1,4 @@
-package com.dylansalim.qrmenuapp.models.dao;
+package com.dylansalim.qrmenuapp.models.dto;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,7 +6,7 @@ import java.util.Date;
 
 import androidx.annotation.Nullable;
 
-public class ItemDao {
+public class Item {
     private int id;
     @SerializedName("item_category_id")
     private int itemCategoryId;
