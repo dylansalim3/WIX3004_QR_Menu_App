@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        app:backgroundTint="@color/colorBeige"
         app:fabCradleMargin="20dp"
         app:fabCradleRoundedCornerRadius="20dp"
         app:fabCradleVerticalOffset="10dp">
@@ -25,7 +26,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
             android:background="@drawable/background_transparent"
-             />
+            />
 
     </com.google.android.material.bottomappbar.BottomAppBar>
 
