@@ -16,16 +16,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/iv_fav"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/icon_fav" />
 
             <TextView
                 android:id="@+id/tv_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/iv_fav"
                 android:drawableLeft="@drawable/icon_strat"
                 android:drawablePadding="5dp"
                 android:textColor="@color/white"
                 android:textSize="18sp"
+                android:layout_marginEnd="10dp"
                 tools:text="4.2" />
 
             <TextView
@@ -33,19 +42,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/tv_rating"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 tools:text="shop name" />
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/icon_fav" />
 
         </RelativeLayout>
 
