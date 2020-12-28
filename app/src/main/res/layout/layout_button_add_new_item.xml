@@ -9,6 +9,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        card_view:cardBackgroundColor="@color/colorBackground"
         card_view:cardCornerRadius="3dp"
         card_view:contentPadding="@dimen/nav_header_vertical_spacing"
         android:theme="@style/ThemeOverlay.MaterialComponents.Light">

@@ -66,6 +66,7 @@ public class MerchantActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.merchant_toolbar);
         setSupportActionBar(toolbar);
 
+
         mCollapsingToolbar = findViewById(R.id.merchant_collapsingToolbarLayout);
         LinearLayout mExpandedTitle = findViewById(R.id.merchant_ll_title_expanded);
         setupMVP();
@@ -167,6 +168,7 @@ public class MerchantActivity extends AppCompatActivity
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(editItemAdapter);
+
 
         TextView mEmptyListTv = findViewById(R.id.tv_merchant_empty_list);
 
