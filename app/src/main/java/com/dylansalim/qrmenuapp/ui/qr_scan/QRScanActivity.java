@@ -30,7 +30,7 @@ import java.util.Objects;
 
 public class QRScanActivity extends AppCompatActivity implements QRScanViewInterface {
     private TextView closeTV, qrActivityTV;
-    private Button scanButton;
+    private Button scanButton, loginButton;
     private QRScanPresenter qrScanPresenter;
 
     @Override
@@ -41,7 +41,9 @@ public class QRScanActivity extends AppCompatActivity implements QRScanViewInter
         closeTV = findViewById(R.id.closeTV);
         qrActivityTV = findViewById(R.id.qrActivityTV);
         scanButton = findViewById(R.id.scanBtn);
-        ((Button)findViewById(R.id.qr_scan_login)).setOnClickListener(view -> {
+        loginButton = findViewById(R.id.qr_scan_login);
+
+        loginButton.setOnClickListener(view -> {
             Intent intent = new Intent(QRScanActivity.this,LoginRegistrationActivity.class);
             startActivity(intent);
         });
@@ -72,8 +74,10 @@ public class QRScanActivity extends AppCompatActivity implements QRScanViewInter
         qrScanPresenter.checkUserType(this);
         if(qrScanPresenter.getUserName() != null){
             qrActivityTV.setText(qrScanPresenter.getUserName());
+            loginButton.setVisibility(View.INVISIBLE);
         }else{
             qrActivityTV.setText("Beloved Guest");
+            loginButton.setVisibility(View.VISIBLE);
         }
     }
 

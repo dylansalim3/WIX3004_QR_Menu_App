@@ -28,7 +28,6 @@
         />
 
     <androidx.cardview.widget.CardView
-        style="@style/qr_scan_cardView"
         android:id="@+id/qrCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
