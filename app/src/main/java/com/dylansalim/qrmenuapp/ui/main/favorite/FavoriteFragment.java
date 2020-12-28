@@ -28,7 +28,7 @@ public class FavoriteFragment extends Fragment implements IShopView {
 
     private ShopPresenter shopPresenter;
 
-    private ShopListAdapter adapter;
+    private FavShopListAdapter adapter;
 
     private FavoriteViewModel favoriteViewModel;
 
@@ -40,14 +40,14 @@ public class FavoriteFragment extends Fragment implements IShopView {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_favorite, container, false);
         initView(root);
         initData();
         return root;
     }
 
     private void initView(View root) {
-        adapter = new ShopListAdapter(getContext());
+        adapter = new FavShopListAdapter(getContext());
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);

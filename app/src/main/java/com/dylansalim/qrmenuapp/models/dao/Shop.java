@@ -26,6 +26,7 @@ public class Shop {
     private int userId;
     private Date created;
     private int user_id;
+    private double average_rating;
 
     public void setId(int id) {
         this.id = id;
@@ -121,6 +122,14 @@ public class Shop {
 
     public int getUser_id() {
         return user_id;
+    }
+
+    public double getAverage_rating() {
+        return average_rating;
+    }
+
+    public void setAverage_rating(double average_rating) {
+        this.average_rating = average_rating;
     }
 
     @Override

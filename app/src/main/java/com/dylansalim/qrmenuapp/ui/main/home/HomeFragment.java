@@ -29,7 +29,7 @@ public class HomeFragment extends Fragment implements IShopView {
 
     private ShopPresenter shopPresenter;
 
-    private ShopListAdapter adapter;
+    private RecShopListAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment implements IShopView {
     }
 
     private void initView(View root) {
-        adapter = new ShopListAdapter(getContext());
+        adapter = new RecShopListAdapter(getContext());
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);

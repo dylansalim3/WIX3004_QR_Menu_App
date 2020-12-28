@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/account_parent"
-    tools:context=".ui.main.notifications.NotificationsFragment">
+    tools:context=".ui.main.notifications.NotificationsFragment"
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_top_bar">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/account_top_bar">
 
         <TextView
             android:id="@+id/account_title"
