@@ -19,6 +19,7 @@
         android:id="@+id/item_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorBackground"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.appbar.AppBarLayout
@@ -117,7 +118,9 @@
                 android:layout_height="48dp"
                 android:layout_gravity="bottom"
                 android:foregroundGravity="left"
-                android:background="@color/colorWhite"
+                android:background="@color/colorBackground"
+                app:tabTextColor="@color/colorBeige"
+                app:tabSelectedTextColor="@color/colorPrimary"
                 android:theme="@style/ThemeOverlay.MaterialComponents.Light"
                 app:tabGravity="start"
                 app:tabIndicatorHeight="4dp"

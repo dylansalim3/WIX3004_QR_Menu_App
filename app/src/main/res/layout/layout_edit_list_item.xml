@@ -10,6 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout_edit_list_item"
+        android:background="@color/colorGray"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp">
@@ -61,6 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:padding="1dp"
+                android:textColor="@color/colorBeige"
                 android:text="MYR " />
 
             <TextView
@@ -68,6 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:padding="1dp"
+                android:textColor="@color/colorBeige"
                 android:text="@string/pricing" />
 
             <TextView
@@ -76,6 +79,7 @@
                 android:layout_height="30dp"
                 android:padding="1dp"
                 android:text="@string/pricing"
+                android:textColor="@color/colorBeige"
                 android:visibility="gone"/>
         </LinearLayout>
 
@@ -86,6 +90,7 @@
             android:padding="1dp"
             android:text="@string/title_account"
             android:textSize="18sp"
+            android:textColor="@color/colorBeige"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/iv_edit_list_item"
             app:layout_constraintHorizontal_bias="0.0"
@@ -102,6 +107,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:padding="1dp"
+            android:textColor="@color/colorBeige"
             android:scrollHorizontally="true"
             android:text="@string/desc"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -71,6 +71,10 @@
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
 
+    <style name="ToggleSwitchStyle" >
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
 
     <style name="ListItemTitleTheme">
         <item name="android:textColor">@android:color/background_dark</item>
