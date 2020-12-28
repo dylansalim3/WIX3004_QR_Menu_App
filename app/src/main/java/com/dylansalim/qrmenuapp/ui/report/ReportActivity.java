@@ -34,11 +34,11 @@ public class ReportActivity extends AppCompatActivity implements ReportViewInter
         setupMVP();
 
         UserDetailDao userDetail = SharedPrefUtil.getUserDetail(this);
-        storeId = getIntent().getIntExtra("store_id", 0);
-        storeName = getIntent().getStringExtra("store_name");
+        storeId = getIntent().getIntExtra(getString(R.string.store_id), 0);
+        storeName = getIntent().getStringExtra(getString(R.string.store_name));
 
         ((EditText) findViewById(R.id.report_store_name_input))
-                .setText(getIntent().getStringExtra("store_name"));
+                .setText(storeName);
 
         findViewById(R.id.report_back_button).setOnClickListener(view -> finish());
 
@@ -74,7 +74,7 @@ public class ReportActivity extends AppCompatActivity implements ReportViewInter
     @Override
     public void showFinish() {
         ConfirmDialog dialog = new ConfirmDialog(this);
-        dialog.setDialogText("Your report has been filled successfully");
+        dialog.setDialogText(getString(R.string.dialog_report));
         dialog.setListener(v -> finish());
         dialog.show();
     }
@@ -82,7 +82,7 @@ public class ReportActivity extends AppCompatActivity implements ReportViewInter
     @Override
     public void showError(String error) {
         ConfirmDialog dialog = new ConfirmDialog(this);
-        dialog.setDialogText("Error occurred. Please try again");
+        dialog.setDialogText(getString(R.string.dialog_error));
         dialog.show();
     }
 

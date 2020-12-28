@@ -25,14 +25,15 @@ import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
 
 public class AccountFragment extends Fragment implements AccountViewInterface {
-    ReloadPageListener reloadPageListener;
-    public interface ReloadPageListener{
+
+    public interface ReloadPageListener {
         void reloadPage();
     }
 
     final String TAG = "Account Fragment";
 
     AccountPresenterInterface presenter;
+    ReloadPageListener reloadPageListener;
     View progressBar;
     View editProfile;
     View switchRole;
@@ -101,16 +102,16 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
         dialog.setListener(clickListener);
         switch (dialogType) {
             case SWITCH_MERCHANT:
-                dialog.setDialogText("Your role has been switched to merchant");
+                dialog.setDialogText(getString(R.string.dialog_switch_merchant));
                 break;
             case SWITCH_CUSTOMER:
-                dialog.setDialogText("Your role has been switched to customer");
+                dialog.setDialogText(getString(R.string.dialog_switch_customer));
                 break;
             case LOGOUT:
-                dialog.setDialogText("You have been logged out");
+                dialog.setDialogText(getString(R.string.dialog_logout));
                 break;
             case ERROR:
-                dialog.setDialogText("Error occurred. Please try again");
+                dialog.setDialogText(getString(R.string.dialog_error));
                 break;
         }
         dialog.show();

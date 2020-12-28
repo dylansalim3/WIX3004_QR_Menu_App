@@ -40,6 +40,8 @@ public class UserDetailDao {
     @SerializedName("store_name")
     private String storeName;
 
+    private String address;
+
     public UserDetailDao(int id, String firstName, String lastName, String email, String password, String created, boolean active, String profileImg, String phoneNum, int roleId, String role, int storeId,String storeName) {
         this.id = id;
         this.firstName = firstName;
@@ -138,6 +140,14 @@ public class UserDetailDao {
 
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getRoleId() {

@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.dylansalim.qrmenuapp.ui.main.FragmentSlidePagerAdapter;
 import com.dylansalim.qrmenuapp.ui.merchant.MerchantActivity;
 import com.dylansalim.qrmenuapp.ui.merchant_info.about.AboutMerchantFragment;
 import com.dylansalim.qrmenuapp.ui.merchant_info.review.MerchantReviewFragment;
+import com.dylansalim.qrmenuapp.ui.report.ReportActivity;
 import com.dylansalim.qrmenuapp.ui.store_qr.StoreQRActivity;
 import com.dylansalim.qrmenuapp.ui.store_registration.StoreRegistrationActivity;
 import com.google.android.material.tabs.TabLayout;
@@ -46,6 +48,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
     private Toolbar toolbar;
     private TabLayout mTabLayout;
     private ViewPager2 mViewPager2;
+    private Button btnReport;
     private ViewGroup progressView;
     protected boolean isProgressShowing = false;
     private static final String TAG = "MIA";
@@ -61,6 +64,7 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
         setContentView(R.layout.activity_merchant_info);
 
         toolbar = findViewById(R.id.merchant_info_toolbar);
+        toolbar.getBackground().setAlpha(50);
         setSupportActionBar(toolbar);
 
         setupMVP();
@@ -98,6 +102,9 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
 
             }
         });
+
+        btnReport = findViewById(R.id.merchant_info_btn_report);
+        btnReport.setOnClickListener(view -> merchantInfoPresenter.onReportBtnClick());
 
         setupTabMediator();
 
@@ -186,6 +193,14 @@ public class MerchantInfoActivity extends AppCompatActivity implements MerchantI
         bundle.putParcelable(getResources().getString(R.string.store_result), storeDetail);
         intent.putExtras(bundle);
         startActivityForResult(intent, UPDATE_FORM_REQUEST_CODE);
+    }
+
+    @Override
+    public void navigateToReportActivity(StoreDao storeDetail) {
+        Intent intent = new Intent(this, ReportActivity.class);
+        intent.putExtra(getResources().getString(R.string.store_name), storeDetail.getName());
+        intent.putExtra(getResources().getString(R.string.store_id), storeDetail.getId());
+        startActivity(intent);
     }
 
     @Override

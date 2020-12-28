@@ -1,93 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/profile_parent"
     tools:context=".ui.edit_profile.EditProfileActivity">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/report_top_bar"
-        style="@style/profile_top_bar">
-
-        <ImageButton
-            android:id="@+id/profile_back_button"
-            style="@style/profile_back_btn"
-            android:src="@drawable/back"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/profile_picture"
-            style="@style/profile_image"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearance="@style/roundedCornersImageView"
-            app:srcCompat="@drawable/ic_account_circle_white_24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_change"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profile_picture" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            style="@style/profile_content"
-            android:paddingTop="20dp">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                style="@style/profile_text"
-                android:text="@string/first_name" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/report_top_bar"
+                style="@style/profile_top_bar">
 
-            <EditText
-                android:id="@+id/profile_firstname"
-                style="@style/profile_input"
-                android:hint="@string/first_name" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/profile_picture"
+                    style="@style/profile_image"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearance="@style/roundedCornersImageView"
+                    app:srcCompat="@drawable/ic_account_circle_white_24dp" />
 
-            <TextView
-                style="@style/profile_text"
-                android:text="@string/last_name" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_change"
+                    android:textColor="@color/colorWhite"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/profile_picture" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <EditText
-                android:id="@+id/profile_lastname"
-                style="@style/profile_input"
-                android:hint="@string/last_name" />
+            <LinearLayout
+                style="@style/profile_content"
+                android:paddingTop="20dp">
 
-            <TextView
-                style="@style/profile_text"
-                android:text="@string/phone_number" />
+                <TextView
+                    style="@style/profile_text"
+                    android:text="@string/first_name" />
 
-            <EditText
-                android:id="@+id/profile_phonenumber"
-                style="@style/profile_input"
-                android:hint="@string/phone_number" />
+                <EditText
+                    android:id="@+id/profile_firstname"
+                    style="@style/profile_input"
+                    android:hint="@string/first_name" />
 
-            <TextView
-                style="@style/profile_text"
-                android:text="@string/address" />
+                <TextView
+                    style="@style/profile_text"
+                    android:text="@string/last_name" />
 
-            <EditText
-                android:id="@+id/profile_address"
-                style="@style/profile_input"
-                android:layout_height="100dp"
-                android:gravity="top"
-                android:hint="@string/address" />
+                <EditText
+                    android:id="@+id/profile_lastname"
+                    style="@style/profile_input"
+                    android:hint="@string/last_name" />
 
-            <Button
-                android:id="@+id/profile_save_button"
-                style="@style/profile_button"
-                android:text="@string/save_profile" />
+                <TextView
+                    style="@style/profile_text"
+                    android:text="@string/phone_number" />
 
+                <com.dylansalim.qrmenuapp.ui.component.CustomPhoneInputLayout
+                    android:padding="0dp"
+                    android:id="@+id/profile_phone_number"
+                    style="@style/profile_text" />
+
+                <TextView
+                    style="@style/profile_text"
+                    android:text="@string/address" />
+
+                <EditText
+                    android:id="@+id/profile_address"
+                    style="@style/profile_input"
+                    android:layout_height="100dp"
+                    android:gravity="top"
+                    android:hint="@string/address" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="20dp"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="Use current location"
+                        android:textColor="@color/colorBeige"
+                        android:textSize="20sp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/profile_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:theme="@style/Switch" />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/profile_save_button"
+                    style="@style/profile_button"
+                    android:text="@string/save_profile" />
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/profile_back_button"
+        style="@style/profile_back_btn"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</RelativeLayout>

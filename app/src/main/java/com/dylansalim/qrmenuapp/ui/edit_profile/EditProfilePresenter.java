@@ -1,6 +1,7 @@
 package com.dylansalim.qrmenuapp.ui.edit_profile;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.FileUtils;
@@ -10,9 +11,11 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.dylansalim.qrmenuapp.BuildConfig;
+import com.dylansalim.qrmenuapp.models.dao.AddressDao;
 import com.dylansalim.qrmenuapp.network.AccountNetworkInterface;
 import com.dylansalim.qrmenuapp.network.LoginRegistrationNetworkInterface;
 import com.dylansalim.qrmenuapp.network.NetworkClient;
+import com.dylansalim.qrmenuapp.services.GpsTracker;
 import com.dylansalim.qrmenuapp.utils.ValidationUtils;
 
 import java.io.File;
@@ -110,6 +113,21 @@ public class EditProfilePresenter implements EditProfilePresenterInterface {
                     view.showError(EditProfileViewInterface.ErrorType.REQUEST_FAILED);
                 });
         disposables.add(disposable);
+    }
+
+    public void getLocation(Context context) {
+        GpsTracker gpsTracker = new GpsTracker(context);
+        if (gpsTracker.canGetLocation()) {
+            double latitude = gpsTracker.getLatitude();
+            double longitude = gpsTracker.getLongitude();
+            //retrieve road data
+            AddressDao addressDao = gpsTracker.getAddress(latitude, longitude);
+            if (addressDao != null) {
+                view.setAddress(addressDao.getAddress());
+            }
+        } else {
+            gpsTracker.showSettingsAlert();
+        }
     }
 
     private File getImage(Uri uri) {
