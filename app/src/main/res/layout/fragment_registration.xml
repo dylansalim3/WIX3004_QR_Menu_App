@@ -106,7 +106,6 @@
                         android:hint="@string/prompt_email"
                         android:inputType="textEmailAddress"
                         android:selectAllOnFocus="true"
-                        android:text="dylansalim3@gmail.com"
                         android:paddingBottom="20dp"
                         style="@style/input_text"/>
 
@@ -119,7 +118,6 @@
                         android:imeOptions="actionDone"
                         android:inputType="textPassword"
                         android:selectAllOnFocus="true"
-                        android:text="test123"
                         android:paddingBottom="20dp"
                         style="@style/input_text"/>
 
@@ -133,8 +131,7 @@
                         android:imeOptions="actionDone"
                         android:inputType="textPassword"
                         android:paddingBottom="20dp"
-                        android:selectAllOnFocus="true"
-                        android:text="test123" />
+                        android:selectAllOnFocus="true" />
 
                     <com.dylansalim.qrmenuapp.ui.component.CustomPhoneInputLayout
                         android:id="@+id/registration_phone_input_layout"
