@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dylansalim.qrmenuapp.R;
 import com.dylansalim.qrmenuapp.models.dto.Notification;
+import com.dylansalim.qrmenuapp.ui.component.ConfirmDialog;
 import com.dylansalim.qrmenuapp.ui.merchant.MerchantActivity;
 import com.dylansalim.qrmenuapp.utils.SharedPrefUtil;
 
@@ -59,6 +60,10 @@ public class NotificationsFragment extends Fragment implements NotificationViewI
                 bundle.putInt(getResources().getString(R.string.store_id), dao.getData());
                 intent.putExtras(bundle);
                 startActivity(intent);
+            } else {
+                ConfirmDialog confirmDialog = new ConfirmDialog(getContext());
+                confirmDialog.setDialogText(dao.getBody());
+                confirmDialog.show();
             }
         });
         recyclerView.setAdapter(adapter);

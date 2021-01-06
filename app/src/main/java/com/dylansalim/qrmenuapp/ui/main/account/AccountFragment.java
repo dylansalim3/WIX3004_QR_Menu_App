@@ -59,7 +59,6 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
         View root = inflater.inflate(R.layout.fragment_account, container, false);
         setupMVP();
 
-
         editProfile = root.findViewById(R.id.account_edit_profile_button);
         switchRole = root.findViewById(R.id.account_switch_role_button);
         settings = root.findViewById(R.id.account_settings_button);
@@ -94,6 +93,12 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
         });
 
         return root;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.disposeObserver();
     }
 
     @Override
@@ -146,6 +151,12 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
         startActivity(intent);
     }
 
+    @Override
+    public void reloadPage() {
+        SharedPrefUtil.removeUserToken(getContext());
+        reloadPageListener.reloadPage();
+    }
+
     private Boolean isLogin() {
         return SharedPrefUtil.getUserDetail(requireContext()) != null;
     }
@@ -157,10 +168,7 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
     }
 
     private void logout() {
-        SharedPrefUtil.removeUserToken(getContext());
-        showDialog(DialogType.LOGOUT, v -> {
-            reloadPageListener.reloadPage();
-        });
+        presenter.logout();
     }
 
     private void openEditProfile() {
@@ -175,7 +183,6 @@ public class AccountFragment extends Fragment implements AccountViewInterface {
 
     private void openMarket() {
         String appPackageName = requireContext().getPackageName();
-        appPackageName = "com.whatsapp"; // TODO: remove this after published to play store
         try {
             Log.d(TAG, "Open market");
             startActivity(new Intent(Intent.ACTION_VIEW,

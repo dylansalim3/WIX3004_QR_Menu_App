@@ -54,23 +54,7 @@ public class NotificationService extends FirebaseMessagingService {
      */
     private void updateFCMToken(String fcm_token) {
         Log.d(TAG, "Updating fcm token");
-        SharedPreferences sharedPreferences = getSharedPreferences("QRMenuApp", Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString("TOKEN", "");
-
-        assert token != null;
-        if (token.equals("")) {
-            Log.e(TAG, "Jwt token is empty");
-            return;
-        }
-
-        String dataString = null;
-        try {
-            dataString = JWTUtils.getDataString(token);
-        } catch (Exception e) {
-            Log.d(TAG, "Jwt decode failed");
-            e.printStackTrace();
-        }
-        UserDetail userDetail = new Gson().fromJson(dataString, UserDetail.class);
+        UserDetail userDetail = SharedPrefUtil.getUserDetail(this);
         FcmDto fcmDto = new FcmDto(userDetail.getId(), fcm_token);
 
         NetworkClient.getNetworkClient().create(NotificationNetworkInterface.class)
@@ -87,7 +71,8 @@ public class NotificationService extends FirebaseMessagingService {
         String body = remoteMessage.getData().get("body");
         String title = remoteMessage.getData().get("title");
 
-        if (SharedPrefUtil.getNotificationPref(this)) {
+        if (SharedPrefUtil.getNotificationPref(this) &&
+                !SharedPrefUtil.getUserToken(this).equals("")) {
             sendNotification(body, title, getPendingIntent(remoteMessage));
         }
     }

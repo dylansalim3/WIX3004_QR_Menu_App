@@ -10,6 +10,8 @@ public interface AccountViewInterface {
 
     void reopenApp();
 
+    void reloadPage();
+
     enum DialogType {
         SWITCH_MERCHANT, SWITCH_CUSTOMER, LOGOUT, ERROR
     }
