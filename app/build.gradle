@@ -9,7 +9,7 @@ android {
         applicationId "com.dylansalim.qrmenuapp"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 2
+        versionCode 3
         versionName "1.0"
         buildConfigField "String", "SERVER_API_URL", API_URL
 
